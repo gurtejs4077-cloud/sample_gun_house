@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sahibzada Gun House — Authorized Firearms Dealer · Mohali</title>
+
+<!-- Google Fonts: Playfair Display (headings) + Inter (body) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+
+<!-- ============================================================
+     NAVBAR
+     ============================================================ -->
+<header class="navbar">
+  <div class="container nav-inner">
+    <a href="#home" class="nav-logo" data-route="home">
+      <img src="sahibzada_gun_house_logo.jpg" alt="Sahibzada Gun House Logo" style="height: 50px; width: auto;" />
+    </a>
+
+    <div class="menu-toggle" id="mobile-menu-btn">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#home" data-route="home" class="active">Home</a></li>
+        <li><a href="#shop" data-route="shop">Catalogue</a></li>
+        <li><a href="#shop" data-route="shop" data-filter-category="pistols">Pistols</a></li>
+        <li><a href="#shop" data-route="shop" data-filter-category="revolvers">Revolvers</a></li>
+        <li><a href="#shop" data-route="shop" data-filter-category="accessories">Accessories</a></li>
+        <li><a href="licensing.html">Licensing</a></li>
+      </ul>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="nav-icon-btn" aria-label="Account">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+      </button>
+      <button class="nav-icon-btn" aria-label="Cart" id="cart-button">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+        <span class="cart-badge hidden" id="cart-badge">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================
+     PAGE: HOMEPAGE
+     ============================================================ -->
+<div id="page-home">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="fade-up">
+        <p class="hero-eyebrow">Est. Mohali · Authorized Dealer</p>
+        <h1 class="hero-title">
+          Heritage. Precision.
+          <span class="hero-title-accent">Responsibility.</span>
+        </h1>
+        <div class="hero-divider"></div>
+        <p class="hero-desc">
+          A curated catalogue of the world's finest firearms,
+          optics, and accessories — sourced for collectors, sport shooters,
+          and licensed professionals. Authorized dealer for Kiehberg, Beretta,
+          Girsan, and Alfaproj.
+        </p>
+        <div class="hero-actions">
+          <a href="#shop" data-route="shop" class="btn-gold">
+            Browse the Catalogue
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="licensing.html" class="btn-outline-light">Licensing Guidance</a>
+        </div>
+      </div>
+
+      <div class="hero-logo">
+        <div class="hero-logo-glow"></div>
+        <div class="hero-logo-circle">
+          <img src="sahibzada_gun_house_logo.jpg" alt="Sahibzada Gun House" style="width: 85%; height: 85%; border-radius: 50%; object-fit: cover;" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST STRIP -->
+  <section class="trust-strip">
+    <div class="container">
+      <div class="trust-grid">
+        <div class="trust-item">
+          <div class="trust-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <div>
+            <h3>Fully Licensed</h3>
+            <p>Operating under the Arms Act 1959 and Arms Rules 2016.</p>
+          </div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="8" r="7"/>
+              <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+            </svg>
+          </div>
+          <div>
+            <h3>Authorized Dealer</h3>
+            <p>Kiehberg GmbH (Germany), Beretta, Girsan, and Alfaproj.</p>
+          </div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+          </div>
+          <div>
+            <h3>Sector 69, Mohali</h3>
+            <p>Visit our showroom for hands-on inspection and consultation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED PRODUCTS -->
+  <section class="featured-section">
+    <div class="container">
+      <div class="section-header">
+        <p class="eyebrow">Curated Selection</p>
+        <h2 class="section-title">Featured This Season</h2>
+        <div class="section-divider"></div>
+      </div>
+      <div class="product-grid featured" id="featured-grid"></div>
+      <div style="text-align: center; margin-top: 3rem;">
+        <a href="#shop" data-route="shop" class="btn-outline-emerald">
+          View Full Catalogue
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STOREFRONT -->
+  <section class="storefront">
+    <div class="container">
+      <div class="storefront-grid">
+        <div>
+          <p class="eyebrow storefront-eyebrow">Visit the Showroom</p>
+          <h2 class="section-title" style="margin: 0.75rem 0 0;">The Mohali Storefront</h2>
+          <div class="hero-divider"></div>
+          <p>
+            Sahibzada Gun House is a physical destination as much as a catalogue.
+            Our showroom in Sector 69 displays the full range — Kiehberg 1911s,
+            Beretta semi-autos, Girsan service pistols, and Alfaproj sporting
+            rifles — alongside optics, holsters, and accessories. Licensed buyers
+            are welcomed by appointment for hands-on inspection and consultation.
+          </p>
+          <div class="storefront-info">
+            <p><span>Address:</span> Sector 69, Mohali, Punjab — India</p>
+            <p><span>Phone:</span> +91 9653 001 001</p>
+            <p><span>Hours:</span> Mon–Sat · 10:00 AM – 7:00 PM</p>
+          </div>
+        </div>
+        <div class="storefront-image">
+          <img src="/home/gurtej-singh/.gemini/antigravity/brain/6a154ad5-dac1-4ffe-8aab-9be621be2a90/storefront_luxury_mohali_1777991702618.png" alt="Storefront Photograph" />
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================
+     PAGE: SHOP / CATALOGUE
+     ============================================================ -->
+<div id="page-shop" class="hidden">
+  <header style="background: white; border-bottom: 1px solid var(--ivory-300);">
+    <div class="container" style="padding: 4rem 1.5rem;">
+      <p class="eyebrow">The Collection</p>
+      <h1 style="font-size: 3rem; margin-top: 0.75rem;">Catalogue</h1>
+      <div class="divider-gold" style="margin: 1.5rem 0;"></div>
+      <p style="max-width: 42rem; color: var(--charcoal-600); margin-top: 1.5rem;">
+        Curated firearms, ammunition, and accessories from the world's most
+        respected manufacturers. Items marked
+        <span style="color: var(--emerald-900); font-weight: 500;">License Required</span>
+        are reserved for in-store transaction following Form III and UIN verification
+        in accordance with the Arms Rules 2016.
+      </p>
+    </div>
+  </header>
+
+  <section class="shop-section">
+    <div class="container">
+      <div class="shop-grid">
+        <!-- FILTERS SIDEBAR -->
+        <aside class="filters">
+          <div class="filters-header">
+            <h2 style="display: flex; align-items: center; gap: 0.5rem;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--emerald-900)" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+              Refine
+            </h2>
+            <button class="filter-clear hidden" id="filter-clear-btn" onclick="clearFilters()">
+              ✕ Clear all
+            </button>
+          </div>
+
+          <div class="filter-group">
+            <h3>Availability</h3>
+            <button class="filter-pill" data-filter="license" data-value="required" onclick="toggleFilter('license', 'required')">
+              🔒 License Required
+            </button>
+            <button class="filter-pill" data-filter="license" data-value="none" onclick="toggleFilter('license', 'none')">
+              🏷️ No License Needed
+            </button>
+          </div>
+
+          <div class="filter-group">
+            <h3>Category</h3>
+            <ul class="filter-list" id="category-list"></ul>
+          </div>
+
+          <div class="filter-group">
+            <h3>Brand</h3>
+            <ul class="filter-list" id="brand-list"></ul>
+          </div>
+        </aside>
+
+        <!-- PRODUCTS COLUMN -->
+        <main>
+          <div class="shop-toolbar">
+            <p style="font-size: 0.875rem; color: var(--charcoal-600);">
+              Showing <strong id="result-count">0</strong> items
+            </p>
+            <div class="sort-control">
+              <label for="sort">Sort by</label>
+              <select id="sort" onchange="applySort()">
+                <option value="newest">Newest Arrivals</option>
+                <option value="featured">Featured</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="product-grid" id="shop-grid"></div>
+
+          <div class="compliance-banner">
+            <p>
+              <span class="compliance-label">Regulatory Notice ·</span>
+              Sahibzada Gun House is a licensed firearms dealer operating under the Arms
+              Act 1959 and Arms Rules 2016. Sale of any item flagged
+              <em>License Required</em> is contingent on the buyer presenting a valid
+              arms license (Form III) and a corresponding Unique Identification Number
+              (UIN) for in-person verification at our Mohali storefront. Online checkout
+              is restricted to non-licensed accessories, optics, holsters, and
+              ammunition compliant with the buyer's state regulations.
+            </p>
+          </div>
+        </main>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div>
+      <div class="footer-brand-mark">
+        <img src="sahibzada_gun_house_logo.jpg" alt="Sahibzada Gun House Logo" style="height: 60px; width: auto;" />
+      </div>
+      <p class="desc">
+        Operating under the Arms Act 1959 and Arms Rules 2016. Authorized dealer for
+        Kiehberg GmbH (Germany), Beretta, Girsan, and Alfaproj. Sale of licensed
+        firearms is conditional on Form III verification at our Sector 69 showroom.
+      </p>
+    </div>
+
+    <div>
+      <h4>Catalogue</h4>
+      <ul>
+        <li><a href="#shop" data-route="shop" data-filter-category="pistols">Pistols</a></li>
+        <li><a href="#shop" data-route="shop" data-filter-category="revolvers">Revolvers</a></li>
+        <li><a href="#shop" data-route="shop" data-filter-category="air-rifles">Air Rifles</a></li>
+        <li><a href="#shop" data-route="shop" data-filter-category="holsters">Accessories</a></li>
+        <li><a href="#shop" data-route="shop" data-filter-category="ammunition">Ammunition</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="licensing.html">Licensing Guide</a></li>
+        <li><a href="licensing.html#uin">Apply for UIN</a></li>
+        <li><a href="licensing.html#forms">Government Forms</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container footer-bottom-inner">
+      <p>© 2026 Sahibzada Gun House. All rights reserved.</p>
+      <p>Sector 69, Mohali, Punjab · +91 9653 001 001</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     QUOTE REQUEST MODAL
+     ============================================================ -->
+<div class="modal-backdrop" id="quote-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Reserve in Store</h3>
+      <button class="modal-close" onclick="closeQuoteModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-product-info">
+        <strong id="modal-product-name">Product Name</strong>
+        <span id="modal-product-price" style="color: var(--charcoal-600);">₹0</span>
+      </div>
+
+      <div class="compliance-disclaimer">
+        <strong>⚖️ Arms Rules 2016 Compliance Notice</strong><br>
+        Purchase requires a valid Form III arms license and UIN.
+        In-store physical verification is mandatory. We will contact you within 24
+        hours to schedule your showroom appointment.
+      </div>
+
+      <form onsubmit="submitQuoteRequest(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="qr-name">Full Name *</label>
+            <input type="text" id="qr-name" required />
+          </div>
+          <div class="form-group">
+            <label for="qr-phone">Phone *</label>
+            <input type="tel" id="qr-phone" required placeholder="+91" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="qr-email">Email *</label>
+          <input type="email" id="qr-email" required />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="qr-city">City</label>
+            <input type="text" id="qr-city" />
+          </div>
+          <div class="form-group">
+            <label for="qr-state">State</label>
+            <input type="text" id="qr-state" />
+          </div>
+        </div>
+
+        <div class="form-checkbox-group">
+          <input type="checkbox" id="qr-license" />
+          <label for="qr-license">
+            I currently hold a valid Indian arms license (Form III).
+            I understand verification will be performed in-store.
+          </label>
+        </div>
+
+        <div class="form-row" style="margin-top: 1rem;">
+          <div class="form-group">
+            <label for="qr-uin">UIN (if held)</label>
+            <input type="text" id="qr-uin" placeholder="Optional" />
+          </div>
+          <div class="form-group">
+            <label for="qr-license-state">License State</label>
+            <input type="text" id="qr-license-state" placeholder="Optional" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="qr-message">Additional Notes</label>
+          <textarea id="qr-message" rows="3" placeholder="Preferred appointment time, questions about the firearm, etc."></textarea>
+        </div>
+
+        <div class="modal-footer" style="margin: 1.5rem -2rem -1.5rem; padding: 1rem 2rem;">
+          <button type="button" class="btn-outline-emerald" onclick="closeQuoteModal()">Cancel</button>
+          <button type="submit" class="btn-emerald">Submit Reservation</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Toast notification -->
+<div class="toast" id="toast">Item added to cart</div>
+
+<script src="js/products.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>

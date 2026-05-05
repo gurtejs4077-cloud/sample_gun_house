@@ -1,0 +1,2504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sahibzada Gun House — Authorized Firearms Dealer · Mohali</title>
+
+<!-- Google Fonts: Playfair Display (headings) + Inter (body) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+/* ============================================================
+   SAHIBZADA GUN HOUSE — Brand Tokens
+   ============================================================ */
+:root {
+  --emerald-900: #064e3b;
+  --emerald-800: #065f46;
+  --emerald-700: #047857;
+  --emerald-950: #022c22;
+  --gold-500:    #d4af37;
+  --gold-600:    #b8941f;
+  --gold-400:    #dcb43c;
+  --gold-300:    #ecd069;
+  --gold-100:    #faf3d8;
+  --gold-50:     #fdfbf3;
+  --ivory-50:    #fffff8;
+  --ivory-100:   #fdfaf2;
+  --ivory-200:   #faf7f2;
+  --ivory-300:   #f3ede0;
+  --ivory-400:   #e8dec8;
+  --charcoal-900: #1f2937;
+  --charcoal-700: #4f4f4f;
+  --charcoal-600: #5d5d5d;
+  --charcoal-500: #6d6d6d;
+  --charcoal-400: #888888;
+  --charcoal-300: #b0b0b0;
+
+  --shadow-luxe:    0 4px 20px -2px rgba(6, 78, 59, 0.15), 0 2px 8px -2px rgba(6, 78, 59, 0.08);
+  --shadow-luxe-lg: 0 20px 50px -10px rgba(6, 78, 59, 0.25), 0 8px 20px -8px rgba(6, 78, 59, 0.15);
+  --shadow-gold:    0 0 0 1px rgba(212, 175, 55, 0.4), 0 4px 12px rgba(212, 175, 55, 0.15);
+}
+
+/* ============================================================
+   Reset + base
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--ivory-200);
+  color: var(--charcoal-900);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--charcoal-900);
+}
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+img { display: block; max-width: 100%; height: auto; }
+
+/* ============================================================
+   Layout helpers
+   ============================================================ */
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+@media (max-width: 768px) {
+  .container { padding: 0 1.25rem; }
+}
+.eyebrow {
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-weight: 600;
+  color: var(--emerald-900);
+}
+.divider-gold {
+  height: 1px;
+  width: 5rem;
+  background: var(--gold-500);
+}
+
+/* Buttons */
+.btn-gold, .btn-emerald, .btn-outline-emerald {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.btn-gold {
+  background: var(--gold-500);
+  color: var(--emerald-950);
+}
+.btn-gold:hover {
+  background: var(--gold-600);
+  box-shadow: var(--shadow-gold);
+}
+.btn-emerald {
+  background: var(--emerald-900);
+  color: var(--ivory-100);
+}
+.btn-emerald:hover {
+  background: var(--emerald-800);
+  box-shadow: var(--shadow-luxe);
+}
+.btn-outline-emerald {
+  border: 1px solid var(--emerald-900);
+  color: var(--emerald-900);
+  background: transparent;
+}
+.btn-outline-emerald:hover {
+  background: var(--emerald-900);
+  color: var(--ivory-100);
+}
+.btn-disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ============================================================
+   Navbar
+   ============================================================ */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--ivory-300);
+}
+.nav-inner {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.nav-logo-mark {
+  width: 48px;
+  height: 48px;
+  background: var(--emerald-900);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold-400);
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  border: 2px solid var(--gold-500);
+  overflow: hidden;
+}
+.nav-logo img {
+  height: 50px;
+  width: auto;
+  transition: transform 0.3s ease;
+}
+.nav-logo:hover img {
+  transform: scale(1.05);
+}
+.nav-logo-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  color: var(--emerald-900);
+  line-height: 1;
+}
+.nav-logo-sub {
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--charcoal-500);
+  margin-top: 4px;
+}
+/* Mobile Menu Toggle */
+.menu-toggle {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 32px;
+  cursor: pointer;
+  z-index: 60;
+}
+@media (min-width: 1024px) {
+  .menu-toggle { display: none; }
+}
+.menu-toggle span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--emerald-900);
+  transition: all 0.3s ease;
+}
+
+.nav-links {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 80%;
+  height: 100vh;
+  background: white;
+  flex-direction: column;
+  padding: 6rem 2rem;
+  gap: 1.5rem;
+  list-style: none;
+  transition: right 0.3s ease;
+  box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+  z-index: 55;
+  display: flex;
+}
+.nav-links.active {
+  right: 0;
+}
+@media (min-width: 1024px) {
+  .nav-links {
+    position: static;
+    width: auto;
+    height: auto;
+    background: transparent;
+    flex-direction: row;
+    padding: 0;
+    gap: 2.5rem;
+    box-shadow: none;
+    transition: none;
+    display: flex;
+  }
+}
+.nav-links a {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--charcoal-700);
+  transition: all 0.3s ease;
+  position: relative;
+}
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--gold-500);
+  transition: width 0.3s ease;
+}
+.nav-links a:hover::after, .nav-links a.active::after {
+  width: 100%;
+}
+.nav-links a:hover, .nav-links a.active {
+  color: var(--emerald-900);
+}
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.nav-icon-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background 0.2s;
+  color: var(--charcoal-700);
+  position: relative;
+}
+.nav-icon-btn:hover { background: var(--ivory-200); }
+.cart-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: var(--gold-500);
+  color: var(--emerald-950);
+  font-size: 10px;
+  font-weight: 600;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================================================
+   Hero section
+   ============================================================ */
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--emerald-900) 0%, var(--emerald-700) 100%);
+  color: var(--ivory-100);
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 30% 20%, var(--emerald-700) 0%, var(--emerald-900) 60%, var(--emerald-950) 100%);
+  opacity: 0.3;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 70% 30%, rgba(212, 175, 55, 0.15), transparent 50%);
+}
+.hero-inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  padding: 5rem 0;
+  align-items: center;
+}
+@media (min-width: 1024px) {
+  .hero-inner {
+    grid-template-columns: 1fr 1fr;
+    padding: 7rem 0;
+  }
+}
+.hero-eyebrow {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-weight: 500;
+  color: var(--gold-400);
+}
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 8vw, 4rem);
+  line-height: 1.1;
+  color: var(--ivory-100);
+  margin-top: 1rem;
+}
+@media (max-width: 768px) {
+  .hero-inner {
+    text-align: center;
+    padding: 3rem 0 5rem;
+  }
+  .hero-divider { margin: 1.5rem auto; }
+  .hero-desc { margin: 0 auto; }
+  .hero-actions { justify-content: center; }
+  .hero-logo { margin-top: 3rem; }
+}
+.hero-title-accent {
+  display: block;
+  color: var(--gold-400);
+}
+.hero-divider {
+  height: 1px;
+  width: 6rem;
+  background: var(--gold-500);
+  margin: 1.5rem 0;
+}
+.hero-desc {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: rgba(253, 250, 242, 0.8);
+  max-width: 32rem;
+}
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.hero-actions .btn-outline-light {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border: 1px solid rgba(253, 250, 242, 0.3);
+  color: var(--ivory-100);
+  border-radius: 2px;
+  transition: background 0.2s;
+}
+.hero-actions .btn-outline-light:hover {
+  background: rgba(253, 250, 242, 0.1);
+}
+.hero-logo {
+  position: relative;
+  width: 100%;
+  max-width: 24rem;
+  aspect-ratio: 1;
+  margin: 0 auto;
+}
+.hero-logo-glow {
+  position: absolute;
+  inset: 0;
+  background: rgba(212, 175, 55, 0.2);
+  filter: blur(48px);
+  z-index: 0;
+}
+.hero-logo-circle {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: rgba(2, 44, 34, 0.4);
+  border-radius: 50%;
+  backdrop-filter: blur(8px);
+  border: 4px solid var(--gold-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  overflow: hidden;
+}
+.hero-logo-circle-inner {
+  width: 70%;
+  height: 70%;
+  border: 2px solid var(--gold-400);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem;
+}
+.hero-logo-circle-inner .arms {
+  font-size: 0.625rem;
+  letter-spacing: 0.3em;
+  color: var(--gold-300);
+  margin-bottom: 0.5rem;
+}
+.hero-logo-circle-inner .name {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gold-400);
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+.hero-logo-circle-inner .sub {
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: rgba(253, 250, 242, 0.7);
+  text-transform: uppercase;
+}
+.hero-logo-circle-inner .phone {
+  font-size: 0.875rem;
+  color: var(--gold-300);
+  margin-top: 0.5rem;
+  letter-spacing: 0.1em;
+}
+
+/* ============================================================
+   Trust strip
+   ============================================================ */
+.trust-strip {
+  background: white;
+  border-top: 1px solid var(--ivory-300);
+  border-bottom: 1px solid var(--ivory-300);
+}
+.trust-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  padding: 3rem 0;
+}
+@media (min-width: 768px) {
+  .trust-grid { grid-template-columns: repeat(3, 1fr); }
+}
+.trust-item {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+.trust-icon {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  background: rgba(6, 78, 59, 0.05);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--emerald-900);
+  font-size: 1.5rem;
+}
+.trust-item h3 {
+  font-size: 1.125rem;
+  margin-bottom: 0.25rem;
+}
+.trust-item p {
+  font-size: 0.875rem;
+  color: var(--charcoal-600);
+}
+
+/* ============================================================
+   Section headers
+   ============================================================ */
+.section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+.section-title {
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  margin: 0.75rem 0;
+}
+.section-divider {
+  height: 1px;
+  width: 4rem;
+  background: var(--gold-500);
+  margin: 1.5rem auto 0;
+}
+
+/* ============================================================
+   Catalogue / shop
+   ============================================================ */
+.shop-section {
+  padding: 5rem 0;
+}
+.shop-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-bottom: 1px solid var(--ivory-300);
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+}
+@media (min-width: 640px) {
+  .shop-toolbar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+.shop-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+}
+@media (min-width: 1024px) {
+  .shop-grid { grid-template-columns: 260px 1fr; }
+}
+
+/* Filters sidebar */
+.filters {
+  position: sticky;
+  top: 6rem;
+  height: fit-content;
+}
+.filter-group {
+  margin-bottom: 2rem;
+}
+.filter-group h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-weight: 500;
+  color: var(--emerald-900);
+  margin-bottom: 0.75rem;
+}
+.filter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0 0.5rem 0.5rem 0;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border: 1px solid var(--ivory-300);
+  background: white;
+  color: var(--charcoal-600);
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+.filter-pill:hover {
+  border-color: var(--emerald-700);
+  color: var(--emerald-900);
+}
+.filter-pill.active {
+  border-color: var(--emerald-900);
+  background: var(--emerald-900);
+  color: var(--ivory-100);
+}
+.filter-list {
+  list-style: none;
+}
+.filter-list button {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.375rem 0;
+  font-size: 0.875rem;
+  color: var(--charcoal-600);
+  transition: color 0.2s;
+  text-align: left;
+}
+.filter-list button:hover {
+  color: var(--emerald-900);
+}
+.filter-list button.active {
+  color: var(--emerald-900);
+  font-weight: 500;
+}
+.filter-count {
+  font-size: 0.75rem;
+  color: var(--charcoal-400);
+}
+.filter-clear {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--emerald-900);
+  margin-left: auto;
+}
+.filter-clear:hover { color: var(--gold-600); }
+
+.filters-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--ivory-300);
+  padding-bottom: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+.filters-header h2 {
+  font-size: 1.125rem;
+}
+
+/* Sort dropdown */
+.sort-control {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.sort-control label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-weight: 500;
+  color: var(--emerald-900);
+}
+.sort-control select {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  border: 1px solid var(--ivory-300);
+  background: white;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+/* Product grid */
+.product-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+@media (min-width: 480px) {
+  .product-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+}
+@media (min-width: 640px) {
+  .product-grid { gap: 1.5rem; }
+}
+@media (min-width: 1024px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+}
+@media (min-width: 1280px) {
+  .product-grid.featured { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* ============================================================
+   PRODUCT CARD — the centerpiece
+   ============================================================ */
+.product-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border: 1px solid var(--ivory-300);
+  transition: all 0.5s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.product-card:hover {
+  border-color: var(--gold-400);
+  box-shadow: var(--shadow-luxe-lg);
+}
+.product-image {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--ivory-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.product-image-illustration {
+  width: 70%;
+  height: 70%;
+  transition: transform 0.7s ease;
+}
+.product-card:hover .product-image-illustration,
+.product-card:hover .product-image img {
+  transform: scale(1.08);
+}
+.product-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(2, 44, 34, 0.2), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.product-card:hover .product-image::after {
+  opacity: 1;
+}
+.badge {
+  position: absolute;
+  top: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.625rem;
+  font-size: 0.625rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  border-radius: 2px;
+  backdrop-filter: blur(4px);
+}
+.badge-license {
+  left: 0.75rem;
+  background: rgba(2, 44, 34, 0.9);
+  color: var(--gold-300);
+  border: 1px solid rgba(212, 175, 55, 0.6);
+}
+.badge-stock {
+  right: 0.75rem;
+  background: rgba(31, 41, 55, 0.85);
+  color: var(--ivory-100);
+}
+.badge-sale {
+  right: 0.75rem;
+  background: var(--gold-500);
+  color: var(--emerald-950);
+  font-weight: 600;
+}
+
+.product-details {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.product-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--charcoal-500);
+}
+.product-meta-brand {
+  font-weight: 500;
+  color: var(--emerald-900);
+}
+.product-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.125rem;
+  line-height: 1.3;
+  color: var(--charcoal-900);
+  margin-top: 0.5rem;
+}
+.product-spec {
+  font-size: 0.75rem;
+  color: var(--charcoal-500);
+  margin-top: 0.25rem;
+}
+.product-spec strong {
+  color: var(--charcoal-700);
+  font-weight: 500;
+}
+.product-desc {
+  font-size: 0.875rem;
+  color: var(--charcoal-600);
+  margin-top: 0.5rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* CTA section */
+.product-cta {
+  margin-top: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.product-price-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  border-top: 1px solid var(--ivory-300);
+  padding-top: 0.75rem;
+}
+.product-price-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--emerald-900);
+  font-weight: 500;
+}
+.product-price {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  color: var(--emerald-900);
+}
+.product-price-old {
+  font-size: 0.875rem;
+  color: var(--charcoal-400);
+  text-decoration: line-through;
+  margin-left: 0.5rem;
+}
+.stock-indicator {
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.stock-indicator.in-stock { color: var(--emerald-700); }
+.stock-indicator.out-of-stock { color: var(--charcoal-400); }
+
+.license-info {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--charcoal-600);
+  align-items: flex-start;
+}
+
+.product-action {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  transition: all 0.3s ease;
+  border-radius: 0;
+  cursor: pointer;
+}
+.product-action.primary {
+  background: var(--emerald-900);
+  color: var(--ivory-100);
+  border: none;
+}
+.product-action.primary:hover {
+  background: var(--emerald-800);
+  box-shadow: var(--shadow-luxe);
+}
+.product-action.outline {
+  border: 1px solid var(--emerald-900);
+  color: var(--emerald-900);
+  background: transparent;
+}
+.product-action.outline:hover {
+  background: var(--emerald-900);
+  color: var(--ivory-100);
+}
+.product-action:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ============================================================
+   Compliance banner
+   ============================================================ */
+.compliance-banner {
+  margin-top: 3rem;
+  padding: 1.25rem;
+  background: rgba(6, 78, 59, 0.05);
+  border: 1px solid rgba(6, 78, 59, 0.15);
+  border-radius: 2px;
+}
+.compliance-banner p {
+  font-size: 0.75rem;
+  line-height: 1.7;
+  color: var(--charcoal-700);
+}
+.compliance-banner em {
+  font-style: italic;
+  color: var(--emerald-900);
+}
+.compliance-label {
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--emerald-900);
+}
+
+/* ============================================================
+   Storefront section
+   ============================================================ */
+.storefront {
+  background: var(--emerald-900);
+  color: var(--ivory-100);
+  padding: 5rem 0;
+}
+.storefront-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+@media (max-width: 1024px) {
+  .storefront-grid {
+    text-align: center;
+  }
+  .storefront-grid .hero-divider { margin: 1.5rem auto; }
+}
+@media (min-width: 1024px) {
+  .storefront-grid { grid-template-columns: 1fr 1fr; }
+}
+.storefront h2 { color: var(--ivory-100); }
+.storefront-eyebrow { color: var(--gold-400); }
+.storefront p { color: rgba(253, 250, 242, 0.8); margin-top: 1rem; }
+.storefront-info { margin-top: 2rem; font-size: 0.875rem; }
+.storefront-info p { margin-bottom: 0.5rem; }
+.storefront-info span { color: var(--gold-400); }
+.storefront-image {
+  aspect-ratio: 4 / 3;
+  background: rgba(2, 44, 34, 0.5);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-luxe-lg);
+  background-image:
+    linear-gradient(135deg, rgba(2, 44, 34, 0.7), rgba(6, 78, 59, 0.5)),
+    repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(212, 175, 55, 0.05) 20px, rgba(212, 175, 55, 0.05) 40px);
+  color: rgba(212, 175, 55, 0.5);
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+}
+
+/* ============================================================
+   Featured section
+   ============================================================ */
+.featured-section {
+  padding: 5rem 0;
+}
+
+/* ============================================================
+   Footer
+   ============================================================ */
+.footer {
+  background: #0f1419;
+  color: var(--ivory-100);
+}
+.footer-inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  padding: 4rem 0;
+}
+@media (min-width: 768px) {
+  .footer-inner { grid-template-columns: 2fr 1fr 1fr; }
+}
+.footer-brand-mark {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.footer-brand-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.125rem;
+}
+.footer-brand-sub {
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--gold-400);
+}
+.footer p.desc {
+  margin-top: 1.5rem;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: rgba(253, 250, 242, 0.6);
+  max-width: 28rem;
+}
+.footer h4 {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--gold-400);
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+.footer ul {
+  list-style: none;
+}
+.footer ul li {
+  margin-bottom: 0.5rem;
+}
+.footer ul a {
+  font-size: 0.875rem;
+  color: rgba(253, 250, 242, 0.7);
+  transition: color 0.2s;
+}
+.footer ul a:hover { color: var(--gold-400); }
+.footer-bottom {
+  border-top: 1px solid rgba(253, 250, 242, 0.1);
+}
+.footer-bottom-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.5rem 0;
+  font-size: 0.75rem;
+  color: rgba(253, 250, 242, 0.4);
+}
+@media (min-width: 640px) {
+  .footer-bottom-inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+/* ============================================================
+   Quote modal
+   ============================================================ */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 44, 34, 0.7);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.modal-backdrop.active {
+  display: flex;
+  opacity: 1;
+}
+.modal {
+  background: white;
+  max-width: 32rem;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  border: 1px solid var(--gold-400);
+  box-shadow: var(--shadow-luxe-lg);
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+}
+.modal-backdrop.active .modal {
+  transform: translateY(0);
+}
+.modal-header {
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--ivory-300);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal-header h3 {
+  font-size: 1.25rem;
+}
+.modal-close {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  font-size: 1.25rem;
+  color: var(--charcoal-500);
+  transition: all 0.2s;
+}
+.modal-close:hover {
+  background: var(--ivory-200);
+  color: var(--charcoal-900);
+}
+.modal-body {
+  padding: 1.5rem 2rem;
+}
+.modal-product-info {
+  background: var(--ivory-200);
+  padding: 1rem;
+  border-left: 3px solid var(--gold-500);
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+}
+.modal-product-info strong {
+  color: var(--emerald-900);
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+.compliance-disclaimer {
+  background: var(--gold-50);
+  border: 1px solid var(--gold-300);
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--charcoal-800);
+}
+.compliance-disclaimer strong {
+  color: var(--emerald-900);
+  font-weight: 600;
+}
+.form-group {
+  margin-bottom: 1rem;
+}
+.form-group label {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+  color: var(--charcoal-700);
+  margin-bottom: 0.375rem;
+}
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  font-family: inherit;
+  font-size: 0.875rem;
+  border: 1px solid var(--ivory-300);
+  background: white;
+  border-radius: 2px;
+  transition: border-color 0.2s;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  outline: none;
+  border-color: var(--emerald-700);
+  box-shadow: 0 0 0 1px var(--emerald-700);
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.form-checkbox-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  padding: 0.75rem;
+  background: var(--ivory-100);
+  border: 1px solid var(--ivory-300);
+  border-radius: 2px;
+}
+.form-checkbox-group input { width: auto; margin-top: 2px; }
+.form-checkbox-group label {
+  font-size: 0.8125rem;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--charcoal-700);
+}
+.modal-footer {
+  padding: 1rem 2rem;
+  border-top: 1px solid var(--ivory-300);
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  background: var(--ivory-100);
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--emerald-900);
+  color: var(--ivory-100);
+  padding: 1rem 1.5rem;
+  border-radius: 2px;
+  border-left: 3px solid var(--gold-500);
+  box-shadow: var(--shadow-luxe-lg);
+  font-size: 0.875rem;
+  z-index: 200;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+.toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-up {
+  animation: fadeUp 0.6s ease-out;
+}
+
+/* Hide section on view */
+.hidden { display: none !important; }
+
+/* SVG illustrations for product images (placeholder firearms shapes) */
+.product-svg {
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAVBAR
+     ============================================================ -->
+<header class="navbar">
+  <div class="container nav-inner">
+    <a href="#home" class="nav-logo" data-route="home">
+      <img src="sahibzada_gun_house_logo.jpg" alt="Sahibzada Gun House Logo" style="height: 50px; width: auto;" />
+    </a>
+
+    <div class="menu-toggle" id="mobile-menu-btn">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#home" data-route="home" class="active">Home</a></li>
+        <li><a href="#shop" data-route="shop">Catalogue</a></li>
+        <li><a href="#shop" data-route="shop" data-filter-category="pistols">Pistols</a></li>
+        <li><a href="#shop" data-route="shop" data-filter-category="revolvers">Revolvers</a></li>
+        <li><a href="#shop" data-route="shop" data-filter-category="accessories">Accessories</a></li>
+        <li><a href="#help">Licensing</a></li>
+      </ul>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="nav-icon-btn" aria-label="Account">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+      </button>
+      <button class="nav-icon-btn" aria-label="Cart" id="cart-button">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+        <span class="cart-badge hidden" id="cart-badge">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================
+     PAGE: HOMEPAGE
+     ============================================================ -->
+<div id="page-home">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="fade-up">
+        <p class="hero-eyebrow">Est. Mohali · Authorized Dealer</p>
+        <h1 class="hero-title">
+          Heritage. Precision.
+          <span class="hero-title-accent">Responsibility.</span>
+        </h1>
+        <div class="hero-divider"></div>
+        <p class="hero-desc">
+          A curated catalogue of the world's finest firearms,
+          optics, and accessories — sourced for collectors, sport shooters,
+          and licensed professionals. Authorized dealer for Kiehberg, Beretta,
+          Girsan, and Alfaproj.
+        </p>
+        <div class="hero-actions">
+          <a href="#shop" data-route="shop" class="btn-gold">
+            Browse the Catalogue
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="#help" class="btn-outline-light">Licensing Guidance</a>
+        </div>
+      </div>
+
+      <div class="hero-logo">
+        <div class="hero-logo-glow"></div>
+        <div class="hero-logo-circle">
+          <img src="sahibzada_gun_house_logo.jpg" alt="Sahibzada Gun House" style="width: 85%; height: 85%; border-radius: 50%; object-fit: cover;" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST STRIP -->
+  <section class="trust-strip">
+    <div class="container">
+      <div class="trust-grid">
+        <div class="trust-item">
+          <div class="trust-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <div>
+            <h3>Fully Licensed</h3>
+            <p>Operating under the Arms Act 1959 and Arms Rules 2016.</p>
+          </div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="8" r="7"/>
+              <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+            </svg>
+          </div>
+          <div>
+            <h3>Authorized Dealer</h3>
+            <p>Kiehberg GmbH (Germany), Beretta, Girsan, and Alfaproj.</p>
+          </div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+          </div>
+          <div>
+            <h3>Sector 69, Mohali</h3>
+            <p>Visit our showroom for hands-on inspection and consultation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED PRODUCTS -->
+  <section class="featured-section">
+    <div class="container">
+      <div class="section-header">
+        <p class="eyebrow">Curated Selection</p>
+        <h2 class="section-title">Featured This Season</h2>
+        <div class="section-divider"></div>
+      </div>
+      <div class="product-grid featured" id="featured-grid"></div>
+      <div style="text-align: center; margin-top: 3rem;">
+        <a href="#shop" data-route="shop" class="btn-outline-emerald">
+          View Full Catalogue
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STOREFRONT -->
+  <section class="storefront">
+    <div class="container">
+      <div class="storefront-grid">
+        <div>
+          <p class="eyebrow storefront-eyebrow">Visit the Showroom</p>
+          <h2 class="section-title" style="margin: 0.75rem 0 0;">The Mohali Storefront</h2>
+          <div class="hero-divider"></div>
+          <p>
+            Sahibzada Gun House is a physical destination as much as a catalogue.
+            Our showroom in Sector 69 displays the full range — Kiehberg 1911s,
+            Beretta semi-autos, Girsan service pistols, and Alfaproj sporting
+            rifles — alongside optics, holsters, and accessories. Licensed buyers
+            are welcomed by appointment for hands-on inspection and consultation.
+          </p>
+          <div class="storefront-info">
+            <p><span>Address:</span> Sector 69, Mohali, Punjab — India</p>
+            <p><span>Phone:</span> +91 9653 001 001</p>
+            <p><span>Hours:</span> Mon–Sat · 10:00 AM – 7:00 PM</p>
+          </div>
+        </div>
+        <div class="storefront-image">
+          Storefront Photograph
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================
+     PAGE: SHOP / CATALOGUE
+     ============================================================ -->
+<div id="page-shop" class="hidden">
+  <header style="background: white; border-bottom: 1px solid var(--ivory-300);">
+    <div class="container" style="padding: 4rem 1.5rem;">
+      <p class="eyebrow">The Collection</p>
+      <h1 style="font-size: 3rem; margin-top: 0.75rem;">Catalogue</h1>
+      <div class="divider-gold" style="margin: 1.5rem 0;"></div>
+      <p style="max-width: 42rem; color: var(--charcoal-600); margin-top: 1.5rem;">
+        Curated firearms, ammunition, and accessories from the world's most
+        respected manufacturers. Items marked
+        <span style="color: var(--emerald-900); font-weight: 500;">License Required</span>
+        are reserved for in-store transaction following Form III and UIN verification
+        in accordance with the Arms Rules 2016.
+      </p>
+    </div>
+  </header>
+
+  <section class="shop-section">
+    <div class="container">
+      <div class="shop-grid">
+        <!-- FILTERS SIDEBAR -->
+        <aside class="filters">
+          <div class="filters-header">
+            <h2 style="display: flex; align-items: center; gap: 0.5rem;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--emerald-900)" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+              Refine
+            </h2>
+            <button class="filter-clear hidden" id="filter-clear-btn" onclick="clearFilters()">
+              ✕ Clear all
+            </button>
+          </div>
+
+          <div class="filter-group">
+            <h3>Availability</h3>
+            <button class="filter-pill" data-filter="license" data-value="required" onclick="toggleFilter('license', 'required')">
+              🔒 License Required
+            </button>
+            <button class="filter-pill" data-filter="license" data-value="none" onclick="toggleFilter('license', 'none')">
+              🏷️ No License Needed
+            </button>
+          </div>
+
+          <div class="filter-group">
+            <h3>Category</h3>
+            <ul class="filter-list" id="category-list"></ul>
+          </div>
+
+          <div class="filter-group">
+            <h3>Brand</h3>
+            <ul class="filter-list" id="brand-list"></ul>
+          </div>
+        </aside>
+
+        <!-- PRODUCTS COLUMN -->
+        <main>
+          <div class="shop-toolbar">
+            <p style="font-size: 0.875rem; color: var(--charcoal-600);">
+              Showing <strong id="result-count">0</strong> items
+            </p>
+            <div class="sort-control">
+              <label for="sort">Sort by</label>
+              <select id="sort" onchange="applySort()">
+                <option value="newest">Newest Arrivals</option>
+                <option value="featured">Featured</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="product-grid" id="shop-grid"></div>
+
+          <div class="compliance-banner">
+            <p>
+              <span class="compliance-label">Regulatory Notice ·</span>
+              Sahibzada Gun House is a licensed firearms dealer operating under the Arms
+              Act 1959 and Arms Rules 2016. Sale of any item flagged
+              <em>License Required</em> is contingent on the buyer presenting a valid
+              arms license (Form III) and a corresponding Unique Identification Number
+              (UIN) for in-person verification at our Mohali storefront. Online checkout
+              is restricted to non-licensed accessories, optics, holsters, and
+              ammunition compliant with the buyer's state regulations.
+            </p>
+          </div>
+        </main>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div>
+      <div class="footer-brand-mark">
+        <img src="sahibzada_gun_house_logo.jpg" alt="Sahibzada Gun House Logo" style="height: 60px; width: auto;" />
+      </div>
+      <p class="desc">
+        Operating under the Arms Act 1959 and Arms Rules 2016. Authorized dealer for
+        Kiehberg GmbH (Germany), Beretta, Girsan, and Alfaproj. Sale of licensed
+        firearms is conditional on Form III verification at our Sector 69 showroom.
+      </p>
+    </div>
+
+    <div>
+      <h4>Catalogue</h4>
+      <ul>
+        <li><a href="#shop" data-route="shop" data-filter-category="pistols">Pistols</a></li>
+        <li><a href="#shop" data-route="shop" data-filter-category="revolvers">Revolvers</a></li>
+        <li><a href="#shop" data-route="shop" data-filter-category="air-rifles">Air Rifles</a></li>
+        <li><a href="#shop" data-route="shop" data-filter-category="holsters">Accessories</a></li>
+        <li><a href="#shop" data-route="shop" data-filter-category="ammunition">Ammunition</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="#help">Licensing Guide</a></li>
+        <li><a href="#help">Apply for UIN</a></li>
+        <li><a href="#help">Government Forms</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container footer-bottom-inner">
+      <p>© 2026 Sahibzada Gun House. All rights reserved.</p>
+      <p>Sector 69, Mohali, Punjab · +91 9653 001 001</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     QUOTE REQUEST MODAL
+     ============================================================ -->
+<div class="modal-backdrop" id="quote-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Reserve in Store</h3>
+      <button class="modal-close" onclick="closeQuoteModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-product-info">
+        <strong id="modal-product-name">Product Name</strong>
+        <span id="modal-product-price" style="color: var(--charcoal-600);">₹0</span>
+      </div>
+
+      <div class="compliance-disclaimer">
+        <strong>⚖️ Arms Rules 2016 Compliance Notice</strong><br>
+        Purchase requires a valid Form III arms license and UIN.
+        In-store physical verification is mandatory. We will contact you within 24
+        hours to schedule your showroom appointment.
+      </div>
+
+      <form onsubmit="submitQuoteRequest(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="qr-name">Full Name *</label>
+            <input type="text" id="qr-name" required />
+          </div>
+          <div class="form-group">
+            <label for="qr-phone">Phone *</label>
+            <input type="tel" id="qr-phone" required placeholder="+91" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="qr-email">Email *</label>
+          <input type="email" id="qr-email" required />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="qr-city">City</label>
+            <input type="text" id="qr-city" />
+          </div>
+          <div class="form-group">
+            <label for="qr-state">State</label>
+            <input type="text" id="qr-state" />
+          </div>
+        </div>
+
+        <div class="form-checkbox-group">
+          <input type="checkbox" id="qr-license" />
+          <label for="qr-license">
+            I currently hold a valid Indian arms license (Form III).
+            I understand verification will be performed in-store.
+          </label>
+        </div>
+
+        <div class="form-row" style="margin-top: 1rem;">
+          <div class="form-group">
+            <label for="qr-uin">UIN (if held)</label>
+            <input type="text" id="qr-uin" placeholder="Optional" />
+          </div>
+          <div class="form-group">
+            <label for="qr-license-state">License State</label>
+            <input type="text" id="qr-license-state" placeholder="Optional" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="qr-message">Additional Notes</label>
+          <textarea id="qr-message" rows="3" placeholder="Preferred appointment time, questions about the firearm, etc."></textarea>
+        </div>
+
+        <div class="modal-footer" style="margin: 1.5rem -2rem -1.5rem; padding: 1rem 2rem;">
+          <button type="button" class="btn-outline-emerald" onclick="closeQuoteModal()">Cancel</button>
+          <button type="submit" class="btn-emerald">Submit Reservation</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Toast notification -->
+<div class="toast" id="toast">Item added to cart</div>
+
+<!-- ============================================================
+     SAMPLE DATA
+     ============================================================ -->
+<script>
+// SVG illustrations for product categories (since we don't have real photos)
+const SVG_PISTOL_GOLD = `<svg class="product-svg" viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gold1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#dcb43c"/>
+      <stop offset="50%" style="stop-color:#d4af37"/>
+      <stop offset="100%" style="stop-color:#94731a"/>
+    </linearGradient>
+  </defs>
+  <!-- Slide -->
+  <rect x="20" y="60" width="140" height="22" rx="2" fill="url(#gold1)" stroke="#634c1d" stroke-width="0.8"/>
+  <rect x="30" y="62" width="120" height="3" fill="#634c1d" opacity="0.3"/>
+  <!-- Frame -->
+  <path d="M 35 82 L 145 82 L 140 110 L 100 110 L 95 130 L 75 130 L 70 105 L 40 105 Z" fill="url(#gold1)" stroke="#634c1d" stroke-width="0.8"/>
+  <!-- Grip -->
+  <rect x="78" y="100" width="20" height="35" rx="2" fill="#3a2b0e"/>
+  <line x1="80" y1="105" x2="96" y2="105" stroke="#634c1d" stroke-width="0.5"/>
+  <line x1="80" y1="110" x2="96" y2="110" stroke="#634c1d" stroke-width="0.5"/>
+  <line x1="80" y1="115" x2="96" y2="115" stroke="#634c1d" stroke-width="0.5"/>
+  <line x1="80" y1="120" x2="96" y2="120" stroke="#634c1d" stroke-width="0.5"/>
+  <!-- Trigger guard -->
+  <ellipse cx="58" cy="98" rx="10" ry="7" fill="none" stroke="#634c1d" stroke-width="2"/>
+  <!-- Barrel -->
+  <rect x="155" y="65" width="10" height="12" fill="url(#gold1)" stroke="#634c1d" stroke-width="0.5"/>
+</svg>`;
+
+const SVG_REVOLVER = `<svg class="product-svg" viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="silver1">
+      <stop offset="0%" style="stop-color:#e8e8e8"/>
+      <stop offset="100%" style="stop-color:#888"/>
+    </radialGradient>
+  </defs>
+  <!-- Barrel -->
+  <rect x="100" y="65" width="60" height="14" rx="2" fill="url(#silver1)" stroke="#444" stroke-width="0.5"/>
+  <!-- Cylinder -->
+  <circle cx="85" cy="78" r="22" fill="url(#silver1)" stroke="#444" stroke-width="1"/>
+  <circle cx="85" cy="78" r="4" fill="#222"/>
+  <circle cx="85" cy="65" r="3" fill="#222" opacity="0.6"/>
+  <circle cx="98" cy="78" r="3" fill="#222" opacity="0.6"/>
+  <circle cx="85" cy="91" r="3" fill="#222" opacity="0.6"/>
+  <circle cx="72" cy="78" r="3" fill="#222" opacity="0.6"/>
+  <!-- Frame -->
+  <rect x="55" y="72" width="35" height="14" fill="url(#silver1)" stroke="#444" stroke-width="0.5"/>
+  <!-- Grip -->
+  <path d="M 60 86 L 80 86 L 78 130 Q 70 135 62 130 Z" fill="#5a3520" stroke="#3a2010" stroke-width="0.8"/>
+  <!-- Trigger -->
+  <path d="M 72 95 Q 70 100 72 105 L 76 105 L 76 95 Z" fill="#222"/>
+  <!-- Trigger guard -->
+  <path d="M 65 95 Q 60 105 70 110 L 80 110" fill="none" stroke="#444" stroke-width="2"/>
+  <!-- Hammer -->
+  <path d="M 55 70 L 50 65 L 50 75 Z" fill="#444"/>
+</svg>`;
+
+const SVG_HOLSTER = `<svg class="product-svg" viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="leather1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#3a2b1a"/>
+      <stop offset="100%" style="stop-color:#1a1208"/>
+    </linearGradient>
+  </defs>
+  <!-- Holster body -->
+  <path d="M 70 30 L 130 30 L 135 110 Q 130 130 100 130 Q 70 130 65 110 Z" fill="url(#leather1)" stroke="#0a0604" stroke-width="1"/>
+  <!-- Stitching -->
+  <path d="M 75 35 L 75 115" stroke="#d4af37" stroke-width="0.5" stroke-dasharray="2,2" opacity="0.6"/>
+  <path d="M 125 35 L 125 115" stroke="#d4af37" stroke-width="0.5" stroke-dasharray="2,2" opacity="0.6"/>
+  <!-- Belt loop -->
+  <rect x="85" y="20" width="30" height="15" rx="2" fill="url(#leather1)" stroke="#0a0604" stroke-width="0.8"/>
+  <!-- Highlight -->
+  <ellipse cx="100" cy="60" rx="20" ry="30" fill="#5a4030" opacity="0.3"/>
+</svg>`;
+
+const SVG_OPTIC = `<svg class="product-svg" viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="lens1">
+      <stop offset="0%" style="stop-color:#d4af37" stop-opacity="0.3"/>
+      <stop offset="50%" style="stop-color:#064e3b"/>
+      <stop offset="100%" style="stop-color:#022c22"/>
+    </radialGradient>
+  </defs>
+  <!-- Body -->
+  <rect x="40" y="55" width="120" height="50" rx="6" fill="#1a1a1a" stroke="#0a0a0a" stroke-width="1"/>
+  <!-- Lens objective -->
+  <circle cx="50" cy="80" r="20" fill="url(#lens1)" stroke="#0a0a0a" stroke-width="2"/>
+  <!-- Lens ocular -->
+  <circle cx="150" cy="80" r="18" fill="url(#lens1)" stroke="#0a0a0a" stroke-width="2"/>
+  <!-- Adjustment turrets -->
+  <rect x="90" y="40" width="14" height="20" rx="2" fill="#2a2a2a"/>
+  <rect x="90" y="100" width="14" height="20" rx="2" fill="#2a2a2a"/>
+  <!-- Mount rings -->
+  <rect x="60" y="100" width="12" height="20" fill="#444"/>
+  <rect x="128" y="100" width="12" height="20" fill="#444"/>
+  <!-- Reticle dot -->
+  <circle cx="50" cy="80" r="2" fill="#dc2626"/>
+</svg>`;
+
+const SVG_RIFLE = `<svg class="product-svg" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="wood1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b4513"/>
+      <stop offset="100%" style="stop-color:#5d2f0a"/>
+    </linearGradient>
+  </defs>
+  <!-- Stock -->
+  <path d="M 10 50 L 70 45 L 70 65 L 30 75 Z" fill="url(#wood1)" stroke="#3d1f08" stroke-width="0.8"/>
+  <!-- Receiver -->
+  <rect x="65" y="42" width="40" height="20" fill="#2a2a2a" stroke="#0a0a0a" stroke-width="0.5"/>
+  <!-- Barrel -->
+  <rect x="100" y="48" width="80" height="6" fill="#444" stroke="#222" stroke-width="0.5"/>
+  <!-- Trigger -->
+  <path d="M 80 62 L 80 70 L 84 70 L 84 62" fill="#222"/>
+  <!-- Trigger guard -->
+  <path d="M 76 62 Q 72 72 80 75 L 88 75" fill="none" stroke="#444" stroke-width="1.5"/>
+  <!-- Sight -->
+  <rect x="170" y="44" width="3" height="6" fill="#222"/>
+</svg>`;
+
+const SVG_CLEANING = `<svg class="product-svg" viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+  <!-- Case background -->
+  <rect x="20" y="40" width="160" height="80" rx="4" fill="#1a3d2e" stroke="#022c22" stroke-width="1"/>
+  <!-- Foam dividers -->
+  <line x1="60" y1="40" x2="60" y2="120" stroke="#0a2e1f" stroke-width="1"/>
+  <line x1="100" y1="40" x2="100" y2="120" stroke="#0a2e1f" stroke-width="1"/>
+  <line x1="140" y1="40" x2="140" y2="120" stroke="#0a2e1f" stroke-width="1"/>
+  <!-- Cleaning rod -->
+  <rect x="30" y="55" width="20" height="2" fill="#d4af37"/>
+  <rect x="30" y="60" width="20" height="2" fill="#d4af37"/>
+  <rect x="30" y="65" width="20" height="2" fill="#d4af37"/>
+  <!-- Brush -->
+  <ellipse cx="80" cy="60" rx="6" ry="3" fill="#888"/>
+  <line x1="80" y1="63" x2="80" y2="100" stroke="#444" stroke-width="2"/>
+  <!-- Bottle -->
+  <rect x="115" y="55" width="14" height="35" rx="2" fill="#dcb43c" stroke="#94731a"/>
+  <rect x="118" y="50" width="8" height="6" fill="#634c1d"/>
+  <!-- Patches -->
+  <circle cx="160" cy="65" r="3" fill="#faf7f2"/>
+  <circle cx="160" cy="75" r="3" fill="#faf7f2"/>
+  <circle cx="160" cy="85" r="3" fill="#faf7f2"/>
+</svg>`;
+
+const SVG_AMMO = `<svg class="product-svg" viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="brass1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#b8941f"/>
+      <stop offset="50%" style="stop-color:#dcb43c"/>
+      <stop offset="100%" style="stop-color:#b8941f"/>
+    </linearGradient>
+    <linearGradient id="bullet1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#888"/>
+      <stop offset="50%" style="stop-color:#ddd"/>
+      <stop offset="100%" style="stop-color:#888"/>
+    </linearGradient>
+  </defs>
+  <!-- Cartridge 1 -->
+  <g transform="translate(40,30)">
+    <rect x="0" y="20" width="20" height="60" fill="url(#brass1)" stroke="#634c1d" stroke-width="0.5"/>
+    <path d="M 0 20 L 20 20 L 17 5 L 10 0 L 3 5 Z" fill="url(#bullet1)" stroke="#444" stroke-width="0.5"/>
+    <line x1="0" y1="75" x2="20" y2="75" stroke="#634c1d"/>
+  </g>
+  <!-- Cartridge 2 -->
+  <g transform="translate(80,40)">
+    <rect x="0" y="20" width="20" height="60" fill="url(#brass1)" stroke="#634c1d" stroke-width="0.5"/>
+    <path d="M 0 20 L 20 20 L 17 5 L 10 0 L 3 5 Z" fill="url(#bullet1)" stroke="#444" stroke-width="0.5"/>
+    <line x1="0" y1="75" x2="20" y2="75" stroke="#634c1d"/>
+  </g>
+  <!-- Cartridge 3 -->
+  <g transform="translate(120,30)">
+    <rect x="0" y="20" width="20" height="60" fill="url(#brass1)" stroke="#634c1d" stroke-width="0.5"/>
+    <path d="M 0 20 L 20 20 L 17 5 L 10 0 L 3 5 Z" fill="url(#bullet1)" stroke="#444" stroke-width="0.5"/>
+    <line x1="0" y1="75" x2="20" y2="75" stroke="#634c1d"/>
+  </g>
+</svg>`;
+
+// Categories
+const CATEGORIES = [
+  { slug: 'pistols',      name: 'Pistols' },
+  { slug: 'revolvers',    name: 'Revolvers' },
+  { slug: 'air-rifles',   name: 'Air Rifles' },
+  { slug: 'ammunition',   name: 'Ammunition' },
+  { slug: 'holsters',     name: 'Holsters & Carry' },
+  { slug: 'optics',       name: 'Optics & Sights' },
+  { slug: 'cleaning',     name: 'Cleaning & Care' },
+];
+
+// Brands
+const BRANDS = [
+  { slug: 'kiehberg',  name: 'Kiehberg GmbH', authorized: true },
+  { slug: 'beretta',   name: 'Beretta',       authorized: true },
+  { slug: 'girsan',    name: 'Girsan',        authorized: true },
+  { slug: 'alfaproj',  name: 'Alfaproj',      authorized: true },
+  { slug: 'vortex',    name: 'Vortex',        authorized: false },
+];
+
+// PRODUCTS — the entire catalogue (replace with real data + photos for production)
+// Each carries the all-important `licenseRequired` flag.
+const PRODUCTS = [
+  {
+    id: 'kie-1911-chr',
+    slug: 'kiehberg-1911-chrome',
+    name: 'Kiehberg 1911 Chrome Edition',
+    shortDesc: 'Engraved chrome 1911 in .45 ACP — limited dealer allocation.',
+    licenseRequired: true,
+    licenseType: 'Form III · Non-Prohibited Bore',
+    priceInr: 28500000,
+    caliber: '.45 ACP',
+    capacity: '8+1',
+    category: 'pistols',
+    brand: 'kiehberg',
+    isFeatured: true,
+    image: SVG_PISTOL_GOLD,
+    createdAt: 6,
+  },
+  {
+    id: 'kie-1911-sc',
+    slug: 'kiehberg-1911-subcompact',
+    name: 'Kiehberg 1911 Sub-Compact',
+    shortDesc: 'Concealable Officer-frame 1911 with tritium night sights.',
+    licenseRequired: true,
+    licenseType: 'Form III · Non-Prohibited Bore',
+    priceInr: 24500000,
+    caliber: '.45 ACP',
+    capacity: '7+1',
+    category: 'pistols',
+    brand: 'kiehberg',
+    isFeatured: true,
+    image: SVG_PISTOL_GOLD,
+    createdAt: 5,
+  },
+  {
+    id: 'ber-92fs',
+    slug: 'beretta-92fs',
+    name: 'Beretta 92FS',
+    shortDesc: 'The legendary service pistol in 9×19mm.',
+    licenseRequired: true,
+    licenseType: 'Form III · Non-Prohibited Bore',
+    priceInr: 19500000,
+    caliber: '9×19mm',
+    capacity: '15+1',
+    category: 'pistols',
+    brand: 'beretta',
+    isFeatured: true,
+    image: SVG_PISTOL_GOLD,
+    createdAt: 4,
+  },
+  {
+    id: 'gir-mc28',
+    slug: 'girsan-mc28-sa',
+    name: 'Girsan MC 28 SA',
+    shortDesc: 'Modern striker-fired service pistol from Turkey.',
+    licenseRequired: true,
+    licenseType: 'Form III · Non-Prohibited Bore',
+    priceInr: 16500000,
+    caliber: '9×19mm',
+    capacity: '15+1',
+    category: 'pistols',
+    brand: 'girsan',
+    isFeatured: false,
+    image: SVG_PISTOL_GOLD,
+    createdAt: 3,
+  },
+  {
+    id: 'alf-820',
+    slug: 'alfaproj-alfa-820',
+    name: 'Alfaproj Alfa 820 Revolver',
+    shortDesc: '.38 Special revolver — Czech engineering.',
+    licenseRequired: true,
+    licenseType: 'Form III · Non-Prohibited Bore',
+    priceInr: 14500000,
+    caliber: '.38 Special',
+    capacity: '6 rounds',
+    category: 'revolvers',
+    brand: 'alfaproj',
+    isFeatured: true,
+    image: SVG_REVOLVER,
+    createdAt: 6,
+  },
+  {
+    id: 'alf-820pd',
+    slug: 'alfaproj-alfa-820-pd',
+    name: 'Alfaproj Alfa 820 PD',
+    shortDesc: 'Compact carry revolver with bobbed hammer.',
+    licenseRequired: true,
+    licenseType: 'Form III · Non-Prohibited Bore',
+    priceInr: 13500000,
+    caliber: '.38 Special',
+    capacity: '5 rounds',
+    category: 'revolvers',
+    brand: 'alfaproj',
+    isFeatured: false,
+    image: SVG_REVOLVER,
+    createdAt: 2,
+  },
+  {
+    id: 'alf-air-622',
+    slug: 'alfaproj-alfa-air-622',
+    name: 'Alfaproj Alfa Air 622',
+    shortDesc: 'PCP air rifle — match-grade accuracy.',
+    licenseRequired: false,
+    priceInr: 4500000,
+    caliber: '.177',
+    capacity: '10 rounds',
+    category: 'air-rifles',
+    brand: 'alfaproj',
+    isFeatured: false,
+    image: SVG_RIFLE,
+    createdAt: 4,
+  },
+  {
+    id: 'acc-hlst-iwb-1911',
+    slug: 'kydex-iwb-holster-1911',
+    name: 'Custom Kydex IWB Holster — 1911',
+    shortDesc: 'Custom-molded inside-the-waistband carry holster.',
+    licenseRequired: false,
+    priceInr: 450000,
+    category: 'holsters',
+    isFeatured: true,
+    image: SVG_HOLSTER,
+    createdAt: 5,
+    inStock: true,
+  },
+  {
+    id: 'acc-hlst-owb-92fs',
+    slug: 'leather-owb-holster-beretta-92fs',
+    name: 'Premium Leather OWB Holster — Beretta 92FS',
+    shortDesc: 'Hand-stitched belt holster in Italian saddle leather.',
+    licenseRequired: false,
+    priceInr: 680000,
+    compareAtInr: 850000,
+    category: 'holsters',
+    isFeatured: false,
+    image: SVG_HOLSTER,
+    createdAt: 3,
+    inStock: true,
+  },
+  {
+    id: 'opt-vtx-cf-rd',
+    slug: 'vortex-crossfire-red-dot',
+    name: 'Vortex Crossfire Red Dot',
+    shortDesc: '2 MOA red dot — pistol-rated, IPX7 waterproof.',
+    licenseRequired: false,
+    priceInr: 1850000,
+    category: 'optics',
+    brand: 'vortex',
+    isFeatured: true,
+    image: SVG_OPTIC,
+    createdAt: 4,
+    inStock: true,
+  },
+  {
+    id: 'opt-vtx-vp-30mm',
+    slug: 'vortex-viper-pst-30mm',
+    name: 'Vortex Viper PST Gen II 1-6×24',
+    shortDesc: 'Variable-power LPVO scope for sport shooting.',
+    licenseRequired: false,
+    priceInr: 5800000,
+    category: 'optics',
+    brand: 'vortex',
+    isFeatured: false,
+    image: SVG_OPTIC,
+    createdAt: 2,
+    inStock: false,
+  },
+  {
+    id: 'acc-cln-pro',
+    slug: 'premium-cleaning-kit',
+    name: 'Premium Cleaning Kit — Universal',
+    shortDesc: 'Full bore-cleaning kit with brass rods and patches.',
+    licenseRequired: false,
+    priceInr: 320000,
+    category: 'cleaning',
+    isFeatured: false,
+    image: SVG_CLEANING,
+    createdAt: 5,
+    inStock: true,
+  },
+  {
+    id: 'acc-cln-bsc',
+    slug: 'basic-field-cleaning-kit',
+    name: 'Basic Field Cleaning Kit',
+    shortDesc: 'Compact kit for range maintenance.',
+    licenseRequired: false,
+    priceInr: 95000,
+    category: 'cleaning',
+    isFeatured: false,
+    image: SVG_CLEANING,
+    createdAt: 1,
+    inStock: true,
+  },
+  {
+    id: 'amm-45acp-fmj',
+    slug: '45acp-fmj-50ct',
+    name: '.45 ACP FMJ 230gr — Box of 50',
+    shortDesc: 'Full metal jacket range ammunition.',
+    licenseRequired: true,
+    licenseType: 'Buyer Form III + UIN required',
+    priceInr: 850000,
+    caliber: '.45 ACP',
+    category: 'ammunition',
+    isFeatured: false,
+    image: SVG_AMMO,
+    createdAt: 3,
+  },
+  {
+    id: 'amm-9mm-fmj',
+    slug: '9mm-fmj-50ct',
+    name: '9×19mm FMJ 124gr — Box of 50',
+    shortDesc: 'Standard NATO ball ammunition.',
+    licenseRequired: true,
+    licenseType: 'Buyer Form III + UIN required',
+    priceInr: 650000,
+    caliber: '9×19mm',
+    category: 'ammunition',
+    isFeatured: false,
+    image: SVG_AMMO,
+    createdAt: 3,
+  },
+  {
+    id: 'amm-pellet-177',
+    slug: 'air-pellets-177-tin',
+    name: '.177 Air Pellets — Tin of 500',
+    shortDesc: 'Match-grade lead pellets for sport shooting.',
+    licenseRequired: false,
+    priceInr: 65000,
+    caliber: '.177',
+    category: 'ammunition',
+    isFeatured: false,
+    image: SVG_AMMO,
+    createdAt: 1,
+    inStock: true,
+  },
+];
+
+// ============================================================
+// STATE
+// ============================================================
+const state = {
+  route: 'home',
+  filters: {
+    category: null,
+    brand: null,
+    license: null,
+  },
+  sort: 'newest',
+  cart: [],
+  currentQuoteProduct: null,
+};
+
+// ============================================================
+// UTILITIES
+// ============================================================
+function formatInr(paise, options = {}) {
+  const rupees = paise / 100;
+  return new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    maximumFractionDigits: 0,
+  }).format(rupees);
+}
+
+function getBrand(slug) { return BRANDS.find(b => b.slug === slug); }
+function getCategory(slug) { return CATEGORIES.find(c => c.slug === slug); }
+
+// ============================================================
+// PRODUCT CARD RENDER — the compliance-critical component
+// ============================================================
+function renderProductCard(product) {
+  const category = getCategory(product.category);
+  const brand = getBrand(product.brand);
+
+  // ========================================================
+  // CRITICAL COMPLIANCE FORK
+  // Two completely separate render paths — never share a button
+  // between license-gated and non-licensed products.
+  // ========================================================
+  let ctaHtml;
+  if (product.licenseRequired) {
+    // ---- LICENSE-GATED CTA ----
+    ctaHtml = `
+      <div class="product-cta">
+        <div class="product-price-row">
+          <span class="product-price-label">Indicative Price</span>
+          <span class="product-price">${formatInr(product.priceInr)}</span>
+        </div>
+        ${product.licenseType ? `
+          <div class="license-info">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--emerald-700)" stroke-width="2" style="flex-shrink: 0; margin-top: 2px;">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            <span>${product.licenseType}</span>
+          </div>
+        ` : ''}
+        <button class="product-action primary" onclick="openQuoteModal('${product.id}')">
+          Reserve in Store
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </div>
+    `;
+  } else {
+    // ---- STANDARD COMMERCE CTA ----
+    const inStock = product.inStock !== false;
+    const sale = product.compareAtInr && product.compareAtInr > product.priceInr;
+    ctaHtml = `
+      <div class="product-cta">
+        <div class="product-price-row">
+          <div>
+            <span class="product-price">${formatInr(product.priceInr)}</span>
+            ${sale ? `<span class="product-price-old">${formatInr(product.compareAtInr)}</span>` : ''}
+          </div>
+          <span class="stock-indicator ${inStock ? 'in-stock' : 'out-of-stock'}">
+            ${inStock ? 'In Stock' : 'Sold Out'}
+          </span>
+        </div>
+        <button class="product-action outline" onclick="addToCart('${product.id}')" ${!inStock ? 'disabled' : ''}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+          ${inStock ? 'Add to Cart' : 'Notify Me'}
+        </button>
+      </div>
+    `;
+  }
+
+  // Badge logic
+  let badgeHtml = '';
+  if (product.licenseRequired) {
+    badgeHtml = `<div class="badge badge-license">🔒 License Required</div>`;
+  } else if (product.compareAtInr && product.compareAtInr > product.priceInr) {
+    const savings = product.compareAtInr - product.priceInr;
+    badgeHtml = `<div class="badge badge-sale">Save ${formatInr(savings)}</div>`;
+  } else if (product.inStock === false) {
+    badgeHtml = `<div class="badge badge-stock">Out of Stock</div>`;
+  }
+
+  return `
+    <article class="product-card fade-up">
+      <div class="product-image">
+        ${product.image}
+        ${badgeHtml}
+      </div>
+      <div class="product-details">
+        <div class="product-meta">
+          ${brand ? `<span class="product-meta-brand">${brand.name}</span>` : ''}
+          ${brand && category ? '<span>·</span>' : ''}
+          ${category ? `<span>${category.name}</span>` : ''}
+        </div>
+        <h3 class="product-name">${product.name}</h3>
+        ${product.caliber ? `<p class="product-spec"><strong>Caliber:</strong> ${product.caliber}</p>` : ''}
+        ${product.shortDesc ? `<p class="product-desc">${product.shortDesc}</p>` : ''}
+        <div style="flex: 1;"></div>
+        ${ctaHtml}
+      </div>
+    </article>
+  `;
+}
+
+// ============================================================
+// FILTERS
+// ============================================================
+function renderFilterLists() {
+  // Categories
+  const categoryList = document.getElementById('category-list');
+  categoryList.innerHTML = CATEGORIES.map(c => {
+    const count = PRODUCTS.filter(p => p.category === c.slug).length;
+    const active = state.filters.category === c.slug ? 'active' : '';
+    return `
+      <li>
+        <button class="${active}" onclick="toggleFilter('category', '${c.slug}')">
+          <span style="display: flex; align-items: center; gap: 0.5rem;">
+            ${active ? '<span style="color: var(--gold-500);">✓</span>' : ''}
+            ${c.name}
+          </span>
+          <span class="filter-count">${count}</span>
+        </button>
+      </li>
+    `;
+  }).join('');
+
+  // Brands
+  const brandList = document.getElementById('brand-list');
+  brandList.innerHTML = BRANDS.map(b => {
+    const count = PRODUCTS.filter(p => p.brand === b.slug).length;
+    if (count === 0) return '';
+    const active = state.filters.brand === b.slug ? 'active' : '';
+    return `
+      <li>
+        <button class="${active}" onclick="toggleFilter('brand', '${b.slug}')">
+          <span style="display: flex; align-items: center; gap: 0.5rem;">
+            ${active ? '<span style="color: var(--gold-500);">✓</span>' : ''}
+            ${b.name}
+            ${b.authorized ? '<span style="background: var(--gold-100); color: #94731a; font-size: 9px; padding: 1px 4px; text-transform: uppercase; letter-spacing: 0.1em;">Authorized</span>' : ''}
+          </span>
+          <span class="filter-count">${count}</span>
+        </button>
+      </li>
+    `;
+  }).join('');
+
+  // Pills (license)
+  document.querySelectorAll('.filter-pill[data-filter="license"]').forEach(btn => {
+    if (state.filters.license === btn.dataset.value) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  });
+
+  // Clear-all visibility
+  const hasActive = state.filters.category || state.filters.brand || state.filters.license;
+  document.getElementById('filter-clear-btn').classList.toggle('hidden', !hasActive);
+}
+
+function toggleFilter(type, value) {
+  state.filters[type] = state.filters[type] === value ? null : value;
+  renderFilterLists();
+  renderShop();
+}
+
+function clearFilters() {
+  state.filters = { category: null, brand: null, license: null };
+  renderFilterLists();
+  renderShop();
+}
+
+function applySort() {
+  state.sort = document.getElementById('sort').value;
+  renderShop();
+}
+
+// ============================================================
+// PAGE RENDERERS
+// ============================================================
+function renderFeatured() {
+  const featured = PRODUCTS.filter(p => p.isFeatured).slice(0, 8);
+  document.getElementById('featured-grid').innerHTML =
+    featured.map(renderProductCard).join('');
+}
+
+function renderShop() {
+  // Apply filters
+  let filtered = PRODUCTS.slice();
+  if (state.filters.category) {
+    filtered = filtered.filter(p => p.category === state.filters.category);
+  }
+  if (state.filters.brand) {
+    filtered = filtered.filter(p => p.brand === state.filters.brand);
+  }
+  if (state.filters.license === 'required') {
+    filtered = filtered.filter(p => p.licenseRequired);
+  } else if (state.filters.license === 'none') {
+    filtered = filtered.filter(p => !p.licenseRequired);
+  }
+
+  // Apply sort
+  switch (state.sort) {
+    case 'price-asc':  filtered.sort((a, b) => a.priceInr - b.priceInr); break;
+    case 'price-desc': filtered.sort((a, b) => b.priceInr - a.priceInr); break;
+    case 'featured':   filtered.sort((a, b) => (b.isFeatured ? 1 : 0) - (a.isFeatured ? 1 : 0)); break;
+    case 'newest':
+    default:           filtered.sort((a, b) => b.createdAt - a.createdAt); break;
+  }
+
+  // Render
+  const grid = document.getElementById('shop-grid');
+  if (filtered.length === 0) {
+    grid.innerHTML = `
+      <div style="grid-column: 1 / -1; padding: 5rem; text-align: center; background: white; border: 1px solid var(--ivory-300);">
+        <h2 style="font-size: 1.5rem;">No items match your filters</h2>
+        <p style="margin-top: 0.75rem; color: var(--charcoal-600);">
+          Try removing some filters or
+          <a href="javascript:clearFilters()" style="color: var(--emerald-900); text-decoration: underline;">view the full catalogue</a>.
+        </p>
+      </div>
+    `;
+  } else {
+    grid.innerHTML = filtered.map(renderProductCard).join('');
+  }
+  document.getElementById('result-count').textContent = filtered.length;
+}
+
+// ============================================================
+// ROUTER
+// ============================================================
+function navigateTo(route) {
+  state.route = route;
+  document.getElementById('page-home').classList.toggle('hidden', route !== 'home');
+  document.getElementById('page-shop').classList.toggle('hidden', route !== 'shop');
+
+  // Update nav active state
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.classList.toggle('active', a.dataset.route === route);
+  });
+
+  // Scroll to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  if (route === 'shop') {
+    renderShop();
+  }
+}
+
+// Bind nav clicks
+document.addEventListener('click', (e) => {
+  const link = e.target.closest('a[data-route]');
+  if (link) {
+    e.preventDefault();
+    const route = link.dataset.route;
+    const filterCategory = link.dataset.filterCategory;
+    if (filterCategory) {
+      state.filters.category = filterCategory;
+      renderFilterLists();
+    }
+    navigateTo(route);
+  }
+});
+
+// ============================================================
+// QUOTE MODAL
+// ============================================================
+function openQuoteModal(productId) {
+  const product = PRODUCTS.find(p => p.id === productId);
+  if (!product) return;
+
+  // SAFETY: double-check this is a license-required product. If somehow
+  // an Add-to-Cart button leaked into a license-required card, the modal
+  // would refuse to open the wrong flow.
+  if (!product.licenseRequired) {
+    console.error('[compliance] openQuoteModal called on non-licensed product');
+    return;
+  }
+
+  state.currentQuoteProduct = product;
+  document.getElementById('modal-product-name').textContent = product.name;
+  document.getElementById('modal-product-price').textContent =
+    `Indicative price: ${formatInr(product.priceInr)}`;
+  document.getElementById('quote-modal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeQuoteModal() {
+  document.getElementById('quote-modal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function submitQuoteRequest(e) {
+  e.preventDefault();
+  // In production this POSTs to /api/quote-requests and creates a QuoteRequest row.
+  closeQuoteModal();
+  showToast(`Reservation submitted. We'll contact you within 24 hours to schedule your showroom visit.`);
+  e.target.reset();
+}
+
+// ============================================================
+// CART (only for non-licensed products)
+// ============================================================
+function addToCart(productId) {
+  const product = PRODUCTS.find(p => p.id === productId);
+  if (!product) return;
+
+  // ========================================================
+  // CRITICAL DEFENSE-IN-DEPTH CHECK
+  // Even if the UI somehow rendered an Add-to-Cart button for a
+  // license-gated product, this guard prevents the cart from
+  // ever holding it. Production version replicates this on the
+  // server-side API endpoint.
+  // ========================================================
+  if (product.licenseRequired) {
+    console.error('[compliance] addToCart blocked: license required');
+    showToast('This item requires in-store reservation.', true);
+    return;
+  }
+
+  state.cart.push(productId);
+  updateCartBadge();
+  showToast(`Added: ${product.name}`);
+}
+
+function updateCartBadge() {
+  const badge = document.getElementById('cart-badge');
+  if (state.cart.length > 0) {
+    badge.textContent = state.cart.length;
+    badge.classList.remove('hidden');
+  } else {
+    badge.classList.add('hidden');
+  }
+}
+
+// ============================================================
+// TOAST
+// ============================================================
+let toastTimer = null;
+function showToast(message, isError = false) {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.style.borderLeftColor = isError ? '#dc2626' : 'var(--gold-500)';
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 3500);
+}
+
+// ============================================================
+// INIT
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+  renderFeatured();
+  renderFilterLists();
+  renderShop();
+
+  // Mobile Menu Toggle
+  const menuBtn = document.getElementById('mobile-menu-btn');
+  const navLinks = document.querySelector('.nav-links');
+  
+  if (menuBtn && navLinks) {
+    menuBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+      const spans = menuBtn.querySelectorAll('span');
+      if (navLinks.classList.contains('active')) {
+        spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+      } else {
+        spans[0].style.transform = 'none';
+        spans[1].style.opacity = '1';
+        spans[2].style.transform = 'none';
+      }
+    });
+
+    navLinks.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A') {
+        navLinks.classList.remove('active');
+        const spans = menuBtn.querySelectorAll('span');
+        spans[0].style.transform = 'none';
+        spans[1].style.opacity = '1';
+        spans[2].style.transform = 'none';
+      }
+    });
+  }
+});
+
+// Close modal on backdrop click
+document.getElementById('quote-modal').addEventListener('click', (e) => {
+  if (e.target.id === 'quote-modal') closeQuoteModal();
+});
+
+// Close modal on escape
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeQuoteModal();
+});
+</script>
+
+</body>
+</html>
