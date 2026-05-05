@@ -305,12 +305,14 @@ img { display: block; max-width: 100%; height: auto; }
   background:
     radial-gradient(circle at 30% 20%, var(--emerald-700) 0%, var(--emerald-900) 60%, var(--emerald-950) 100%);
   opacity: 0.3;
+  z-index: 0;
 }
 .hero::after {
   content: "";
   position: absolute;
   inset: 0;
   background: radial-gradient(circle at 70% 30%, rgba(212, 175, 55, 0.15), transparent 50%);
+  z-index: 0;
 }
 .hero-inner {
   position: relative;
@@ -319,6 +321,7 @@ img { display: block; max-width: 100%; height: auto; }
   gap: 3rem;
   padding: 5rem 0;
   align-items: center;
+  z-index: 10;
 }
 @media (min-width: 1024px) {
   .hero-inner {
