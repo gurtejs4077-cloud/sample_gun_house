@@ -99,11 +99,16 @@ function renderProductCard(product) {
     badgeHtml = `<div class="badge badge-stock">Out of Stock</div>`;
   }
 
-  // Handle image SVG string vs literal
+  // Handle image SVG string vs URL
   let imageContent = product.image;
-  if (typeof imageContent === 'string' && imageContent.startsWith('SVG_')) {
-    // If it's a variable name, get the content from window
-    imageContent = window[imageContent] || '';
+  if (typeof imageContent === 'string') {
+    if (imageContent.startsWith('SVG_')) {
+      // If it's a variable name, get the content from window
+      imageContent = window[imageContent] || '';
+    } else if (imageContent.startsWith('http')) {
+      // If it's a URL (Cloudinary), render an img tag
+      imageContent = `<img src="${imageContent}" alt="${product.name}" style="width: 100%; height: 100%; object-fit: cover;">`;
+    }
   }
 
   return `
