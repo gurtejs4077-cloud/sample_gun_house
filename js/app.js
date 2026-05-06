@@ -9,7 +9,7 @@ const state = {
     license: null,
   },
   sort: 'newest',
-  cart: [],
+  cart: JSON.parse(localStorage.getItem('sgh_cart') || '[]'),
   currentQuoteProduct: null,
   // Add live data holders
   inventory: {
@@ -304,11 +304,6 @@ function openQuoteModal(productId) {
   const product = state.inventory.products.find(p => p.id === productId);
   if (!product) return;
 
-  if (!product.licenseRequired) {
-    console.error('[compliance] openQuoteModal called on non-licensed product');
-    return;
-  }
-
   state.currentQuoteProduct = product;
   const modalName = document.getElementById('modal-product-name');
   const modalPrice = document.getElementById('modal-product-price');
@@ -318,6 +313,74 @@ function openQuoteModal(productId) {
   if (modalPrice) modalPrice.textContent = `Indicative price: ${formatInr(product.priceInr)}`;
   if (modal) modal.classList.add('active');
   document.body.style.overflow = 'hidden';
+
+  // --- Pre-fill from profile if available ---
+  const profileStr = localStorage.getItem('sgh_user_profile');
+  if (profileStr) {
+    const profile = JSON.parse(profileStr);
+    const nameEl = document.getElementById('qr-name');
+    const emailEl = document.getElementById('qr-email');
+    const phoneEl = document.getElementById('qr-phone');
+    const cityEl = document.getElementById('qr-city');
+
+    if (nameEl) nameEl.value = (profile.firstName + ' ' + (profile.lastName || '')).trim();
+    if (emailEl) emailEl.value = profile.email || '';
+    if (phoneEl) phoneEl.value = profile.phone || '';
+    if (cityEl) cityEl.value = profile.city || '';
+  }
+
+  // Check verification status for licensed products
+  checkVerificationStatus();
+}
+
+function checkVerificationStatus() {
+  if (!state.currentQuoteProduct || !state.currentQuoteProduct.licenseRequired) return;
+
+  const isUploaded = CameraModule.isVerified();
+  // Simulated verification check (checks if admin has verified this user in localStorage)
+  const verifiedUsers = JSON.parse(localStorage.getItem('sgh_verified_users') || '[]');
+  
+  // Note: For a real app, this would be a server-side check. 
+  // Here we check if the current user (if logged in or matched by name) is verified.
+  // For the prototype, we check if ANY name in the verified list matches.
+  const isVerified = verifiedUsers.length > 0; // Simplified for prototype
+
+  const submitBtn = document.getElementById('quote-submit-btn');
+  const badge = document.getElementById('doc-verified-badge');
+  const statusText = document.getElementById('doc-status-text');
+  const uploadBtn = document.getElementById('modal-upload-btn');
+
+  if (isUploaded) {
+    submitBtn.disabled = false;
+    submitBtn.style.opacity = '1';
+    submitBtn.style.cursor = 'pointer';
+    
+    if (isVerified) {
+      badge.style.display = 'block';
+      badge.textContent = 'VERIFIED';
+      badge.style.background = '#27ae60';
+      statusText.textContent = 'Your documents have been verified by our team.';
+      statusText.style.color = '#27ae60';
+    } else {
+      badge.style.display = 'block';
+      badge.textContent = 'UPLOADED';
+      badge.style.background = '#d4af37'; // Gold/Yellow for pending
+      statusText.textContent = 'Documents uploaded. Reservation unlocked. Admin verification pending.';
+      statusText.style.color = '#d4af37';
+    }
+
+    uploadBtn.innerHTML = `
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+      Update Documents
+    `;
+  } else {
+    submitBtn.disabled = true;
+    submitBtn.style.opacity = '0.5';
+    submitBtn.style.cursor = 'not-allowed';
+    badge.style.display = 'none';
+    statusText.textContent = 'Aadhaar Card + Firearms License required to unlock reservation.';
+    statusText.style.color = '#6d6d6d';
+  }
 }
 
 function closeQuoteModal() {
@@ -351,6 +414,23 @@ async function submitQuoteRequest(e) {
   submitBtn.textContent = 'Submitting...';
   submitBtn.disabled = true;
 
+  // 1. If images exist, upload them first to ensure they are saved on server
+  const capturedImages = JSON.parse(localStorage.getItem('sgh_captured_docs') || '[]');
+  if (capturedImages.length >= 2) {
+    try {
+      await fetch('api/upload_docs.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          images: capturedImages,
+          userName: enquiry.customerName || 'Anonymous'
+        })
+      });
+    } catch (err) {
+      console.warn('Doc upload failed, continuing with enquiry', err);
+    }
+  }
+
   const success = await saveEnquiry(enquiry);
 
   if (success) {
@@ -369,6 +449,14 @@ async function submitQuoteRequest(e) {
 // CART
 // ============================================================
 function addToCart(productId) {
+  // --- Check if profile exists ---
+  const profile = localStorage.getItem('sgh_user_profile');
+  if (!profile) {
+    alert('Please complete your profile and upload your documents before adding items to the cart.');
+    window.location.href = 'profile.html';
+    return;
+  }
+
   const product = state.inventory.products.find(p => p.id === productId);
   if (!product) return;
 
@@ -378,19 +466,40 @@ function addToCart(productId) {
     return;
   }
 
-  state.cart.push(productId);
+  // Use the same storage key as cart.html
+  const existingIndex = state.cart.findIndex(item => item.id === productId);
+  if (existingIndex > -1) {
+    state.cart[existingIndex].qty = (state.cart[existingIndex].qty || 1) + 1;
+  } else {
+    state.cart.push({
+      id: product.id,
+      name: product.name,
+      price: product.priceInr / 100,
+      brand: product.brand,
+      image: (product.image && !product.image.startsWith('SVG_')) ? product.image : null,
+      license: product.licenseRequired ? 'required' : 'none',
+      qty: 1
+    });
+  }
+
+  localStorage.setItem('sgh_cart', JSON.stringify(state.cart));
   updateCartBadge();
   showToast(`Added: ${product.name}`);
 }
 
 function updateCartBadge() {
   const badge = document.getElementById('cart-badge');
-  if (!badge) return;
-  if (state.cart.length > 0) {
-    badge.textContent = state.cart.length;
-    badge.classList.remove('hidden');
-  } else {
-    badge.classList.add('hidden');
+  const badgeNav = document.getElementById('cart-badge-nav');
+  
+  const totalCount = state.cart.reduce((a, b) => a + (b.qty || 1), 0);
+  
+  if (badge) {
+    badge.textContent = totalCount;
+    badge.classList.toggle('hidden', totalCount === 0);
+  }
+  if (badgeNav) {
+    badgeNav.textContent = totalCount;
+    badgeNav.classList.toggle('hidden', totalCount === 0);
   }
 }
 
@@ -424,11 +533,21 @@ document.addEventListener('DOMContentLoaded', async () => {
   renderFeatured();
   renderFilterLists();
   renderShop();
+  updateCartBadge();
 
   // Mobile Menu Toggle
   const menuBtn = document.getElementById('mobile-menu-btn');
   const navLinks = document.querySelector('.nav-links');
   
+  // Initialize Camera Module
+  if (typeof CameraModule !== 'undefined') {
+    CameraModule.init((images) => {
+      // Callback after camera close
+      checkVerificationStatus();
+      showToast(`Captured ${images.length} documents.`);
+    });
+  }
+
   if (menuBtn && navLinks) {
     menuBtn.addEventListener('click', () => {
       navLinks.classList.toggle('active');

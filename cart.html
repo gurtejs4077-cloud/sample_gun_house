@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cart — Sahibzada Gun House</title>
+  <meta name="description" content="Review your selected items at Sahibzada Gun House. Authorized firearms dealer in Mohali." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/main.css" />
+  <style>
+    /* ── Page shell ── */
+    .page-shell {
+      min-height: 100vh;
+      background: var(--ivory-200);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Cart hero banner ── */
+    .cart-banner {
+      background: linear-gradient(135deg, var(--emerald-950) 0%, var(--emerald-900) 60%, var(--emerald-800) 100%);
+      padding: 4rem 0 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .cart-banner::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 80% 50%, rgba(212,175,55,0.12), transparent 60%);
+    }
+    .cart-banner-inner {
+      position: relative;
+      z-index: 1;
+    }
+    .cart-banner p.eyebrow { color: var(--gold-400); }
+    .cart-banner h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.75rem, 5vw, 3rem);
+      color: var(--ivory-100);
+      margin: 0.5rem 0 0;
+    }
+    .cart-banner .sub {
+      color: rgba(253,250,242,0.6);
+      font-size: 0.875rem;
+      margin-top: 0.5rem;
+    }
+
+    /* ── Cart body ── */
+    .cart-body {
+      flex: 1;
+      padding: 3rem 0 5rem;
+    }
+    .cart-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+    @media (min-width: 1024px) {
+      .cart-layout { grid-template-columns: 1fr 360px; gap: 3rem; }
+    }
+
+    /* ── Empty state ── */
+    .cart-empty {
+      background: white;
+      border: 1px solid var(--ivory-300);
+      border-radius: 4px;
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+    .cart-empty-icon {
+      width: 80px; height: 80px;
+      background: rgba(6,78,59,0.06);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.5rem;
+      color: var(--emerald-900);
+    }
+    .cart-empty h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .cart-empty p {
+      font-size: 0.9375rem;
+      color: var(--charcoal-600);
+      margin-bottom: 2rem;
+      max-width: 28rem;
+      margin-left: auto; margin-right: auto;
+    }
+
+    /* ── Cart items ── */
+    .cart-items-list { display: flex; flex-direction: column; gap: 1rem; }
+    .cart-item {
+      background: white;
+      border: 1px solid var(--ivory-300);
+      border-radius: 4px;
+      display: grid;
+      grid-template-columns: 90px 1fr auto;
+      gap: 1.25rem;
+      align-items: center;
+      padding: 1.25rem;
+      transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .cart-item:hover {
+      border-color: var(--gold-400);
+      box-shadow: 0 4px 20px rgba(6,78,59,0.08);
+    }
+    .cart-item-thumb {
+      aspect-ratio: 1;
+      background: var(--ivory-200);
+      border-radius: 3px;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--charcoal-300);
+    }
+    .cart-item-info h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+    .cart-item-brand {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--emerald-900);
+      font-weight: 600;
+    }
+    .cart-item-price {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--charcoal-900);
+      margin-top: 0.5rem;
+    }
+    .cart-item-license-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.625rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      background: rgba(2,44,34,0.08);
+      color: var(--emerald-800);
+      border: 1px solid rgba(6,78,59,0.2);
+      padding: 0.15rem 0.5rem;
+      border-radius: 2px;
+      margin-top: 0.4rem;
+    }
+    .cart-item-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.75rem;
+    }
+    .qty-control {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      border: 1px solid var(--ivory-300);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .qty-btn {
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      color: var(--charcoal-700);
+      background: var(--ivory-100);
+      transition: background 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+    .qty-btn:hover { background: var(--ivory-300); }
+    .qty-display {
+      width: 36px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.875rem;
+      font-weight: 500;
+      border-left: 1px solid var(--ivory-300);
+      border-right: 1px solid var(--ivory-300);
+    }
+    .remove-btn {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--charcoal-400);
+      cursor: pointer;
+      transition: color 0.2s;
+      background: none; border: none;
+    }
+    .remove-btn:hover { color: #c0392b; }
+
+    /* ── Order summary ── */
+    .order-summary {
+      background: white;
+      border: 1px solid var(--ivory-300);
+      border-radius: 4px;
+      padding: 2rem;
+      position: sticky;
+      top: 5.5rem;
+    }
+    .order-summary h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--ivory-300);
+      margin-bottom: 1.25rem;
+    }
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.875rem;
+      color: var(--charcoal-600);
+      margin-bottom: 0.75rem;
+    }
+    .summary-row.total {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--charcoal-900);
+      padding-top: 1rem;
+      border-top: 1px solid var(--ivory-300);
+      margin-top: 0.5rem;
+    }
+    .summary-note {
+      font-size: 0.75rem;
+      color: var(--charcoal-400);
+      margin-top: 1rem;
+      line-height: 1.6;
+    }
+    .checkout-btn {
+      width: 100%;
+      margin-top: 1.5rem;
+      padding: 0.875rem;
+      background: var(--emerald-900);
+      color: var(--ivory-100);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background 0.3s, box-shadow 0.3s;
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    }
+    .checkout-btn:hover {
+      background: var(--emerald-800);
+      box-shadow: var(--shadow-luxe);
+    }
+    .or-divider {
+      display: flex; align-items: center; gap: 1rem;
+      margin: 1.25rem 0;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--charcoal-300);
+    }
+    .or-divider::before, .or-divider::after {
+      content: ""; flex: 1; height: 1px;
+      background: var(--ivory-300);
+    }
+    .continue-link {
+      display: block;
+      text-align: center;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--emerald-900);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: color 0.2s;
+    }
+    .continue-link:hover { color: var(--gold-600); }
+
+    /* ── Compliance notice ── */
+    .compliance-bar {
+      background: rgba(6,78,59,0.05);
+      border: 1px solid rgba(6,78,59,0.15);
+      border-radius: 3px;
+      padding: 1rem 1.25rem;
+      margin-top: 1.5rem;
+      font-size: 0.8125rem;
+      color: var(--emerald-800);
+      line-height: 1.6;
+    }
+    .compliance-bar strong { display: block; margin-bottom: 0.25rem; }
+  </style>
+</head>
+<body class="page-shell">
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="sahibzada_gun_house_logo.jpg" alt="Sahibzada Gun House Logo" style="height:50px;width:auto;" />
+      </a>
+      <nav>
+        <ul class="nav-links" style="position:static;width:auto;height:auto;background:transparent;flex-direction:row;padding:0;gap:2.5rem;box-shadow:none;display:flex;">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#shop">Catalogue</a></li>
+          <li><a href="licensing.html">Licensing</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions">
+        <a href="profile.html" class="nav-icon-btn" aria-label="Account">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+        </a>
+        <a href="cart.html" class="nav-icon-btn" aria-label="Cart" style="color:var(--emerald-900);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <path d="M16 10a4 4 0 0 1-8 0" />
+          </svg>
+          <span id="cart-badge-nav" class="cart-badge hidden">0</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- CART BANNER -->
+  <section class="cart-banner">
+    <div class="container cart-banner-inner">
+      <p class="eyebrow">Your Selection</p>
+      <h1>Cart</h1>
+      <p class="sub">Review items before proceeding to reservation</p>
+    </div>
+  </section>
+
+  <!-- CART BODY -->
+  <main class="cart-body">
+    <div class="container">
+      <div class="cart-layout">
+
+        <!-- Items column -->
+        <div>
+          <!-- Empty state (shown when cart is empty) -->
+          <div class="cart-empty" id="cart-empty-state">
+            <div class="cart-empty-icon">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <path d="M16 10a4 4 0 0 1-8 0" />
+              </svg>
+            </div>
+            <h2>Your cart is empty</h2>
+            <p>Browse our curated catalogue of firearms, optics, and accessories to begin your selection.</p>
+            <a href="index.html#shop" class="btn-gold">Browse Catalogue</a>
+          </div>
+
+          <!-- Items list (populated by JS) -->
+          <div class="cart-items-list" id="cart-items-list" style="display:none;"></div>
+        </div>
+
+        <!-- Summary column -->
+        <div>
+          <div class="order-summary">
+            <h2>Order Summary</h2>
+            <div class="summary-row">
+              <span>Subtotal (<span id="summary-count">0</span> items)</span>
+              <span id="summary-subtotal">₹0</span>
+            </div>
+            <div class="summary-row">
+              <span>In-store verification</span>
+              <span style="color:var(--emerald-700);font-weight:500;">Required</span>
+            </div>
+            <div class="summary-row">
+              <span>Shipping</span>
+              <span>Calculated at store</span>
+            </div>
+            <div class="summary-row total">
+              <span>Estimated Total</span>
+              <span id="summary-total">₹0</span>
+            </div>
+            <p class="summary-note">
+              Final pricing confirmed at our Sector 69 Mohali showroom after arms license (Form III) verification.
+            </p>
+
+            <button class="checkout-btn" id="reserve-btn" onclick="handleReserve()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              Request Store Reservation
+            </button>
+
+            <div class="or-divider">or</div>
+            <a href="index.html#shop" class="continue-link">Continue Browsing</a>
+
+            <div class="compliance-bar">
+              <strong>⚖️ Arms Rules 2016</strong>
+              Licensed firearms require in-person Form III &amp; UIN verification at our Mohali showroom before any transaction is completed.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-bottom" style="border-top:1px solid rgba(255,255,255,0.08);">
+      <div class="container footer-bottom-inner">
+        <p>© 2026 Sahibzada Gun House. All rights reserved.</p>
+        <p>Sector 69, Mohali, Punjab · +91 9653 001 001</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/products.js"></script>
+  <script src="js/db-provider.js"></script>
+  <script>
+    // ── Load cart from localStorage ──
+    function getCart() {
+      try { return JSON.parse(localStorage.getItem('sgh_cart') || '[]'); } catch { return []; }
+    }
+    function saveCart(cart) {
+      localStorage.setItem('sgh_cart', JSON.stringify(cart));
+    }
+
+    function formatPrice(n) {
+      return '₹' + Number(n).toLocaleString('en-IN');
+    }
+
+    function renderCart() {
+      const cart = getCart();
+      const emptyEl = document.getElementById('cart-empty-state');
+      const listEl = document.getElementById('cart-items-list');
+      const countEl = document.getElementById('summary-count');
+      const subtotalEl = document.getElementById('summary-subtotal');
+      const totalEl = document.getElementById('summary-total');
+      const reserveBtn = document.getElementById('reserve-btn');
+
+      if (cart.length === 0) {
+        emptyEl.style.display = '';
+        listEl.style.display = 'none';
+        reserveBtn.disabled = true;
+        reserveBtn.style.opacity = '0.45';
+        countEl.textContent = '0';
+        subtotalEl.textContent = '₹0';
+        totalEl.textContent = '₹0';
+        return;
+      }
+
+      emptyEl.style.display = 'none';
+      listEl.style.display = 'flex';
+      reserveBtn.disabled = false;
+      reserveBtn.style.opacity = '';
+
+      let subtotal = 0;
+      listEl.innerHTML = cart.map((item, idx) => {
+        const lineTotal = (item.price || 0) * (item.qty || 1);
+        subtotal += lineTotal;
+        return `
+          <div class="cart-item">
+            <div class="cart-item-thumb">
+              ${item.image
+                ? `<img src="${item.image}" alt="${item.name}" style="width:100%;height:100%;object-fit:cover;" />`
+                : `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`}
+            </div>
+            <div class="cart-item-info">
+              <p class="cart-item-brand">${item.brand || ''}</p>
+              <h3>${item.name}</h3>
+              <p class="cart-item-price">${formatPrice(lineTotal)}</p>
+              ${item.license === 'required' ? `<span class="cart-item-license-tag">🔒 License Required</span>` : ''}
+            </div>
+            <div class="cart-item-actions">
+              <div class="qty-control">
+                <button class="qty-btn" onclick="changeQty(${idx}, -1)">−</button>
+                <span class="qty-display">${item.qty || 1}</span>
+                <button class="qty-btn" onclick="changeQty(${idx}, 1)">+</button>
+              </div>
+              <button class="remove-btn" onclick="removeItem(${idx})">Remove</button>
+            </div>
+          </div>`;
+      }).join('');
+
+      countEl.textContent = cart.reduce((a, b) => a + (b.qty || 1), 0);
+      subtotalEl.textContent = formatPrice(subtotal);
+      totalEl.textContent = formatPrice(subtotal);
+
+      // Update nav badge
+      const badge = document.getElementById('cart-badge-nav');
+      if (badge) {
+        const total = cart.reduce((a, b) => a + (b.qty || 1), 0);
+        badge.textContent = total;
+        badge.classList.toggle('hidden', total === 0);
+      }
+    }
+
+    function changeQty(idx, delta) {
+      const cart = getCart();
+      cart[idx].qty = Math.max(1, (cart[idx].qty || 1) + delta);
+      saveCart(cart);
+      renderCart();
+    }
+
+    function removeItem(idx) {
+      const cart = getCart();
+      cart.splice(idx, 1);
+      saveCart(cart);
+      renderCart();
+    }
+
+    async function handleReserve() {
+      const profileStr = localStorage.getItem('sgh_user_profile');
+      if (!profileStr) {
+        alert('Your profile information is missing. Please visit the Profile page first.');
+        window.location.href = 'profile.html';
+        return;
+      }
+
+      const profile = JSON.parse(profileStr);
+      const cart = getCart();
+
+      if (cart.length === 0) {
+        alert('Your cart is empty.');
+        return;
+      }
+
+      const reserveBtn = document.getElementById('reserve-btn');
+      const originalText = reserveBtn.innerHTML;
+      reserveBtn.disabled = true;
+      reserveBtn.textContent = 'Submitting...';
+
+      const enquiryData = {
+        customerName: (profile.firstName + ' ' + profile.lastName).trim(),
+        email: profile.email,
+        phone: profile.phone,
+        location: profile.city || 'Not Provided',
+        items: cart.map(i => `${i.name} (${i.qty}x)`).join(', '),
+        totalAmount: cart.reduce((a, b) => a + (b.price * b.qty), 0),
+        status: 'Pending',
+        isCartReservation: true,
+        type: 'Store Reservation'
+      };
+
+      try {
+        // Use saveEnquiry from db-provider.js
+        const success = await saveEnquiry(enquiryData);
+        if (success) {
+          alert('✅ Reservation request sent! Our team will contact you at ' + profile.phone + ' to confirm your appointment.');
+          localStorage.removeItem('sgh_cart');
+          window.location.href = 'index.html';
+        } else {
+          alert('❌ Failed to submit reservation. Please check your connection.');
+        }
+      } catch (err) {
+        console.error('Reservation error:', err);
+        alert('An unexpected error occurred. Please try again later.');
+      } finally {
+        reserveBtn.innerHTML = originalText;
+        reserveBtn.disabled = false;
+      }
+    }
+
+    renderCart();
+  </script>
+
+  <!-- WhatsApp Floating Button -->
+  <a href="https://wa.me/919653001001" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+    <svg viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+      <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.7 17.8 69.4 27.2 106.2 27.2h.1c122.3 0 222-99.6 222-222 0-59.3-23-115.1-65.1-157.1z" fill="currentColor"/>
+    </svg>
+  </a>
+</body>
+</html>

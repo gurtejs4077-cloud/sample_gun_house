@@ -110,9 +110,27 @@
       <ul class="nav-links" id="nav-links-list">
         <li><a href="index.html">Home</a></li>
         <li><a href="index.html#shop">Catalogue</a></li>
+        <li><a href="brands.html">Brands</a></li>
         <li><a href="licensing.html" class="active">Licensing</a></li>
       </ul>
     </nav>
+
+    <div class="nav-actions">
+      <a href="profile.html" class="nav-icon-btn" aria-label="Account">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+          <circle cx="12" cy="7" r="4" />
+        </svg>
+      </a>
+      <a href="cart.html" class="nav-icon-btn" aria-label="Cart" id="cart-button">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <path d="M16 10a4 4 0 0 1-8 0" />
+        </svg>
+        <span class="cart-badge hidden" id="cart-badge">0</span>
+      </a>
+    </div>
   </div>
 </header>
 
@@ -201,7 +219,20 @@
   </div>
 </div>
 
-<footer class="footer">
+  <!-- MAP SECTION -->
+  <section class="location-section" style="padding: 6rem 0; background: var(--ivory-100);">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 3rem;">
+        <h2 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--emerald-950);">Visit Our Showroom</h2>
+        <p style="color: var(--charcoal-600); margin-top: 1rem;">Have questions about licensing? Visit our Mohali showroom for expert assistance.</p>
+      </div>
+      <div style="border-radius: 12px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); border: 1px solid var(--ivory-300);">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3489.1412003382575!2d76.71366107557864!3d30.68849487460561!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390feebe777cddff%3A0xe85ddecdab4bb7fd!2sSahibzada%20Gun%20House!5e1!3m2!1sen!2sin!4v1778054036085!5m2!1sen!2sin" width="100%" height="450" style="border:0; display: block;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
   <div class="container footer-bottom-inner">
     <p>© 2026 Sahibzada Gun House. All rights reserved.</p>
     <p>Sector 69, Mohali, Punjab · +91 9653 001 001</p>
@@ -237,8 +268,24 @@
         }
       });
     }
+
+    // Sync cart badge
+    const cart = JSON.parse(localStorage.getItem('sgh_cart') || '[]');
+    const total = cart.reduce((a, b) => a + (b.qty || 1), 0);
+    const badge = document.getElementById('cart-badge') || document.getElementById('cart-badge-nav');
+    if (badge && total > 0) {
+      badge.textContent = total;
+      badge.classList.remove('hidden');
+    }
   });
 </script>
+
+<!-- WhatsApp Floating Button -->
+<a href="https://wa.me/919653001001" class="whatsapp-float" target="_blank" aria-label="Chat with us on WhatsApp">
+  <svg viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+    <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.7 17.8 69.4 27.2 106.2 27.2h.1c122.3 0 222-99.6 222-222 0-59.3-23-115.1-65.1-157.1zM223.9 445.3c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 365.5l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-5.5-2.8-23.2-8.5-44.2-27.1-16.4-14.6-27.4-32.7-30.6-38.1-3.2-5.4-.3-8.3 2.4-11.1 2.4-2.5 5.5-6.4 8.3-9.7 2.8-3.3 3.7-5.7 5.5-9.4 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 13.2 5.8 23.5 9.2 31.5 11.8 13.3 4.2 25.4 3.6 35 2.2 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z" fill="currentColor"/>
+  </svg>
+</a>
 
 </body>
 </html>

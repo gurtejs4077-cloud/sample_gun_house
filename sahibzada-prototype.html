@@ -1047,19 +1047,52 @@ img { display: block; max-width: 100%; height: auto; }
   border-top: 1px solid rgba(253, 250, 242, 0.1);
 }
 .footer-bottom-inner {
+  height: auto;
+  min-height: 60px;
+  padding: 1rem 0;
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  padding: 1.5rem 0;
-  font-size: 0.75rem;
-  color: rgba(253, 250, 242, 0.4);
+  align-items: center;
+  justify-content: space-between;
 }
-@media (min-width: 640px) {
+.footer-bottom-inner p {
+  font-size: 0.75rem;
+  color: var(--charcoal-400);
+}
+@media (max-width: 640px) {
   .footer-bottom-inner {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
   }
+}
+
+/* Social Media Icons */
+.social-links {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+.social-icon {
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  color: var(--ivory-300);
+}
+.social-icon:hover {
+  background: var(--gold-500);
+  color: var(--emerald-950);
+  border-color: var(--gold-500);
+  transform: translateY(-3px);
+}
+.social-icon svg {
+  width: 20px;
+  height: 20px;
 }
 
 /* ============================================================
@@ -1248,6 +1281,55 @@ img { display: block; max-width: 100%; height: auto; }
   height: 100%;
   padding: 1rem;
 }
+
+/* ============================================================
+   WhatsApp Floating Button — Refined Premium Version
+   ============================================================ */
+.whatsapp-float {
+  position: fixed;
+  width: 65px;
+  height: 65px;
+  bottom: 40px;
+  right: 40px;
+  background-color: #25d366;
+  color: #FFF;
+  border-radius: 50%;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.whatsapp-float svg {
+  width: 38px;
+  height: 38px;
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1) translateY(-5px);
+  background-color: #20ba5a;
+  box-shadow: 0 10px 25px rgba(37, 211, 102, 0.45);
+  color: #FFF;
+}
+
+@media (max-width: 768px) {
+  .whatsapp-float {
+    width: 55px;
+    height: 55px;
+    bottom: 25px;
+    right: 25px;
+  }
+  .whatsapp-float svg {
+    width: 32px;
+    height: 32px;
+  }
+}
 </style>
 </head>
 <body>
@@ -1279,19 +1361,6 @@ img { display: block; max-width: 100%; height: auto; }
     </nav>
 
     <div class="nav-actions">
-      <button class="nav-icon-btn" aria-label="Account">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-          <circle cx="12" cy="7" r="4"/>
-        </svg>
-      </button>
-      <button class="nav-icon-btn" aria-label="Cart" id="cart-button">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
-          <line x1="3" y1="6" x2="21" y2="6"/>
-          <path d="M16 10a4 4 0 0 1-8 0"/>
-        </svg>
-        <span class="cart-badge hidden" id="cart-badge">0</span>
       </button>
     </div>
   </div>
@@ -1531,6 +1600,17 @@ img { display: block; max-width: 100%; height: auto; }
         Kiehberg GmbH (Germany), Beretta, Girsan, and Alfaproj. Sale of licensed
         firearms is conditional on Form III verification at our Sector 69 showroom.
       </p>
+      <div class="social-links">
+        <a href="https://www.instagram.com/sahibzadagunhouse/" class="social-icon" target="_blank" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        </a>
+        <a href="https://www.facebook.com/sahibzadagunhouse69/posts/1339239908217432/" class="social-icon" target="_blank" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+        </a>
+        <a href="#" class="social-icon" target="_blank" aria-label="YouTube">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+        </a>
+      </div>
     </div>
 
     <div>
@@ -2164,14 +2244,14 @@ function renderProductCard(product) {
             ${inStock ? 'In Stock' : 'Sold Out'}
           </span>
         </div>
-        <button class="product-action outline" onclick="addToCart('${product.id}')" ${!inStock ? 'disabled' : ''}>
+        <a href="#" class="product-action outline ${!inStock ? 'disabled' : ''}" onclick="if(${inStock}) { addToCart('${product.id}'); } return false;">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
             <line x1="3" y1="6" x2="21" y2="6"/>
             <path d="M16 10a4 4 0 0 1-8 0"/>
           </svg>
           ${inStock ? 'Add to Cart' : 'Notify Me'}
-        </button>
+        </a>
       </div>
     `;
   }
@@ -2519,6 +2599,14 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeQuoteModal();
 });
 </script>
+
+
+<!-- WhatsApp Floating Button -->
+<a href="https://wa.me/919653001001" class="whatsapp-float" target="_blank" aria-label="Chat with us on WhatsApp">
+  <svg viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+    <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.7 17.8 69.4 27.2 106.2 27.2h.1c122.3 0 222-99.6 222-222 0-59.3-23-115.1-65.1-157.1zM223.9 445.3c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 365.5l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-5.5-2.8-23.2-8.5-44.2-27.1-16.4-14.6-27.4-32.7-30.6-38.1-3.2-5.4-.3-8.3 2.4-11.1 2.4-2.5 5.5-6.4 8.3-9.7 2.8-3.3 3.7-5.7 5.5-9.4 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 13.2 5.8 23.5 9.2 31.5 11.8 13.3 4.2 25.4 3.6 35 2.2 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z" fill="currentColor"/>
+  </svg>
+</a>
 
 </body>
 </html>

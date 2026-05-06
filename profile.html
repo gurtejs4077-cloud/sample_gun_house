@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile — Sahibzada Gun House</title>
+  <meta name="description" content="Manage your account and license verification at Sahibzada Gun House." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/main.css" />
+  <script src="js/camera-module.js"></script>
+  <style>
+    /* ── Page shell ── */
+    .page-shell {
+      min-height: 100vh;
+      background: var(--ivory-200);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Profile header ── */
+    .profile-header {
+      background: linear-gradient(135deg, var(--emerald-950) 0%, var(--emerald-900) 60%, var(--emerald-800) 100%);
+      padding: 5rem 0 4rem;
+      position: relative;
+      overflow: hidden;
+      color: var(--ivory-100);
+    }
+    .profile-header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 50%, rgba(212,175,55,0.1), transparent 50%);
+    }
+    .profile-info {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+    .profile-avatar {
+      width: 100px;
+      height: 100px;
+      background: var(--gold-500);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--emerald-900);
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      border: 4px solid rgba(255, 255, 255, 0.1);
+    }
+    .profile-details h1 {
+      font-size: 2rem;
+      color: var(--ivory-100);
+      margin: 0;
+    }
+    .profile-details p {
+      color: rgba(253, 250, 242, 0.6);
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+    }
+    .license-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      padding: 0.35rem 0.75rem;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #f1c40f; /* Pending */
+    }
+
+    /* ── Profile content ── */
+    .profile-content {
+      flex: 1;
+      padding: 4rem 0 6rem;
+    }
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+    @media (min-width: 1024px) {
+      .profile-grid { grid-template-columns: 300px 1fr; }
+    }
+
+    /* ── Sidebar tabs ── */
+    .profile-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .profile-tab {
+      padding: 1rem 1.5rem;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      text-align: left;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--charcoal-600);
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .profile-tab:hover {
+      background: white;
+      color: var(--emerald-900);
+    }
+    .profile-tab.active {
+      background: white;
+      border-color: var(--ivory-300);
+      color: var(--emerald-900);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    /* ── Settings card ── */
+    .settings-card {
+      background: white;
+      border: 1px solid var(--ivory-300);
+      border-radius: 4px;
+      padding: 2.5rem;
+    }
+    .settings-card h2 {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--ivory-100);
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    @media (min-width: 768px) {
+      .form-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .form-field label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--charcoal-500);
+    }
+    .form-field input {
+      padding: 0.75rem;
+      border: 1px solid var(--ivory-300);
+      border-radius: 3px;
+      font-size: 0.9375rem;
+      transition: border-color 0.2s;
+    }
+    .form-field input:focus {
+      outline: none;
+      border-color: var(--emerald-700);
+    }
+    .form-field input[readonly] {
+      background: var(--ivory-100);
+      cursor: not-allowed;
+    }
+
+    .save-btn {
+      margin-top: 2.5rem;
+      padding: 0.875rem 2rem;
+      background: var(--emerald-900);
+      color: white;
+      border: none;
+      border-radius: 3px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .save-btn:hover {
+      background: var(--emerald-800);
+    }
+
+    /* ── License Card ── */
+    .license-card {
+      background: var(--gold-50);
+      border: 1px solid var(--gold-300);
+      padding: 1.5rem;
+      border-radius: 4px;
+      margin-top: 2rem;
+      display: flex;
+      gap: 1.25rem;
+    }
+    .license-icon {
+      color: var(--gold-600);
+      flex-shrink: 0;
+    }
+    .license-text h3 {
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+      color: var(--emerald-950);
+    }
+    .license-text p {
+      font-size: 0.8125rem;
+      color: var(--charcoal-600);
+      line-height: 1.5;
+    }
+    .upload-link {
+      display: inline-block;
+      margin-top: 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--emerald-900);
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body class="page-shell">
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="sahibzada_gun_house_logo.jpg" alt="Sahibzada Gun House Logo" style="height:50px;width:auto;" />
+      </a>
+      <nav>
+        <ul class="nav-links" style="position:static;width:auto;height:auto;background:transparent;flex-direction:row;padding:0;gap:2.5rem;box-shadow:none;display:flex;">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#shop">Catalogue</a></li>
+          <li><a href="brands.html">Brands</a></li>
+          <li><a href="licensing.html">Licensing</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions">
+        <a href="profile.html" class="nav-icon-btn" aria-label="Account" style="color:var(--emerald-900);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+        </a>
+        <a href="cart.html" class="nav-icon-btn" aria-label="Cart">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <path d="M16 10a4 4 0 0 1-8 0" />
+          </svg>
+          <span id="cart-badge-nav" class="cart-badge hidden">0</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- PROFILE HEADER -->
+  <section class="profile-header">
+    <div class="container">
+      <div class="profile-info">
+        <div class="profile-avatar">G</div>
+        <div class="profile-details">
+          <h1>Gurtej Singh</h1>
+          <p>Member since May 2026 • Mohali, PB</p>
+          <div class="license-status">
+            <span class="status-dot"></span>
+            License Verification Pending
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROFILE CONTENT -->
+  <main class="profile-content">
+    <div class="container">
+      <div class="profile-grid">
+        
+        <!-- Sidebar -->
+        <aside class="profile-sidebar">
+          <button class="profile-tab active">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+            </svg>
+            Personal Information
+          </button>
+          <button class="profile-tab">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+            </svg>
+            Order History
+          </button>
+          <button class="profile-tab">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+            Security
+          </button>
+          <button class="profile-tab" style="margin-top: 2rem; color: #c0392b;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+            Logout
+          </button>
+        </aside>
+
+        <!-- Main Settings Area -->
+        <div class="settings-card">
+          <h2>Account Settings</h2>
+          
+          <form id="profile-form">
+            <div class="form-grid">
+              <div class="form-field">
+                <label>First Name</label>
+                <input type="text" id="first-name" value="Gurtej" />
+              </div>
+              <div class="form-field">
+                <label>Last Name</label>
+                <input type="text" id="last-name" value="Singh" />
+              </div>
+              <div class="form-field">
+                <label>Email Address</label>
+                <input type="email" value="gurtej@example.com" />
+              </div>
+              <div class="form-field">
+                <label>Phone Number</label>
+                <input type="tel" value="+91 9653 001 001" />
+              </div>
+              <div class="form-field">
+                <label>UIN (Unique ID Number)</label>
+                <input type="text" value="Not Provided" readonly />
+              </div>
+              <div class="form-field">
+                <label>City / State</label>
+                <input type="text" value="Mohali, Punjab" />
+              </div>
+            </div>
+
+            <div class="license-card">
+              <div class="license-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+              </div>
+              <div class="license-text">
+                <h3>Form III Arms License Verification</h3>
+                <p>To purchase restricted firearms, you must provide a digital copy of your Form III license for pre-verification. Final verification occurs in-store.</p>
+                <div style="display: flex; align-items: center; gap: 1rem; margin-top: 0.75rem;">
+                  <button type="button" class="upload-link" onclick="CameraModule.openModal()" style="border:none; background:none; cursor:pointer; padding:0;">Upload License Documents</button>
+                  <div id="upload-status-tick" style="display: none; align-items: center; gap: 0.25rem; color: #27ae60; font-size: 0.75rem; font-weight: 700;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    Ready
+                  </div>
+                </div>
+                
+                <div id="uploaded-previews" style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem;">
+                  <!-- Captured images will appear here -->
+                </div>
+              </div>
+            </div>
+
+            <div id="license-error" style="display:none; color:#c0392b; font-size:0.75rem; margin-top:0.5rem; font-weight:600;">⚠️ At least 2 document images are required to proceed.</div>
+            
+            <button type="submit" id="profile-save-btn" class="save-btn">Save Changes</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  </footer>
+
+  <script>
+    // Sync cart badge if any
+    const cart = JSON.parse(localStorage.getItem('sgh_cart') || '[]');
+    const totalCount = cart.reduce((a, b) => a + (b.qty || 1), 0);
+    const badge = document.getElementById('cart-badge-nav');
+    if (badge && totalCount > 0) {
+      badge.textContent = totalCount;
+      badge.classList.remove('hidden');
+    }
+
+    // --- CAMERA & SAVE LOGIC ---
+    CameraModule.init((images) => {
+        updatePreviews();
+    });
+
+    function updatePreviews() {
+      const images = CameraModule.capturedImages;
+      const container = document.getElementById('uploaded-previews');
+      container.innerHTML = images.map((img, idx) => `
+        <div style="position:relative; width:80px; height:80px; border:1px solid var(--ivory-300); border-radius:4px; overflow:hidden;">
+          <img src="${img}" style="width:100%; height:100%; object-fit:cover;" />
+          <button type="button" onclick="removeImage(${idx})" style="position:absolute; top:2px; right:2px; background:rgba(0,0,0,0.5); color:white; border:none; border-radius:50%; width:18px; height:18px; font-size:12px; cursor:pointer; display:flex; align-items:center; justify-content:center;">&times;</button>
+        </div>
+      `).join('');
+      
+      const tick = document.getElementById('upload-status-tick');
+      const errorEl = document.getElementById('license-error');
+      
+      if (images.length >= CameraModule.MIN_IMAGES) {
+        tick.style.display = 'flex';
+        errorEl.style.display = 'none';
+      } else {
+        tick.style.display = 'none';
+      }
+    }
+
+    function removeImage(idx) {
+      CameraModule.capturedImages.splice(idx, 1);
+      localStorage.setItem('sgh_captured_docs', JSON.stringify(CameraModule.capturedImages));
+      updatePreviews();
+    }
+
+    // Initial load
+    updatePreviews();
+
+    // --- TAB SWITCHING ---
+    const tabs = document.querySelectorAll('.profile-tab');
+    const settingsCard = document.querySelector('.settings-card');
+    const cardTitle = settingsCard.querySelector('h2');
+    const profileForm = document.getElementById('profile-form');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const tabText = tab.textContent.trim();
+        cardTitle.textContent = tabText + ' Settings';
+
+        if (tabText === 'Personal Information') {
+          profileForm.style.display = 'block';
+          const placeholder = document.getElementById('tab-placeholder');
+          if (placeholder) placeholder.style.display = 'none';
+        } else if (tabText === 'Order History') {
+          profileForm.style.display = 'none';
+          let placeholder = document.getElementById('tab-placeholder');
+          if (!placeholder) {
+            placeholder = document.createElement('div');
+            placeholder.id = 'tab-placeholder';
+            placeholder.style.padding = '2rem';
+            placeholder.style.textAlign = 'center';
+            placeholder.style.color = 'var(--charcoal-500)';
+            settingsCard.appendChild(placeholder);
+          }
+          placeholder.style.display = 'block';
+          placeholder.innerHTML = `
+            <div style="margin-bottom:1rem; color:var(--emerald-900);">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+              </svg>
+            </div>
+            <p>You haven't placed any orders yet.</p>
+            <a href="index.html#shop" class="upload-link" style="margin-top:1rem; display:inline-block;">Browse Catalogue</a>
+          `;
+        } else if (tabText === 'Security') {
+          profileForm.style.display = 'none';
+          let placeholder = document.getElementById('tab-placeholder');
+          if (!placeholder) {
+            placeholder = document.createElement('div');
+            placeholder.id = 'tab-placeholder';
+            placeholder.style.padding = '2rem';
+            settingsCard.appendChild(placeholder);
+          }
+          placeholder.style.display = 'block';
+          placeholder.innerHTML = `
+            <div class="form-grid">
+              <div class="form-field">
+                <label>Current Password</label>
+                <input type="password" placeholder="••••••••" />
+              </div>
+              <div class="form-field">
+                <label>New Password</label>
+                <input type="password" placeholder="••••••••" />
+              </div>
+              <div class="form-field">
+                <label>Confirm New Password</label>
+                <input type="password" placeholder="••••••••" />
+              </div>
+            </div>
+            <button class="save-btn" onclick="alert('Password updated successfully.')">Update Password</button>
+          `;
+        }
+      });
+    });
+
+    // --- FORM SUBMISSION ---
+    document.getElementById('profile-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const images = CameraModule.capturedImages;
+
+      if (images.length < CameraModule.MIN_IMAGES) {
+        document.getElementById('license-error').style.display = 'block';
+        alert(`Please capture at least ${CameraModule.MIN_IMAGES} document images.`);
+        return;
+      }
+
+      const saveBtn = document.getElementById('profile-save-btn');
+      const originalText = saveBtn.textContent;
+      saveBtn.textContent = 'Saving & Uploading...';
+      saveBtn.disabled = true;
+
+      const profileData = {
+        firstName: document.getElementById('first-name').value,
+        lastName: document.getElementById('last-name').value,
+        email: document.querySelector('input[type="email"]').value,
+        phone: document.querySelector('input[type="tel"]').value,
+        city: document.querySelector('input[value="Mohali, Punjab"]').value, // This selector is fragile, but matches existing HTML
+        capturedImages: images,
+        updatedAt: Date.now()
+      };
+
+      localStorage.setItem('sgh_user_profile', JSON.stringify(profileData));
+
+      try {
+        const response = await fetch('api/upload_docs.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            images: images,
+            userName: (profileData.firstName + ' ' + profileData.lastName).trim()
+          })
+        });
+
+        const result = await response.json();
+        if (result.success) {
+          alert('Profile and documents saved successfully!');
+        } else {
+          alert('Error saving documents: ' + result.message);
+        }
+      } catch (err) {
+        console.error('Upload error:', err);
+        alert('Failed to connect to the server.');
+      } finally {
+        saveBtn.textContent = originalText;
+        saveBtn.disabled = false;
+      }
+    });
+
+    // --- PREFILL PROFILE ---
+    (function prefillProfile() {
+      const saved = localStorage.getItem('sgh_user_profile');
+      if (!saved) return;
+      const data = JSON.parse(saved);
+      document.getElementById('first-name').value = data.firstName || '';
+      document.getElementById('last-name').value = data.lastName || '';
+      document.querySelector('input[type="email"]').value = data.email || '';
+      document.querySelector('input[type="tel"]').value = data.phone || '';
+      // Update city/state if it exists
+      const cityInput = document.querySelector('input[placeholder="Mohali, Punjab"]') || document.querySelector('input[value="Mohali, Punjab"]');
+      if (cityInput) cityInput.value = data.city || 'Mohali, Punjab';
+    })();
+  </script>
+</body>
+</html>

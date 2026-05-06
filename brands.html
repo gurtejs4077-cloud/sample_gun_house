@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Authorized Brands — Sahibzada Gun House</title>
+  <meta name="description" content="Explore our portfolio of world-renowned and domestic firearms brands." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="css/main.css" />
+  <style>
+    .brands-hero {
+      background: var(--emerald-950);
+      color: var(--ivory-100);
+      padding: 8rem 0 6rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brands-hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.08), transparent 70%);
+    }
+
+    .brands-hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .brands-hero p {
+      font-size: 1.125rem;
+      color: rgba(253, 250, 242, 0.6);
+      max-width: 600px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .brands-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 3rem;
+      padding: 6rem 0;
+    }
+
+    .brand-card {
+      background: white;
+      border: 1px solid var(--ivory-300);
+      padding: 3rem 2rem;
+      text-align: center;
+      border-radius: 4px;
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .brand-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(227, 210, 210, 0.469);
+      border-color: var(--gold-300);
+    }
+
+    .brand-logo-wrap {
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .brand-logo-wrap img {
+      max-height: 100%;
+      max-width: 200px;
+      filter: grayscale(100%) contrast(1.1);
+      opacity: 0.8;
+      transition: all 0.4s;
+    }
+
+    .brand-card:hover .brand-logo-wrap img {
+      filter: grayscale(0%);
+      opacity: 1;
+    }
+
+    .brand-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--emerald-950);
+      margin: 0;
+    }
+
+    .brand-origin {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--gold-600);
+      font-weight: 700;
+    }
+
+    .brand-desc {
+      font-size: 0.875rem;
+      color: var(--charcoal-600);
+      line-height: 1.6;
+    }
+
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--ivory-300), transparent);
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="sahibzada_gun_house_logo.jpg" alt="Sahibzada Gun House Logo" style="height:50px;width:auto;" />
+      </a>
+      <nav>
+        <ul class="nav-links"
+          style="position:static;width:auto;height:auto;background:transparent;flex-direction:row;padding:0;gap:2rem;box-shadow:none;display:flex;">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#shop">Catalogue</a></li>
+          <li><a href="brands.html" class="active">Brands</a></li>
+          <li><a href="licensing.html">Licensing</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions">
+        <a href="profile.html" class="nav-icon-btn" aria-label="Account">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+        </a>
+        <a href="cart.html" class="nav-icon-btn" aria-label="Cart">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <path d="M16 10a4 4 0 0 1-8 0" />
+          </svg>
+          <span id="cart-badge-nav" class="cart-badge hidden">0</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <section class="brands-hero">
+    <div class="container">
+      <h1 class="fade-up">Global Portfolio</h1>
+      <p class="fade-up" style="animation-delay: 0.1s;">A curated collection of the world's most prestigious firearms
+        manufacturers, brought to the heart of Punjab.</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <div class="brands-grid">
+
+      <!-- Kiehberg -->
+      <article class="brand-card fade-up">
+        <div class="brand-logo-wrap">
+          <img
+            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAABblBMVEX////9//8AAAD8//////3//f/8/Pz///v7+/v//vz8//z8/v///P/09PT6//37/v/uHCXw8PDW1tawsLBvb2/p6emSkpLxGyOioqLj4+PHx8dKSkrfAADuHCh7e3u4uLiLi4vhAADUAABgYGA3NzeYmJhUVFSysrKnp6cUFBRERETpAA3iABMmJiY9PT0uLi7/8evWABH/8PDig4LCAAB1dXUZGRkpKSlnZ2fPz8/ywrv85uTYSE7hlZbWc3TtDhrWFSH02NPpqKPbQEPdaXD/7Ofl0c3gubrZrKvYoJzALzPL49l8t53q//St3skAiEWS0KsAkURVuoQAmk/E6NM/qm4AmT7Q9OTYlJbTYGFpvpHgjor0v73YKi+n4MHhXV/STVywAAAbllrQSUbeNTvaJCrjfYDddXLLMTvAHCb73dL/6fDIHybvtr74zM/agojLWFXDQUTxcHPqSUbATVW3ACr2urLVOErfvLP0wslxziC6AAAXtUlEQVR4nO1aC3ca17U+Z16HGWBAT4QEQkIPy5qRPIAtWzw8DIgmaeo2uU1bE0TxrYSUKDZOe+9Vm39/vz0DetjYlptmZSXrfGvZQsOZOfu9v31GjElISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhI3IbBDf5zy/DTgse061807d0Lf7Hg2d+wBNzILRFqqJlM/XU51RSffMpScZVxrqt6glkaV9WfW6j/KERM++ypB/W4aqkznBu4xvmvSUdN6Oz5bwNNNyxd+/x3zxjXdaj4c4v1n0WctR5WPNvWTeP3f/jiGdN13fhxT4SFNPqf37hwVceEptJHzvTJ15T+tHqKXemqmPyisVuxxa8KI8qI/j55DINVm81Xps3j4qsvv/ziGWcJbK8JgS019YZwd4Wm6WPpruREBWN8Iicerl0/UjdNHq2aoiFugxi4X9NVnmA35RCklmXRkyyuWZb9HhW5qNWL9WPTjrNn//XlH7/+6hlL4XauTTb+2MSk5ZY1UY9pyHN9IpzAB0uonI8vcGGSkFg2TUOLVtE/CguN7HQFuqqrky2wyfskMnWvV1yvH8egy1d/+vOf//TFX+xI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"
+            alt="Kiehberg GmbH Logo">
+        </div>
+        <div style="text-align: center;">
+          <span class="brand-origin">Germany</span>
+          <h2 class="brand-name">Kiehberg GmbH</h2>
+        </div>
+        <p class="brand-desc">Master distributors of German precision engineering. Specializing in high-performance air
+          rifles, pistols, and premium hunting accessories.</p>
+      </article>
+
+      <!-- Beretta -->
+      <article class="brand-card fade-up" style="animation-delay: 0.1s;">
+        <div class="brand-logo-wrap">
+          <img
+            src="data:image/png;base64,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"
+            alt="Beretta Logo">
+        </div>
+        <div>
+          <span class="brand-origin">Italy</span>
+          <h2 class="brand-name">Beretta</h2>
+        </div>
+        <p class="brand-desc">The world's oldest firearms manufacturer. Legendary for their pistols and shotguns,
+          combining centuries of tradition with modern innovation.</p>
+      </article>
+
+      <!-- Girsan -->
+      <article class="brand-card fade-up" style="animation-delay: 0.2s;">
+        <div class="brand-logo-wrap">
+          <img
+            src="data:image/png;base64,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"
+            alt="Girsan Logo">
+        </div>
+        <div>
+          <span class="brand-origin">Turkey</span>
+          <h2 class="brand-name">Girsan</h2>
+        </div>
+        <p class="brand-desc">Renowned for high-quality military and civilian firearms. Famous for their reliable 1911
+          variants and modern polymer pistols.</p>
+      </article>
+
+      <!-- Alfaproj -->
+      <article class="brand-card fade-up" style="animation-delay: 0.3s;">
+        <div class="brand-logo-wrap" style="background: #eee; padding: 10px; border-radius: 4px;">
+          <span
+            style="font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.5rem; letter-spacing: 0.1em;">ALFAPROJ</span>
+        </div>
+        <div>
+          <span class="brand-origin">Czech Republic</span>
+          <h2 class="brand-name">Alfaproj</h2>
+        </div>
+        <p class="brand-desc">Specialists in revolvers and handguns. Combining Czech craftsmanship with robust
+          durability for professional and personal use.</p>
+      </article>
+
+    </div>
+
+    <div class="section-divider"></div>
+
+    <section style="padding: 6rem 0; text-align: center;">
+      <h2
+        style="font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 1.5rem; color: var(--emerald-950);">
+        Indian Authorized Partner</h2>
+      <p style="color: var(--charcoal-600); max-width: 700px; margin: 0 auto 3rem; line-height: 1.6;">
+        As an authorized dealer for leading Indian manufacturers, we provide support for local industry champions,
+        ensuring domestic firearms meet international standards of safety and performance.
+      </p>
+      <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 4rem; opacity: 0.7;">
+        <!-- Placeholder for Indian brands like Sial, etc. -->
+        <div style="font-weight: 700; color: var(--emerald-900); letter-spacing: 0.2em; font-size: 1.2rem;">SIAL</div>
+        <div style="font-weight: 700; color: var(--emerald-900); letter-spacing: 0.2em; font-size: 1.2rem;">OFB INDIA
+        </div>
+        <div style="font-weight: 700; color: var(--emerald-900); letter-spacing: 0.2em; font-size: 1.2rem;">L&T DEFENSE
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-bottom-inner">
+      <p>© 2026 Sahibzada Gun House. All rights reserved.</p>
+      <p>Sector 69, Mohali, Punjab · +91 9653 001 001</p>
+    </div>
+  </footer>
+
+  <script>
+    // Sync cart badge if any
+    const cart = JSON.parse(localStorage.getItem('sgh_cart') || '[]');
+    const total = cart.reduce((a, b) => a + (b.qty || 1), 0);
+    const badge = document.getElementById('cart-badge-nav');
+    if (badge && total > 0) {
+      badge.textContent = total;
+      badge.classList.remove('hidden');
+    }
+  </script>
+</body>
+
+</html>
