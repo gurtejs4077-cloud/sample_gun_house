@@ -138,6 +138,130 @@
         transform: rotate(360deg);
       }
     }
+
+    /* ───── MOBILE RESPONSIVE ───── */
+
+    /* Nav: stack logo+title and actions on small screens */
+    @media (max-width: 600px) {
+      .admin-nav {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+      }
+
+      .admin-nav > div:last-child {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        width: 100%;
+      }
+
+      .admin-nav > div:last-child a,
+      .admin-nav > div:last-child button {
+        flex: 1 1 auto;
+        text-align: center;
+        font-size: 0.75rem;
+        padding: 0.4rem 0.6rem;
+      }
+
+      /* Admin header: wrap h2 and button */
+      .admin-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+
+      .admin-header button {
+        width: 100%;
+      }
+
+      /* Products table → card layout */
+      .product-list thead {
+        display: none;
+      }
+
+      .product-list,
+      .product-list tbody,
+      .product-list tr,
+      .product-list td {
+        display: block;
+        width: 100%;
+      }
+
+      .product-list tr {
+        border: 1px solid var(--admin-border);
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        padding: 0.75rem;
+        background: white;
+      }
+
+      .product-list td {
+        padding: 0.25rem 0;
+        border: none;
+        font-size: 0.85rem;
+      }
+
+      /* Data labels via pseudo-elements */
+      .product-list td:nth-child(1)::before { content: 'ID: '; font-weight: 600; color: var(--charcoal-500); }
+      .product-list td:nth-child(2)::before { content: 'Name: '; font-weight: 600; color: var(--charcoal-500); }
+      .product-list td:nth-child(3)::before { content: 'Category: '; font-weight: 600; color: var(--charcoal-500); }
+      .product-list td:nth-child(4)::before { content: 'Price: '; font-weight: 600; color: var(--charcoal-500); }
+      .product-list td:nth-child(5)::before { content: 'Stock: '; font-weight: 600; color: var(--charcoal-500); }
+
+      /* Action buttons full-width row */
+      .product-list td.action-btns {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+      }
+
+      .product-list td.action-btns button {
+        flex: 1;
+      }
+
+      /* Categories & Brands: stack vertically */
+      .admin-container > .form-row {
+        flex-direction: column;
+      }
+
+      /* Form modal: full-height on mobile */
+      .form-modal {
+        padding: 1.25rem;
+        max-height: 95vh;
+        border-radius: 8px;
+      }
+
+      /* Enquiry contact grid: single column */
+      .enquiry-contact-grid {
+        grid-template-columns: 1fr !important;
+      }
+
+      /* Enquiry header: stack instead of flex row */
+      .enquiry-header {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 0.4rem;
+      }
+
+      .enquiry-header > div:last-child {
+        text-align: left !important;
+      }
+    }
+
+    /* Tablet: keep table but reduce padding */
+    @media (max-width: 768px) and (min-width: 601px) {
+      .admin-nav {
+        padding: 0.75rem 1rem;
+      }
+
+      .product-list th,
+      .product-list td {
+        padding: 0.6rem 0.5rem;
+        font-size: 0.8rem;
+      }
+    }
   </style>
 </head>
 
@@ -652,7 +776,7 @@
 
       container.innerHTML = enquiries.map(e => `
         <div style="border: 1px solid var(--admin-border); border-radius: 8px; padding: 1rem; background: ${e.status === 'new' ? '#fffbeb' : 'white'};">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+          <div class="enquiry-header" style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
             <div>
               <h4 style="margin: 0;">${e.customerName} <small style="font-weight: normal; color: var(--charcoal-500);">(${e.city}, ${e.state})</small></h4>
               <p style="margin: 0.25rem 0; font-size: 0.9rem;"><strong>Product:</strong> ${e.productName}</p>
@@ -664,7 +788,7 @@
               </div>
             </div>
           </div>
-          <div style="font-size: 0.85rem; display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 0.5rem; background: rgba(0,0,0,0.02); padding: 0.5rem; border-radius: 4px;">
+          <div class="enquiry-contact-grid" style="font-size: 0.85rem; display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 0.5rem; background: rgba(0,0,0,0.02); padding: 0.5rem; border-radius: 4px;">
             <div>📞 ${e.customerPhone}</div>
             <div>📧 ${e.customerEmail}</div>
             ${e.uin ? `<div><strong>UIN:</strong> ${e.uin}</div>` : ''}
