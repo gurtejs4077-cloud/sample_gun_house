@@ -11,6 +11,12 @@ const state = {
   sort: 'newest',
   cart: [],
   currentQuoteProduct: null,
+  // Add live data holders
+  inventory: {
+    products: [],
+    categories: [],
+    brands: []
+  }
 };
 
 // ============================================================
@@ -25,8 +31,8 @@ function formatInr(paise, options = {}) {
   }).format(rupees);
 }
 
-function getBrand(slug) { return BRANDS.find(b => b.slug === slug); }
-function getCategory(slug) { return CATEGORIES.find(c => c.slug === slug); }
+function getBrand(slug) { return state.inventory.brands.find(b => b.slug === slug); }
+function getCategory(slug) { return state.inventory.categories.find(c => c.slug === slug); }
 
 // ============================================================
 // PRODUCT CARD RENDER
@@ -93,10 +99,17 @@ function renderProductCard(product) {
     badgeHtml = `<div class="badge badge-stock">Out of Stock</div>`;
   }
 
+  // Handle image SVG string vs literal
+  let imageContent = product.image;
+  if (typeof imageContent === 'string' && imageContent.startsWith('SVG_')) {
+    // If it's a variable name, get the content from window
+    imageContent = window[imageContent] || '';
+  }
+
   return `
     <article class="product-card fade-up">
       <div class="product-image">
-        ${product.image}
+        ${imageContent}
         ${badgeHtml}
       </div>
       <div class="product-details">
@@ -121,8 +134,8 @@ function renderProductCard(product) {
 function renderFilterLists() {
   const categoryList = document.getElementById('category-list');
   if (!categoryList) return;
-  categoryList.innerHTML = CATEGORIES.map(c => {
-    const count = PRODUCTS.filter(p => p.category === c.slug).length;
+  categoryList.innerHTML = state.inventory.categories.map(c => {
+    const count = state.inventory.products.filter(p => p.category === c.slug).length;
     const active = state.filters.category === c.slug ? 'active' : '';
     return `
       <li>
@@ -139,8 +152,8 @@ function renderFilterLists() {
 
   const brandList = document.getElementById('brand-list');
   if (!brandList) return;
-  brandList.innerHTML = BRANDS.map(b => {
-    const count = PRODUCTS.filter(p => p.brand === b.slug).length;
+  brandList.innerHTML = state.inventory.brands.map(b => {
+    const count = state.inventory.products.filter(p => p.brand === b.slug).length;
     if (count === 0) return '';
     const active = state.filters.brand === b.slug ? 'active' : '';
     return `
@@ -196,7 +209,7 @@ function applySort() {
 function renderFeatured() {
   const grid = document.getElementById('featured-grid');
   if (!grid) return;
-  const featured = PRODUCTS.filter(p => p.isFeatured).slice(0, 8);
+  const featured = state.inventory.products.filter(p => p.isFeatured).slice(0, 8);
   grid.innerHTML = featured.map(renderProductCard).join('');
 }
 
@@ -204,7 +217,7 @@ function renderShop() {
   const grid = document.getElementById('shop-grid');
   if (!grid) return;
 
-  let filtered = PRODUCTS.slice();
+  let filtered = state.inventory.products.slice();
   if (state.filters.category) {
     filtered = filtered.filter(p => p.category === state.filters.category);
   }
@@ -283,7 +296,7 @@ document.addEventListener('click', (e) => {
 // QUOTE MODAL
 // ============================================================
 function openQuoteModal(productId) {
-  const product = PRODUCTS.find(p => p.id === productId);
+  const product = state.inventory.products.find(p => p.id === productId);
   if (!product) return;
 
   if (!product.licenseRequired) {
@@ -319,7 +332,7 @@ function submitQuoteRequest(e) {
 // CART
 // ============================================================
 function addToCart(productId) {
-  const product = PRODUCTS.find(p => p.id === productId);
+  const product = state.inventory.products.find(p => p.id === productId);
   if (!product) return;
 
   if (product.licenseRequired) {
@@ -361,7 +374,16 @@ function showToast(message, isError = false) {
 // ============================================================
 // INIT
 // ============================================================
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  // Load from Live DB
+  if (typeof loadInventory === 'function') {
+    const data = await loadInventory();
+    state.inventory = data;
+  } else {
+    // Fallback if provider missing
+    state.inventory = { products: PRODUCTS, categories: CATEGORIES, brands: BRANDS };
+  }
+
   renderFeatured();
   renderFilterLists();
   renderShop();
