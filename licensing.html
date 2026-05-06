@@ -18,16 +18,22 @@
     padding: 6rem 0;
     text-align: center;
   }
+  @media (max-width: 768px) {
+    .guide-header { padding: 3.5rem 0; }
+  }
   .guide-content {
     padding: 5rem 0;
     max-width: 800px;
     margin: 0 auto;
   }
+  @media (max-width: 768px) {
+    .guide-content { padding: 3rem 0; }
+  }
   .guide-section {
     margin-bottom: 4rem;
   }
   .guide-section h2 {
-    font-size: 2rem;
+    font-size: clamp(1.5rem, 5vw, 2rem);
     margin-bottom: 1.5rem;
     color: var(--emerald-900);
     border-bottom: 1px solid var(--ivory-300);
@@ -44,6 +50,12 @@
     margin-bottom: 1.5rem;
     display: flex;
     gap: 1.5rem;
+  }
+  @media (max-width: 480px) {
+    .step-card {
+      padding: 1.25rem;
+      gap: 1rem;
+    }
   }
   .step-number {
     width: 40px;
@@ -71,6 +83,14 @@
     font-weight: 600;
     text-decoration: underline;
   }
+  .forms-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  @media (max-width: 480px) {
+    .forms-grid { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -87,7 +107,7 @@
     </div>
 
     <nav>
-      <ul class="nav-links" style="display: flex;">
+      <ul class="nav-links" id="nav-links-list">
         <li><a href="index.html">Home</a></li>
         <li><a href="index.html#shop">Catalogue</a></li>
         <li><a href="licensing.html" class="active">Licensing</a></li>
@@ -99,7 +119,7 @@
 <div class="guide-header">
   <div class="container">
     <p class="eyebrow" style="color: var(--gold-400);">Regulatory Compliance</p>
-    <h1 style="font-size: 3.5rem; margin-top: 1rem;">Licensing Guide</h1>
+    <h1 style="font-size: clamp(2rem, 8vw, 3.5rem); margin-top: 1rem;">Licensing Guide</h1>
     <div class="divider-gold" style="margin: 2rem auto;"></div>
     <p style="max-width: 600px; margin: 0 auto; color: rgba(253, 250, 242, 0.8);">
       A step-by-step resource for legal firearms ownership in India under the Arms Rules 2016.
@@ -166,7 +186,7 @@
   <div class="guide-section" id="forms">
     <h2>Government Forms</h2>
     <p>All official forms are provided by the Ministry of Home Affairs. We have curated the most common ones for your convenience:</p>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+    <div class="forms-grid">
       <a href="#" class="form-link">Form III: New License</a>
       <a href="#" class="form-link">Form IX: License Renewal</a>
       <a href="#" class="form-link">Form S-3: Medical Fitness</a>
@@ -187,6 +207,38 @@
     <p>Sector 69, Mohali, Punjab · +91 9653 001 001</p>
   </div>
 </footer>
+
+<script>
+  // Mobile menu toggle for licensing page
+  document.addEventListener('DOMContentLoaded', () => {
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const navLinks = document.getElementById('nav-links-list');
+    if (menuBtn && navLinks) {
+      menuBtn.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        const spans = menuBtn.querySelectorAll('span');
+        if (navLinks.classList.contains('active')) {
+          spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+          spans[1].style.opacity = '0';
+          spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+        } else {
+          spans[0].style.transform = 'none';
+          spans[1].style.opacity = '1';
+          spans[2].style.transform = 'none';
+        }
+      });
+      navLinks.addEventListener('click', (e) => {
+        if (e.target.tagName === 'A') {
+          navLinks.classList.remove('active');
+          const spans = menuBtn.querySelectorAll('span');
+          spans[0].style.transform = 'none';
+          spans[1].style.opacity = '1';
+          spans[2].style.transform = 'none';
+        }
+      });
+    }
+  });
+</script>
 
 </body>
 </html>
