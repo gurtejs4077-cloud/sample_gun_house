@@ -27,14 +27,14 @@ async function initDatabase() {
   try {
     // Dynamically load Firebase SDKs
     const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js');
-    const { getFirestore, doc, getDoc, setDoc, collection, addDoc, getDocs, query, orderBy, serverTimestamp } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
+    const { getFirestore, doc, getDoc, setDoc, collection, addDoc, getDocs, query, orderBy, serverTimestamp, deleteDoc } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
     const { getAnalytics } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js');
 
     const app = initializeApp(firebaseConfig);
     db = getFirestore(app);
 
     try { getAnalytics(app); } catch (e) { console.warn("Analytics failed to load:", e); }
-    return { doc, getDoc, setDoc, collection, addDoc, getDocs, query, orderBy, serverTimestamp };
+    return { doc, getDoc, setDoc, collection, addDoc, getDocs, query, orderBy, serverTimestamp, deleteDoc };
   } catch (error) {
     console.error("Firebase init failed:", error);
     return null;
@@ -137,5 +137,22 @@ async function loadEnquiries() {
   } catch (error) {
     console.error("Error loading enquiries:", error);
     return [];
+  }
+}
+
+/**
+ * Deletes an enquiry from the database
+ */
+async function deleteEnquiryFromDB(id) {
+  const providers = await initDatabase();
+  if (!providers || !db) return false;
+
+  try {
+    const docRef = providers.doc(db, "enquiries", id);
+    await providers.deleteDoc(docRef);
+    return true;
+  } catch (error) {
+    console.error("Error deleting enquiry:", error);
+    return false;
   }
 }

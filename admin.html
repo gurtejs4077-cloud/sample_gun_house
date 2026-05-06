@@ -821,8 +821,15 @@
     }
 
     async function deleteEnquiry(id) {
-      if (!confirm('Delete this enquiry?')) return;
-      alert('Delete function would call the backend API.');
+      if (!confirm('Are you sure you want to permanently delete this enquiry?')) return;
+      
+      const success = await deleteEnquiryFromDB(id);
+      if (success) {
+        showAdminNotification('🗑️ Enquiry deleted successfully.');
+        loadAndRenderEnquiries();
+      } else {
+        alert('Failed to delete enquiry. Please try again.');
+      }
     }
 
     async function exportEnquiriesToCSV() {
