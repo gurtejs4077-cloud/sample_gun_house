@@ -5,13 +5,13 @@
 
 // --- PASTE YOUR FIREBASE CONFIG HERE ---
 const firebaseConfig = {
-  apiKey: "AIzaSyCnz1IsDNZIhHn3PMqq4GpiqAkVBtcIyzg",
-  authDomain: "gymflow-83d53.firebaseapp.com",
-  projectId: "gymflow-83d53",
-  storageBucket: "gymflow-83d53.firebasestorage.app",
-  messagingSenderId: "606905628730",
-  appId: "1:606905628730:web:31b7a28e2345484d0f5d03",
-  measurementId: "G-XQ34HFPY14"
+  apiKey: "AIzaSyAjjbfZnzejzzatJZg8kc5X-03CPQLsTVs",
+  authDomain: "sahibzada-gun-house.firebaseapp.com",
+  projectId: "sahibzada-gun-house",
+  storageBucket: "sahibzada-gun-house.firebasestorage.app",
+  messagingSenderId: "86635259129",
+  appId: "1:86635259129:web:1647d819ce5c42dd10ae28",
+  measurementId: "G-RSJR1T9QR4"
 };
 // ---------------------------------------
 
@@ -28,9 +28,12 @@ async function initDatabase() {
     // Dynamically load Firebase SDKs
     const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js');
     const { getFirestore, doc, getDoc, setDoc, collection, addDoc, getDocs, query, orderBy, serverTimestamp } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
+    const { getAnalytics } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js');
 
     const app = initializeApp(firebaseConfig);
     db = getFirestore(app);
+
+    try { getAnalytics(app); } catch (e) { console.warn("Analytics failed to load:", e); }
     return { doc, getDoc, setDoc, collection, addDoc, getDocs, query, orderBy, serverTimestamp };
   } catch (error) {
     console.error("Firebase init failed:", error);
