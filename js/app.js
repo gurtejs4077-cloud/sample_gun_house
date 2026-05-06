@@ -326,11 +326,43 @@ function closeQuoteModal() {
   document.body.style.overflow = '';
 }
 
-function submitQuoteRequest(e) {
+async function submitQuoteRequest(e) {
   e.preventDefault();
-  closeQuoteModal();
-  showToast(`Reservation submitted. We'll contact you within 24 hours to schedule your showroom visit.`);
-  e.target.reset();
+  
+  if (!state.currentQuoteProduct) return;
+
+  const enquiry = {
+    productId: state.currentQuoteProduct.id,
+    productName: state.currentQuoteProduct.name,
+    customerName: document.getElementById('qr-name').value,
+    customerPhone: document.getElementById('qr-phone').value,
+    customerEmail: document.getElementById('qr-email').value,
+    city: document.getElementById('qr-city').value,
+    state: document.getElementById('qr-state').value,
+    hasLicense: document.getElementById('qr-license').checked,
+    uin: document.getElementById('qr-uin').value,
+    licenseState: document.getElementById('qr-license-state').value,
+    message: document.getElementById('qr-message').value,
+    status: 'new'
+  };
+
+  const submitBtn = e.target.querySelector('button[type="submit"]');
+  const originalText = submitBtn.textContent;
+  submitBtn.textContent = 'Submitting...';
+  submitBtn.disabled = true;
+
+  const success = await saveEnquiry(enquiry);
+
+  if (success) {
+    closeQuoteModal();
+    showToast(`✅ Reservation submitted! We will contact you soon.`);
+    e.target.reset();
+  } else {
+    showToast(`❌ Failed to submit. Please try again.`, true);
+  }
+
+  submitBtn.textContent = originalText;
+  submitBtn.disabled = false;
 }
 
 // ============================================================

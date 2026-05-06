@@ -163,6 +163,16 @@
 
     <div class="admin-card">
       <div class="admin-header">
+        <h2>New Enquiries / Reservations</h2>
+        <button onclick="loadAndRenderEnquiries()" class="btn-outline-emerald btn-sm">Refresh List</button>
+      </div>
+      <div id="enquiries-container" style="display: flex; flex-direction: column; gap: 1rem;">
+        <p style="color: var(--charcoal-400); text-align: center; padding: 1rem;">Loading enquiries...</p>
+      </div>
+    </div>
+
+    <div class="admin-card">
+      <div class="admin-header">
         <h2>Products Catalogue</h2>
         <button onclick="openAddModal()" class="btn-emerald">Add New Product</button>
       </div>
@@ -334,6 +344,7 @@
       renderCategories();
       renderBrands();
       populateSelects();
+      loadAndRenderEnquiries();
 
       document.getElementById('p-license').addEventListener('change', (e) => {
         document.getElementById('license-type-group').style.display = e.target.checked ? 'block' : 'none';
@@ -628,6 +639,40 @@
         localProducts.splice(index, 1);
         renderTable();
       }
+    }
+
+    async function loadAndRenderEnquiries() {
+      const container = document.getElementById('enquiries-container');
+      const enquiries = await loadEnquiries();
+
+      if (enquiries.length === 0) {
+        container.innerHTML = '<p style="color: var(--charcoal-400); text-align: center; padding: 1rem;">No enquiries found.</p>';
+        return;
+      }
+
+      container.innerHTML = enquiries.map(e => `
+        <div style="border: 1px solid var(--admin-border); border-radius: 8px; padding: 1rem; background: ${e.status === 'new' ? '#fffbeb' : 'white'};">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+            <div>
+              <h4 style="margin: 0;">${e.customerName} <small style="font-weight: normal; color: var(--charcoal-500);">(${e.city}, ${e.state})</small></h4>
+              <p style="margin: 0.25rem 0; font-size: 0.9rem;"><strong>Product:</strong> ${e.productName}</p>
+            </div>
+            <div style="text-align: right;">
+              <span style="font-size: 0.75rem; color: var(--charcoal-400);">${new Date(e.timestamp).toLocaleString()}</span>
+              <div style="margin-top: 0.25rem;">
+                ${e.hasLicense ? '<span style="background: #d1fae5; color: #065f46; font-size: 10px; padding: 2px 6px; border-radius: 4px;">✔ LICENSED</span>' : '<span style="background: #fee2e2; color: #991b1b; font-size: 10px; padding: 2px 6px; border-radius: 4px;">✘ NO LICENSE</span>'}
+              </div>
+            </div>
+          </div>
+          <div style="font-size: 0.85rem; display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 0.5rem; background: rgba(0,0,0,0.02); padding: 0.5rem; border-radius: 4px;">
+            <div>📞 ${e.customerPhone}</div>
+            <div>📧 ${e.customerEmail}</div>
+            ${e.uin ? `<div><strong>UIN:</strong> ${e.uin}</div>` : ''}
+            ${e.licenseState ? `<div><strong>Lic State:</strong> ${e.licenseState}</div>` : ''}
+          </div>
+          ${e.message ? `<p style="margin: 0; font-size: 0.85rem; color: var(--charcoal-600); border-left: 2px solid var(--admin-border); padding-left: 0.5rem;">"${e.message}"</p>` : ''}
+        </div>
+      `).join('');
     }
 
     init();

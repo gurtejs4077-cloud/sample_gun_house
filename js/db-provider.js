@@ -27,11 +27,11 @@ async function initDatabase() {
   try {
     // Dynamically load Firebase SDKs
     const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js');
-    const { getFirestore, doc, getDoc, setDoc } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
+    const { getFirestore, doc, getDoc, setDoc, collection, addDoc, getDocs, query, orderBy, serverTimestamp } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
 
     const app = initializeApp(firebaseConfig);
     db = getFirestore(app);
-    return { doc, getDoc, setDoc };
+    return { doc, getDoc, setDoc, collection, addDoc, getDocs, query, orderBy, serverTimestamp };
   } catch (error) {
     console.error("Firebase init failed:", error);
     return null;
@@ -90,5 +90,49 @@ async function saveInventory(data) {
     console.error("Error saving to database:", error);
     alert("Save failed: " + error.message);
     return false;
+  }
+}
+
+/**
+ * Saves a customer enquiry/reservation
+ */
+async function saveEnquiry(enquiryData) {
+  const providers = await initDatabase();
+  if (!providers || !db) return false;
+
+  try {
+    const colRef = providers.collection(db, "enquiries");
+    await providers.addDoc(colRef, {
+      ...enquiryData,
+      timestamp: Date.now()
+    });
+    return true;
+  } catch (error) {
+    console.error("Error saving enquiry:", error);
+    return false;
+  }
+}
+
+/**
+ * Loads all enquiries for the admin panel
+ */
+async function loadEnquiries() {
+  const providers = await initDatabase();
+  if (!providers || !db) return [];
+
+  try {
+    const colRef = providers.collection(db, "enquiries");
+    const querySnapshot = await providers.getDocs(colRef);
+    
+    const enquiries = querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+
+    // Sort by timestamp descending
+    return enquiries.sort((a, b) => b.timestamp - a.timestamp);
+  } catch (error) {
+    console.error("Error loading enquiries:", error);
+    return [];
   }
 }
