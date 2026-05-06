@@ -14,12 +14,17 @@ if (!is_dir($uploadDirBase)) {
 
 // --- CLEANUP LOGIC (100 Days) ---
 // Deletes files older than 100 days to comply with privacy/retention policies.
-$expiryTime = time() - (100 * 24 * 60 * 60); // 100 days in seconds
-$iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($uploadDirBase));
-
-foreach ($iterator as $file) {
-    if ($file->isFile() && $file->getMTime() < $expiryTime) {
-        @unlink($file->getPathname());
+if (is_dir($uploadDirBase)) {
+    try {
+        $expiryTime = time() - (100 * 24 * 60 * 60); // 100 days in seconds
+        $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($uploadDirBase));
+        foreach ($iterator as $file) {
+            if ($file->isFile() && $file->getMTime() < $expiryTime) {
+                @unlink($file->getPathname());
+            }
+        }
+    } catch (Exception $e) {
+        // Silently skip if iterator fails
     }
 }
 // --------------------------------
@@ -38,7 +43,10 @@ $sanitizedName = preg_replace('/[^a-zA-Z0-9_\-]/', '_', $userName);
 $uploadDir = 'uploads/documents/' . $sanitizedName . '/';
 
 if (!is_dir($uploadDir)) {
-    mkdir($uploadDir, 0755, true);
+    if (!mkdir($uploadDir, 0755, true)) {
+        echo json_encode(['success' => false, 'message' => 'Failed to create user directory. check permissions.']);
+        exit;
+    }
 }
 
 $images = $data['images'];

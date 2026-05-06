@@ -535,9 +535,10 @@
         location: profile.city || 'Not Provided',
         items: cart.map(i => `${i.name} (${i.qty}x)`).join(', '),
         totalAmount: cart.reduce((a, b) => a + (b.price * b.qty), 0),
-        status: 'Pending',
+        status: 'new',
         isCartReservation: true,
-        type: 'Store Reservation'
+        type: 'Store Reservation',
+        documentUrls: profile.capturedImages || [] // Passing Cloudinary URLs to Firestore
       };
 
       try {

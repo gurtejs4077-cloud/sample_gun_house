@@ -541,21 +541,31 @@
     async function publishLive() {
       const btn = document.getElementById('save-btn');
       const originalText = btn.textContent;
-      btn.innerHTML = '<span class="spinner"></span> Syncing...';
-      btn.disabled = true;
+      
+      try {
+        btn.innerHTML = '<span class="spinner"></span> Syncing...';
+        btn.disabled = true;
+        console.log('Starting sync to live database...');
 
-      const success = await saveInventory({
-        products: localProducts,
-        categories: localCategories,
-        brands: localBrands
-      });
+        const success = await saveInventory({
+          products: localProducts,
+          categories: localCategories,
+          brands: localBrands
+        });
 
-      if (success) {
-        showAdminNotification('✅ Website updated successfully!');
+        if (success) {
+          showAdminNotification('✅ Website updated successfully!');
+        } else {
+          console.warn('Sync failed according to saveInventory.');
+        }
+      } catch (error) {
+        console.error('Critical sync error:', error);
+        alert('Critical error during sync: ' + error.message);
+      } finally {
+        btn.textContent = originalText;
+        btn.disabled = false;
+        console.log('Sync process finished.');
       }
-
-      btn.textContent = originalText;
-      btn.disabled = false;
     }
 
     function showAdminNotification(msg) {
@@ -801,7 +811,10 @@
           
           <div style="display: flex; gap: 0.75rem; align-items: center;">
             <button onclick="verifyUser('${e.customerName.replace(/'/g, "\\'")}')" class="btn-emerald btn-sm" style="background: #27ae60;">Verify Documents</button>
-            <a href="api/view_docs.php?user=${encodeURIComponent(e.customerName)}" target="_blank" class="btn-outline-emerald btn-sm" style="text-decoration: none;">View Photos</a>
+            ${e.documentUrls && e.documentUrls.length > 0 
+              ? `<button onclick="viewCloudDocs(${JSON.stringify(e.documentUrls).replace(/"/g, '&quot;')})" class="btn-outline-emerald btn-sm">View Photos (Cloud)</button>`
+              : `<a href="api/view_docs.php?user=${encodeURIComponent(e.customerName)}" target="_blank" class="btn-outline-emerald btn-sm" style="text-decoration: none;">View Photos (Legacy)</a>`
+            }
             <button onclick="deleteEnquiry('${e.id}')" class="btn-danger btn-sm" style="margin-left: auto;">Delete</button>
           </div>
         </div>
@@ -818,6 +831,21 @@
       }
       alert(`User ${fullName} has been verified!`);
       loadAndRenderEnquiries();
+    }
+
+    function viewCloudDocs(urls) {
+      if (!urls || urls.length === 0) return;
+      
+      // Simple approach: Open each in a new tab or create a temporary overlay
+      const win = window.open("", "_blank");
+      win.document.write(`
+        <html>
+          <head><title>Document Gallery</title><style>body{background:#111;color:white;font-family:sans-serif;padding:20px;display:flex;flex-wrap:wrap;gap:20px;}img{max-width:400px;border:2px solid #444;border-radius:8px;}</style></head>
+          <body>
+            ${urls.map(u => `<img src="${u}" />`).join('')}
+          </body>
+        </html>
+      `);
     }
 
     async function deleteEnquiry(id) {

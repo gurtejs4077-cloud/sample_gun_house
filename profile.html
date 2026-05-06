@@ -511,40 +511,51 @@
 
       const saveBtn = document.getElementById('profile-save-btn');
       const originalText = saveBtn.textContent;
-      saveBtn.textContent = 'Saving & Uploading...';
+      saveBtn.textContent = 'Uploading to Cloud...';
       saveBtn.disabled = true;
 
-      const profileData = {
-        firstName: document.getElementById('first-name').value,
-        lastName: document.getElementById('last-name').value,
-        email: document.querySelector('input[type="email"]').value,
-        phone: document.getElementById('phone-number').value,
-        city: document.querySelector('input[value="Mohali, Punjab"]').value, // This selector is fragile, but matches existing HTML
-        capturedImages: images,
-        updatedAt: Date.now()
-      };
+      // --- CLOUDINARY CONFIG ---
+      const CLOUDINARY_CLOUD_NAME = 'dwptdfeyu';
+      const CLOUDINARY_UPLOAD_PRESET = 'ml_default';
 
-      localStorage.setItem('sgh_user_profile', JSON.stringify(profileData));
+      const uploadedUrls = [];
 
       try {
-        const response = await fetch('api/upload_docs.php', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ 
-            images: images,
-            userName: (profileData.firstName + ' ' + profileData.lastName).trim()
-          })
-        });
+        // Upload each image to Cloudinary
+        for (let i = 0; i < images.length; i++) {
+          const formData = new FormData();
+          formData.append('file', images[i]);
+          formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
 
-        const result = await response.json();
-        if (result.success) {
-          alert('Profile and documents saved successfully!');
-        } else {
-          alert('Error saving documents: ' + result.message);
+          const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+            method: 'POST',
+            body: formData
+          });
+
+          if (!response.ok) throw new Error('Cloudinary upload failed');
+          const result = await response.json();
+          if (result.secure_url) {
+            uploadedUrls.push(result.secure_url);
+          }
         }
+
+        // Save profile with Cloudinary URLs instead of base64
+        const profileData = {
+          firstName: document.getElementById('first-name').value,
+          lastName: document.getElementById('last-name').value,
+          email: document.querySelector('input[type="email"]').value,
+          phone: document.getElementById('phone-number').value,
+          city: document.querySelector('input[type="text"]:last-of-type')?.value || 'Mohali, Punjab',
+          capturedImages: uploadedUrls, // Storing Cloud URLs
+          updatedAt: Date.now()
+        };
+
+        localStorage.setItem('sgh_user_profile', JSON.stringify(profileData));
+        alert('✅ Profile saved and documents uploaded to Cloud successfully!');
+
       } catch (err) {
         console.error('Upload error:', err);
-        alert('Failed to connect to the server.');
+        alert('⚠️ Upload failed. Please check your connection. Error: ' + err.message);
       } finally {
         saveBtn.textContent = originalText;
         saveBtn.disabled = false;

@@ -16,27 +16,48 @@ const firebaseConfig = {
 // ---------------------------------------
 
 let db = null;
+let providersCache = null;
 
 // Initialize Firebase (Only if config is provided)
 async function initDatabase() {
-  if (firebaseConfig.apiKey === "YOUR_API_KEY") {
+  if (providersCache) return providersCache;
+
+  if (firebaseConfig.apiKey === "YOUR_API_KEY" || !firebaseConfig.apiKey) {
     console.warn("Firebase not configured. Using local products.js data.");
     return null;
   }
 
   try {
-    // Dynamically load Firebase SDKs
-    const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js');
-    const { getFirestore, doc, getDoc, setDoc, collection, addDoc, getDocs, query, orderBy, serverTimestamp, deleteDoc } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
-    const { getAnalytics } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js');
+    // 10-second timeout for Firebase SDK loading
+    const timeout = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error("Firebase SDK load timed out. Check your internet connection.")), 10000)
+    );
+
+    const [
+      { initializeApp },
+      { getFirestore, doc, getDoc, setDoc, collection, addDoc, getDocs, query, orderBy, serverTimestamp, deleteDoc },
+    ] = await Promise.race([
+      Promise.all([
+        import('https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js'),
+        import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js'),
+      ]),
+      timeout.then(() => { throw new Error("Firebase SDK load timed out."); })
+    ]);
+
+    // Load analytics separately — non-critical, don't let it block
+    import('https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js')
+      .then(({ getAnalytics }) => { try { getAnalytics(initializeApp(firebaseConfig)); } catch(e) {} })
+      .catch(() => {});
 
     const app = initializeApp(firebaseConfig);
     db = getFirestore(app);
 
-    try { getAnalytics(app); } catch (e) { console.warn("Analytics failed to load:", e); }
-    return { doc, getDoc, setDoc, collection, addDoc, getDocs, query, orderBy, serverTimestamp, deleteDoc };
+    providersCache = { doc, getDoc, setDoc, collection, addDoc, getDocs, query, orderBy, serverTimestamp, deleteDoc };
+    console.log("Firebase initialized successfully.");
+    return providersCache;
   } catch (error) {
-    console.error("Firebase init failed:", error);
+    console.error("Firebase init failed:", error.message);
+    providersCache = null; // reset so it can retry
     return null;
   }
 }
@@ -78,16 +99,33 @@ async function loadInventory() {
  * Saves all data to the live database
  */
 async function saveInventory(data) {
-  const providers = await initDatabase();
+  if (!navigator.onLine) {
+    alert("You are currently offline. Please connect to the internet to sync changes.");
+    return false;
+  }
 
+  const providers = await initDatabase();
   if (!providers || !db) {
     alert("Database not configured! Changes will only be temporary.");
     return false;
   }
 
+  // Set a timeout to prevent indefinite hanging (30 seconds)
+  const timeoutPromise = new Promise((_, reject) => 
+    setTimeout(() => reject(new Error("Sync timed out after 30 seconds. This usually happens due to a poor connection or Firestore being unreachable.")), 30000)
+  );
+
   try {
     const docRef = providers.doc(db, "inventory", "main");
-    await providers.setDoc(docRef, data);
+    console.log("Saving inventory to Firestore...");
+    
+    // Race the Firestore operation against the timeout
+    await Promise.race([
+      providers.setDoc(docRef, data),
+      timeoutPromise
+    ]);
+    
+    console.log("Inventory saved successfully.");
     return true;
   } catch (error) {
     console.error("Error saving to database:", error);
