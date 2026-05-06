@@ -4,6 +4,12 @@
       "runtime": "vercel-php@0.7.1"
     }
   },
+  "rewrites": [
+    { "source": "/admin", "destination": "/admin.html" },
+    { "source": "/cart", "destination": "/cart.html" },
+    { "source": "/profile", "destination": "/profile.html" },
+    { "source": "/brands", "destination": "/brands.html" }
+  ],
   "routes": [
     {
       "src": "/api/(.*).php",
