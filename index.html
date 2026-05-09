@@ -24,7 +24,9 @@
   <header class="navbar">
     <div class="container nav-inner">
       <a href="#home" class="nav-logo" data-route="home">
-        <img src="sahibzada_gun_house_logo.jpg" alt="Sahibzada Gun House Logo" style="height: 50px; width: auto;" />
+        <div style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; background: white; border: 2px solid var(--gold-400); display: flex; align-items: center; justify-content: center;">
+          <img src="sahibzada_gun_house_logo.jpg" alt="Sahibzada Gun House Logo" style="width: 100%; height: 100%; object-fit: cover; transform: scale(1.4);" />
+        </div>
       </a>
 
       <div class="menu-toggle" id="mobile-menu-btn">
@@ -36,7 +38,7 @@
       <nav>
         <ul class="nav-links">
           <li><a href="#home" data-route="home" class="active">Home</a></li>
-          <li><a href="#shop" data-route="shop">Catalogue</a></li>
+          <li><a href="#shop" data-route="shop">Firearms & Ammunition</a></li>
           <li><a href="brands.html">Brands</a></li>
           <li><a href="licensing.html">Licensing</a></li>
         </ul>
@@ -77,14 +79,14 @@
           </h1>
           <div class="hero-divider"></div>
           <p class="hero-desc">
-            A curated catalogue of the world's finest firearms,
+            A curated collection of the world's finest firearms,
             optics, and accessories — sourced for collectors, sport shooters,
             and licensed professionals. Authorized dealer for Kiehberg, Beretta,
             Girsan, and Alfaproj.
           </p>
           <div class="hero-actions">
             <a href="#shop" data-route="shop" class="btn-gold">
-              Browse the Catalogue
+              Browse Firearms & Ammunition
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <line x1="5" y1="12" x2="19" y2="12" />
                 <polyline points="12 5 19 12 12 19" />
@@ -139,12 +141,25 @@
               </svg>
             </div>
             <div>
-              <h3>Sector 69, Mohali</h3>
+              <h3>Sector 69, Sahibzada Ajit Singh Nagar</h3>
               <p>Visit our showroom for hands-on inspection and consultation.</p>
             </div>
           </div>
         </div>
       </div>
+    </section>
+
+    <!-- ACCESSORIES & CO2 BANNER -->
+    <section class="banner-section container" style="margin-top: 4rem;">
+      <div class="accessory-banner" onclick="openRedirectModal('general-accessory')" style="cursor: pointer; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1595152230531-fec2959543e1?auto=format&fit=crop&q=80&w=1200') center/cover; height: 300px; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border: 1px solid var(--ivory-300); transition: transform 0.3s ease;">
+        <span class="hero-eyebrow" style="color: var(--gold-400);">Precision Gear</span>
+        <h2 style="font-family: var(--font-heading); font-size: 2.5rem; color: white;">Accessories & CO2 Division</h2>
+        <p style="color: var(--ivory-300); margin-top: 1rem; max-width: 500px;">Explore holsters, optics, tactical gear, and our complete CO2 air gun collection.</p>
+        <button class="btn-gold" style="margin-top: 2rem; pointer-events: none;">Visit Division</button>
+      </div>
+      <style>
+        .accessory-banner:hover { transform: translateY(-5px); }
+      </style>
     </section>
 
     <!-- FEATURED PRODUCTS -->
@@ -158,7 +173,7 @@
         <div class="product-grid featured" id="featured-grid"></div>
         <div style="text-align: center; margin-top: 3rem;">
           <a href="#shop" data-route="shop" class="btn-outline-emerald">
-            View Full Catalogue
+            View All Firearms & Ammunition
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <line x1="5" y1="12" x2="19" y2="12" />
               <polyline points="12 5 19 12 12 19" />
@@ -177,7 +192,7 @@
     <header style="background: white; border-bottom: 1px solid var(--ivory-300);">
       <div class="container shop-page-header">
         <p class="eyebrow">The Collection</p>
-        <h1 class="shop-page-title">Catalogue</h1>
+        <h1 class="shop-page-title">Firearms & Ammunition</h1>
         <div class="divider-gold" style="margin: 1.5rem 0;"></div>
         <p style="max-width: 42rem; color: var(--charcoal-600); margin-top: 1.5rem;">
           Curated firearms, ammunition, and accessories from the world's most
@@ -208,20 +223,33 @@
             </div>
 
             <div class="filter-group">
-              <h3>Availability</h3>
-              <button class="filter-pill" data-filter="license" data-value="required"
-                onclick="toggleFilter('license', 'required')">
-                🔒 License Required
-              </button>
-              <button class="filter-pill" data-filter="license" data-value="none"
-                onclick="toggleFilter('license', 'none')">
-                🏷️ No License Needed
-              </button>
+              <h3>New Firearms</h3>
+              <ul class="filter-list" id="new-firearms-list"></ul>
             </div>
 
             <div class="filter-group">
-              <h3>Category</h3>
+              <h3>New Firearms</h3>
+              <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                <button class="filter-pill" onclick="toggleFilter('type', 'new')" id="filter-type-new">
+                  New Firearms
+                </button>
+                <button class="filter-pill" onclick="toggleFilter('type', 'pre-owned')" id="filter-type-pre-owned">
+                  Pre-owned
+                </button>
+                <button class="filter-pill" onclick="toggleFilter('type', 'ammunition')" id="filter-type-ammunition">
+                  Ammunition
+                </button>
+              </div>
+            </div>
+
+            <div class="filter-group" id="category-filter-group">
+              <h3>Categories</h3>
               <ul class="filter-list" id="category-list"></ul>
+            </div>
+
+            <div class="filter-group" id="condition-filter-group">
+              <h3>Condition</h3>
+              <ul class="filter-list" id="condition-list"></ul>
             </div>
 
             <div class="filter-group">
@@ -283,7 +311,7 @@
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 3rem; text-align: center;">
         <div>
           <h4 style="color: var(--emerald-900); font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem;">Address</h4>
-          <p style="font-size: 0.9375rem; color: var(--charcoal-700);">SCF 113, Phase 7, Sector 61<br>Sahibzada Ajit Singh Nagar, Punjab 160062</p>
+          <p style="font-size: 0.9375rem; color: var(--charcoal-700);">SHOP NO. 126, FF, MPQ8+9GG, opp. Gurukul World School<br>Sector 69, Sahibzada Ajit Singh Nagar, Chandigarh, Punjab 160062</p>
         </div>
         <div>
           <h4 style="color: var(--emerald-900); font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem;">Store Hours</h4>
@@ -301,7 +329,9 @@
     <div class="container footer-inner">
       <div>
         <div class="footer-brand-mark">
-          <img src="sahibzada_gun_house_logo.jpg" alt="Sahibzada Gun House Logo" style="height: 60px; width: auto;" />
+          <div style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; background: white; border: 2px solid var(--gold-400); display: flex; align-items: center; justify-content: center;">
+            <img src="sahibzada_gun_house_logo.jpg" alt="Sahibzada Gun House Logo" style="width: 100%; height: 100%; object-fit: cover; transform: scale(1.4);" />
+          </div>
         </div>
         <p class="desc">
           Operating under the Arms Act 1959 and Arms Rules 2016. Authorized dealer for
@@ -338,13 +368,14 @@
       </div>
 
       <div>
-        <h4>Catalogue</h4>
+        <h4>Firearms & Ammunition</h4>
         <ul>
           <li><a href="#shop" data-route="shop" data-filter-category="pistols">Pistols</a></li>
           <li><a href="#shop" data-route="shop" data-filter-category="revolvers">Revolvers</a></li>
-          <li><a href="#shop" data-route="shop" data-filter-category="air-rifles">Air Rifles</a></li>
-          <li><a href="#shop" data-route="shop" data-filter-category="holsters">Accessories</a></li>
+          <li><a href="#shop" data-route="shop" data-filter-category="rifles">Rifles</a></li>
           <li><a href="#shop" data-route="shop" data-filter-category="ammunition">Ammunition</a></li>
+          <li><a href="#shop" data-route="shop" data-filter-category="pre-owned">Pre-owned</a></li>
+          <li><a href="#shop" data-route="shop" data-filter-category="accessories">Accessories</a></li>
         </ul>
       </div>
 
@@ -364,7 +395,7 @@
     <div class="footer-bottom">
       <div class="container footer-bottom-inner">
         <p>© 2026 Sahibzada Gun House. All rights reserved.</p>
-        <p>Sector 69, Mohali, Punjab · +91 9653 001 001</p>
+        <p>SHOP NO. 126, FF, MPQ8+9GG, opp. Gurukul World School, Sector 69, Sahibzada Ajit Singh Nagar, Chandigarh, Punjab 160062 · +91 9653 001 001</p>
       </div>
     </div>
   </footer>

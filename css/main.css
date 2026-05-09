@@ -773,8 +773,6 @@ img { display: block; max-width: 100%; height: auto; }
   opacity: 1;
 }
 .badge {
-  position: absolute;
-  top: 0.75rem;
   display: inline-flex;
   align-items: center;
   gap: 0.375rem;
@@ -785,23 +783,35 @@ img { display: block; max-width: 100%; height: auto; }
   letter-spacing: 0.18em;
   border-radius: 2px;
   backdrop-filter: blur(4px);
+  white-space: nowrap;
 }
 .badge-license {
-  left: 0.75rem;
   background: rgba(2, 44, 34, 0.9);
   color: var(--gold-300);
   border: 1px solid rgba(212, 175, 55, 0.6);
 }
 .badge-stock {
-  right: 0.75rem;
   background: rgba(31, 41, 55, 0.85);
   color: var(--ivory-100);
 }
 .badge-sale {
-  right: 0.75rem;
   background: var(--gold-500);
   color: var(--emerald-950);
   font-weight: 600;
+}
+.badge-pre-owned {
+  background: rgba(120, 53, 15, 0.88);
+  color: #fde68a;
+  border: 1px solid rgba(253, 230, 138, 0.4);
+}
+.badge-stack {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  z-index: 2;
 }
 
 .product-details {

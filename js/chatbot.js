@@ -36,8 +36,8 @@
     {
       patterns: [/\b(where|location|address|directions|showroom|visit|mohali|sector)\b/i],
       response: `<strong>📍 Our Showroom</strong><br>
-        SCF 113, Phase 7, Sector 61<br>
-        Sahibzada Ajit Singh Nagar (Mohali), Punjab 160062<br><br>
+        SHOP NO. 126, FF, MPQ8+9GG, opp. Gurukul World School<br>
+        Sector 69, Sahibzada Ajit Singh Nagar, Chandigarh, Punjab 160062<br><br>
         <a href="https://maps.google.com/?q=Sahibzada+Gun+House" target="_blank" style="color:var(--gold-400);">View on Google Maps ↗</a>`
     },
 
@@ -84,25 +84,26 @@
         • <strong>Optics & Scopes</strong><br>
         • <strong>Holsters & Accessories</strong><br>
         • <strong>Ammunition</strong><br><br>
-        <a href="/#shop" style="color:var(--gold-400);">Browse Full Catalogue ↗</a>`
+        <a href="/#shop" style="color:var(--gold-400);">Browse Firearms & Ammunition ↗</a>`
     },
 
     // Price / cost
     {
       patterns: [/\b(price|cost|rate|how much|budget|cheap|expensive|afford)\b/i],
       response: `<strong>💰 Pricing</strong><br>
-        Prices vary by product and are listed in our online catalogue.<br><br>
+        Prices vary by product and are listed in our online store.<br><br>
         For custom quotes or bulk orders, please contact us directly:<br>
         📞 <strong>+91 9653 001 001</strong><br><br>
-        <a href="/#shop" style="color:var(--gold-400);">View Catalogue Prices ↗</a>`
+        <a href="/#shop" style="color:var(--gold-400);">View Prices ↗</a>`
     },
 
-    // Order / reservation / buy
     {
       patterns: [/\b(order|buy|purchase|reserve|reservation|cart|checkout|pay|booking)\b/i],
       response: `<strong>🛒 How to Purchase</strong><br>
-        <strong>Non-licensed items</strong> (optics, accessories, ammo): Add to cart & checkout online.<br><br>
-        <strong>Licensed firearms</strong>: Place a reservation online, then complete the in-store purchase with your Form III & UIN verification.<br><br>
+        All items in our inventory, including firearms and ammunition, require a valid <strong>Form III Arms License</strong> and <strong>UIN</strong>.<br><br>
+        1. Reserve your items online.<br>
+        2. Visit our showroom for physical license verification.<br>
+        3. Complete your purchase in-person.<br><br>
         <a href="/#shop" style="color:var(--gold-400);">Start Shopping ↗</a>`
     },
 
@@ -115,12 +116,10 @@
         📞 <strong>+91 9653 001 001</strong>`
     },
 
-    // Delivery / shipping
     {
       patterns: [/\b(deliver|shipping|ship|dispatch|courier|home.?deliver)\b/i],
       response: `<strong>🚚 Delivery Policy</strong><br>
-        <strong>Non-licensed accessories & optics</strong>: Available for home delivery across India.<br><br>
-        <strong>Licensed firearms & ammunition</strong>: Must be collected in-store per Arms Rules 2016. Home delivery is not permitted by law.`
+        Per <em>Arms Rules 2016</em>, all firearms and ammunition must be collected in-person at our Mohali showroom after physical license verification. <strong>Home delivery is not permitted by law for these items.</strong>`
     },
 
     // Careers / jobs

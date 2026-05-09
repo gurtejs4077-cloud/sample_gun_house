@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Support | CO2 Division</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    .contact-section { padding: 120px 0; }
+    .contact-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+    .contact-form {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      padding: 3rem;
+      border-radius: 16px;
+    }
+    .form-group { margin-bottom: 1.5rem; }
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--silver);
+      font-size: 0.9rem;
+    }
+    .form-group input, .form-group textarea {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--glass-border);
+      padding: 1rem;
+      color: var(--white);
+      border-radius: 8px;
+      outline: none;
+      transition: var(--transition-smooth);
+    }
+    .form-group input:focus, .form-group textarea:focus {
+      border-color: var(--accent);
+    }
+    .contact-info h2 {
+      font-family: var(--font-heading);
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+    }
+    .info-item {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .info-icon {
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    .map-container {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--glass-border);
+      margin-top: 6rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="sahibzada_gun_house_logo.jpg" alt="CO2 Division" style="height: 50px; width: auto; filter: brightness(1.2);">
+      </a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Precision Home</a></li>
+          <li><a href="products.html">Inventory</a></li>
+          <li><a href="brands.html">Elite Brands</a></li>
+          <li><a href="licensing.html">Regulation</a></li>
+          <li><a href="contact.html" class="active">Support</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions">
+        <a href="cart.html" class="nav-icon-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container contact-section">
+    <div class="contact-container">
+      <div class="contact-info">
+        <h2>Expert <span>Assistance.</span></h2>
+        <p class="hero-desc">Have questions about specific models or technical specifications? Our specialists are here to help.</p>
+        
+        <div class="info-item" style="margin-top: 3rem;">
+          <div class="info-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <div>
+            <h4>Technical Line</h4>
+            <p style="color: var(--silver);">+91 9653 001 001</p>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <h4>Email Support</h4>
+            <p style="color: var(--silver);">co2.division@sahibzadagunhouse.com</p>
+          </div>
+        </div>
+      </div>
+
+      <form class="contact-form">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" placeholder="Enter your name">
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="email@example.com">
+        </div>
+        <div class="form-group">
+          <label>Inquiry Type</label>
+          <input type="text" placeholder="Technical/Sales/General">
+        </div>
+        <div class="form-group">
+          <label>Your Message</label>
+          <textarea rows="5" placeholder="How can we assist you?"></textarea>
+        </div>
+        <button type="submit" class="btn-primary" style="width: 100%; border: none; cursor: pointer; justify-content: center;">Send Message</button>
+      </form>
+    </div>
+
+    <!-- MAP SECTION COPIED FROM MAIN WEB -->
+    <div class="map-container">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3489.1412003382575!2d76.71366107557864!3d30.68849487460561!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390feebe777cddff%3A0xe85ddecdab4bb7fd!2sSahibzada%20Gun%20House!5e1!3m2!1sen!2sin!4v1778054036085!5m2!1sen!2sin" width="100%" height="450" style="border:0; display: block;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-info">
+        <a href="index.html" class="footer-logo">
+          <img src="sahibzada_gun_house_logo.jpg" alt="Logo">
+        </a>
+      </div>
+      <div>
+        <h4>Global</h4>
+        <ul>
+          <li><a href="../index.html">Main Gun House</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- QUOTE MODAL WITH DOC CAPTURE -->
+  <div class="modal-backdrop" id="quote-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 style="font-family: var(--font-heading); color: var(--accent);">Division Reservation</h3>
+        <button class="modal-close" onclick="closeQuoteModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div id="modal-product-info" style="margin-bottom: 2rem; padding: 1.5rem; background: var(--primary); border-radius: 8px; border: 1px solid var(--glass-border);">
+          <strong id="modal-product-name" style="display: block; font-size: 1.2rem; color: var(--white);">Product Name</strong>
+          <span id="modal-product-price" style="color: var(--accent); font-weight: 700;">₹0</span>
+        </div>
+
+        <div id="modal-doc-verification" style="background: rgba(56, 189, 248, 0.05); border: 1px solid var(--accent); border-radius: 8px; padding: 1.5rem; margin-bottom: 2rem;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+              <h4 style="margin: 0; font-size: 1rem; font-weight: 700; color: var(--white);">Operator Verification</h4>
+              <p id="doc-status-text" style="margin: 0.25rem 0 0; font-size: 0.85rem; color: var(--silver);">Identification required to secure precision equipment.</p>
+            </div>
+            <div id="doc-verified-badge" style="display: none; background: var(--accent); color: var(--primary); padding: 2px 8px; border-radius: 12px; font-size: 10px; font-weight: 700;">VERIFIED</div>
+          </div>
+          <button type="button" id="modal-upload-btn" onclick="CameraModule.openModal()" style="margin-top: 1rem; background: var(--accent); color: var(--primary); border: none; padding: 0.6rem 1.25rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            Capture Identity Docs
+          </button>
+        </div>
+
+        <form onsubmit="submitQuoteRequest(event)">
+          <div class="form-group">
+            <label>Full Name *</label>
+            <input type="text" id="qr-name" required />
+          </div>
+          <div class="form-group">
+            <label>Phone *</label>
+            <input type="tel" id="qr-phone" required />
+          </div>
+          <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+            <button type="button" class="btn-primary" onclick="closeQuoteModal()" style="background: var(--glass); color: var(--white); border: 1px solid var(--glass-border);">Cancel</button>
+            <button type="submit" id="quote-submit-btn" class="btn-primary" style="flex: 1; border: none; cursor: pointer; justify-content: center;">Submit Reservation</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Item added to cart</div>
+
+  <!-- WHATSAPP FLOATING BUTTON -->
+  <a href="https://wa.me/919653001001" class="whatsapp-float" target="_blank" aria-label="Chat with CO2 Support">
+    <svg viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.7 17.8 69.4 27.2 106.2 27.2h.1c122.3 0 222-99.6 222-222 0-59.3-23-115.1-65.1-157.1zM223.9 445.3c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 365.5l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-5.5-2.8-23.2-8.5-44.2-27.1-16.4-14.6-27.4-32.7-30.6-38.1-3.2-5.4-.3-8.3 2.4-11.1 2.4-2.5 5.5-6.4 8.3-9.7 2.8-3.3 3.7-5.7 5.5-9.4 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 13.2 5.8 23.5 9.2 31.5 11.8 13.3 4.2 25.4 3.6 35 2.2 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z" fill="currentColor"/></svg>
+  </a>
+
+  <script src="js/db-provider.js"></script>
+  <script src="js/camera-module.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/chatbot.js"></script>
+</body>
+</html>

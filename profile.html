@@ -240,7 +240,7 @@
       <nav>
         <ul class="nav-links" style="position:static;width:auto;height:auto;background:transparent;flex-direction:row;padding:0;gap:2.5rem;box-shadow:none;display:flex;">
           <li><a href="index.html">Home</a></li>
-          <li><a href="index.html#shop">Catalogue</a></li>
+          <li><a href="index.html#shop">Firearms & Ammunition</a></li>
           <li><a href="brands.html">Brands</a></li>
           <li><a href="licensing.html">Licensing</a></li>
         </ul>
@@ -511,31 +511,37 @@
 
       const saveBtn = document.getElementById('profile-save-btn');
       const originalText = saveBtn.textContent;
-      saveBtn.textContent = 'Uploading to Cloud...';
+      saveBtn.textContent = 'Uploading...';
       saveBtn.disabled = true;
 
-      // --- CLOUDINARY CONFIG ---
-      const CLOUDINARY_CLOUD_NAME = 'dwptdfeyu';
-      const CLOUDINARY_UPLOAD_PRESET = 'ml_default';
 
       const uploadedUrls = [];
 
       try {
-        // Upload each image to Cloudinary
+        // Helper to convert base64 to Blob
+        const dataURLtoBlob = (dataurl) => {
+          let arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+              bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+          while(n--) u8arr[n] = bstr.charCodeAt(n);
+          return new Blob([u8arr], {type:mime});
+        };
+
+        // Upload each image to Local Server
         for (let i = 0; i < images.length; i++) {
           const formData = new FormData();
-          formData.append('file', images[i]);
-          formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+          const blob = dataURLtoBlob(images[i]);
+          formData.append('file', blob, `license_${i}.jpg`);
+          formData.append('folder', 'documents');
 
-          const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+          const response = await fetch(`upload.php`, {
             method: 'POST',
             body: formData
           });
 
-          if (!response.ok) throw new Error('Cloudinary upload failed');
+          if (!response.ok) throw new Error('Upload failed');
           const result = await response.json();
-          if (result.secure_url) {
-            uploadedUrls.push(result.secure_url);
+          if (result.status === 'success' && result.url) {
+            uploadedUrls.push(result.url);
           }
         }
 

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Selection | CO2 Division</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    .cart-section { padding: 140px 0; }
+    .cart-container {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 3rem;
+    }
+    .cart-items {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      padding: 2rem;
+      border-radius: 16px;
+    }
+    .cart-summary {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      padding: 2rem;
+      border-radius: 16px;
+      height: fit-content;
+      position: sticky;
+      top: 120px;
+    }
+    .cart-item {
+      display: flex;
+      gap: 1.5rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--glass-border);
+    }
+    .cart-item:last-child { border-bottom: none; }
+    .cart-item-img {
+      width: 80px;
+      height: 80px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+    }
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      color: var(--silver);
+    }
+    .summary-total {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--glass-border);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="sahibzada_gun_house_logo.jpg" alt="CO2 Division" style="height: 50px; width: auto; filter: brightness(1.2);">
+      </a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Precision Home</a></li>
+          <li><a href="products.html">Inventory</a></li>
+          <li><a href="brands.html">Elite Brands</a></li>
+          <li><a href="licensing.html">Regulation</a></li>
+          <li><a href="contact.html">Support</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions">
+        <a href="cart.html" class="nav-icon-btn active" style="color: var(--accent);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container cart-section">
+    <h1 class="hero-title" style="font-size: 3rem; margin-bottom: 3rem;">Your <span>Selection</span></h1>
+    <div class="cart-container">
+      <div class="cart-items" id="cart-items-container">
+        <!-- Will be populated by JS -->
+        <p style="text-align: center; color: var(--silver); padding: 3rem;">Your selection is currently empty.</p>
+      </div>
+      
+      <div class="cart-summary">
+        <h3>Order Summary</h3>
+        <div style="margin-top: 2rem;">
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <span id="cart-subtotal">₹0.00</span>
+          </div>
+          <div class="summary-row">
+            <span>Regulatory Fees</span>
+            <span>₹0.00</span>
+          </div>
+          <div class="summary-total">
+            <span>Total</span>
+            <span id="cart-total">₹0.00</span>
+          </div>
+        </div>
+        <button id="checkout-btn" onclick="checkoutCart()" class="btn-primary" style="width: 100%; margin-top: 2rem; border: none; cursor: pointer; justify-content: center;">Proceed to Reservation</button>
+      </div>
+    </div>
+  </main>
+
+  <div class="toast" id="toast">Item added to cart</div>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-info">
+        <a href="index.html" class="footer-logo">
+          <img src="sahibzada_gun_house_logo.jpg" alt="Logo">
+        </a>
+      </div>
+      <div>
+        <h4>Global</h4>
+        <ul>
+          <li><a href="../index.html">Main Gun House</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/db-provider.js"></script>
+  <script src="js/camera-module.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/chatbot.js"></script>
+</body>
+</html>

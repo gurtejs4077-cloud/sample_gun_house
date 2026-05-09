@@ -6,7 +6,8 @@ const state = {
   filters: {
     category: null,
     brand: null,
-    license: null,
+    condition: null,
+    type: null,
   },
   sort: 'newest',
   cart: JSON.parse(localStorage.getItem('sgh_cart') || '[]'),
@@ -33,6 +34,10 @@ function formatInr(paise, options = {}) {
 
 function getBrand(slug) { return state.inventory.brands.find(b => b.slug === slug); }
 function getCategory(slug) { return state.inventory.categories.find(c => c.slug === slug); }
+function isAccessory(p) {
+  const accCats = ['accessories', 'holsters', 'optics', 'cleaning', 'tactical-gear'];
+  return accCats.includes(p.category);
+}
 
 // ============================================================
 // PRODUCT CARD RENDER
@@ -66,6 +71,8 @@ function renderProductCard(product) {
   } else {
     const inStock = product.inStock !== false;
     const sale = product.compareAtInr && product.compareAtInr > product.priceInr;
+    const isAcc = isAccessory(product);
+    
     ctaHtml = `
       <div class="product-cta">
         <div class="product-price-row">
@@ -77,27 +84,35 @@ function renderProductCard(product) {
             ${inStock ? 'In Stock' : 'Sold Out'}
           </span>
         </div>
-        <button class="product-action outline" onclick="addToCart('${product.id}')" ${!inStock ? 'disabled' : ''}>
+        <button class="product-action outline" onclick="${isAcc ? `openRedirectModal('${product.id}')` : `addToCart('${product.id}')`}" ${!inStock ? 'disabled' : ''}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
             <line x1="3" y1="6" x2="21" y2="6"/>
             <path d="M16 10a4 4 0 0 1-8 0"/>
           </svg>
-          ${inStock ? 'Add to Cart' : 'Notify Me'}
+          ${isAcc ? 'Buy in CO2 Division' : (inStock ? 'Add to Cart' : 'Notify Me')}
         </button>
       </div>
     `;
   }
 
   let badgeHtml = '';
+  const badges = [];
+
   if (product.licenseRequired) {
-    badgeHtml = `<div class="badge badge-license">🔒 License Required</div>`;
+    badges.push(`<div class="badge badge-license">🔒 License Required</div>`);
   } else if (product.compareAtInr && product.compareAtInr > product.priceInr) {
     const savings = product.compareAtInr - product.priceInr;
-    badgeHtml = `<div class="badge badge-sale">Save ${formatInr(savings)}</div>`;
+    badges.push(`<div class="badge badge-sale">Save ${formatInr(savings)}</div>`);
   } else if (product.inStock === false) {
-    badgeHtml = `<div class="badge badge-stock">Out of Stock</div>`;
+    badges.push(`<div class="badge badge-stock">Out of Stock</div>`);
   }
+
+  if (product.type === 'pre-owned') {
+    badges.push(`<div class="badge badge-pre-owned">🔖 Pre-Owned</div>`);
+  }
+
+  badgeHtml = badges.length ? `<div class="badge-stack">${badges.join('')}</div>` : '';
 
   // Handle image SVG string vs URL
   let imageContent = product.image;
@@ -105,8 +120,8 @@ function renderProductCard(product) {
     if (imageContent.startsWith('SVG_')) {
       // If it's a variable name, get the content from window
       imageContent = window[imageContent] || '';
-    } else if (imageContent.startsWith('http')) {
-      // If it's a URL (Cloudinary), render an img tag
+    } else if (imageContent !== '') {
+      // If it's a URL or path, render an img tag
       imageContent = `<img src="${imageContent}" alt="${product.name}" style="width: 100%; height: 100%; object-fit: cover;">`;
     }
   }
@@ -125,6 +140,7 @@ function renderProductCard(product) {
         </div>
         <h3 class="product-name">${product.name}</h3>
         ${product.caliber ? `<p class="product-spec"><strong>Caliber:</strong> ${product.caliber}</p>` : ''}
+        ${product.type === 'pre-owned' && product.condition ? `<p class="product-spec"><strong>Condition:</strong> <span style="text-transform: capitalize;">${product.condition.replace('-', ' ')}</span></p>` : ''}
         ${product.shortDesc ? `<p class="product-desc">${product.shortDesc}</p>` : ''}
         <div style="flex: 1;"></div>
         ${ctaHtml}
@@ -137,28 +153,84 @@ function renderProductCard(product) {
 // FILTERS
 // ============================================================
 function renderFilterLists() {
+  // Update Type buttons
+  ['new', 'pre-owned', 'ammunition'].forEach(t => {
+    const btn = document.getElementById(`filter-type-${t}`);
+    if (btn) btn.classList.toggle('active', state.filters.type === t);
+  });
+
+  // Categories
   const categoryList = document.getElementById('category-list');
-  if (!categoryList) return;
-  categoryList.innerHTML = state.inventory.categories.map(c => {
-    const count = state.inventory.products.filter(p => p.category === c.slug).length;
-    const active = state.filters.category === c.slug ? 'active' : '';
-    return `
-      <li>
-        <button class="${active}" onclick="toggleFilter('category', '${c.slug}')">
-          <span style="display: flex; align-items: center; gap: 0.5rem;">
-            ${active ? '<span style="color: var(--gold-500);">✓</span>' : ''}
-            ${c.name}
-          </span>
-          <span class="filter-count">${count}</span>
-        </button>
-      </li>
-    `;
-  }).join('');
+  if (categoryList) {
+    let categories = state.inventory.categories.filter(c => !c.division || c.division === 'main' || c.division === 'both');
+    // Main page: only count license-required products OR accessories
+    const mainProducts = state.inventory.products.filter(p => p.licenseRequired || isAccessory(p));
+
+    if (state.filters.type) {
+      categories = categories.filter(c => c.type === state.filters.type);
+    }
+
+    categoryList.innerHTML = categories.map(c => {
+      const count = mainProducts.filter(p => p.category === c.slug).length;
+      const active = state.filters.category === c.slug ? 'active' : '';
+      return `
+        <li>
+          <button class="${active}" onclick="toggleFilter('category', '${c.slug}')">
+            <span style="display: flex; align-items: center; gap: 0.5rem;">
+              ${active ? '<span style="color: var(--gold-500);">✓</span>' : ''}
+              ${c.name}
+            </span>
+            <span class="filter-count">${count}</span>
+          </button>
+        </li>
+      `;
+    }).join('');
+  }
+
+  // Conditions
+  const conditionGroup = document.getElementById('condition-filter-group');
+  if (conditionGroup) {
+    const isPreOwned = state.filters.type === 'pre-owned';
+    conditionGroup.style.display = isPreOwned ? 'block' : 'none';
+
+    if (isPreOwned) {
+      const conditionList = document.getElementById('condition-list');
+      if (conditionList) {
+        const conditions = window.CONDITIONS || [
+          { slug: 'excellent', name: 'Excellent' },
+          { slug: 'good',      name: 'Good' },
+          { slug: 'average',   name: 'Average' },
+          { slug: 'as-is',     name: 'As Is condition' },
+        ];
+        // Main page: only count license-required products
+        const mainProducts = state.inventory.products.filter(p => p.licenseRequired);
+
+        conditionList.innerHTML = conditions.map(c => {
+          const count = mainProducts.filter(p => p.condition === c.slug && p.type === 'pre-owned').length;
+          const active = state.filters.condition === c.slug ? 'active' : '';
+          return `
+            <li>
+              <button class="${active}" onclick="toggleFilter('condition', '${c.slug}')">
+                <span style="display: flex; align-items: center; gap: 0.5rem;">
+                  ${active ? '<span style="color: var(--gold-500);">✓</span>' : ''}
+                  ${c.name}
+                </span>
+                <span class="filter-count">${count}</span>
+              </button>
+            </li>
+          `;
+        }).join('');
+      }
+    }
+  }
 
   const brandList = document.getElementById('brand-list');
   if (!brandList) return;
+  // Main page: only count license-required products
+  const mainProducts = state.inventory.products.filter(p => p.licenseRequired);
+
   brandList.innerHTML = state.inventory.brands.map(b => {
-    const count = state.inventory.products.filter(p => p.brand === b.slug).length;
+    const count = mainProducts.filter(p => p.brand === b.slug).length;
     if (count === 0) return '';
     const active = state.filters.brand === b.slug ? 'active' : '';
     return `
@@ -175,27 +247,25 @@ function renderFilterLists() {
     `;
   }).join('');
 
-  document.querySelectorAll('.filter-pill[data-filter="license"]').forEach(btn => {
-    if (state.filters.license === btn.dataset.value) {
-      btn.classList.add('active');
-    } else {
-      btn.classList.remove('active');
-    }
-  });
-
-  const hasActive = state.filters.category || state.filters.brand || state.filters.license;
+  const hasActive = state.filters.category || state.filters.brand || state.filters.condition || state.filters.type;
   const clearBtn = document.getElementById('filter-clear-btn');
   if (clearBtn) clearBtn.classList.toggle('hidden', !hasActive);
 }
 
 function toggleFilter(type, value) {
   state.filters[type] = state.filters[type] === value ? null : value;
+  
+  // If type changed and is not pre-owned, clear condition filter
+  if (type === 'type' && state.filters.type !== 'pre-owned') {
+    state.filters.condition = null;
+  }
+  
   renderFilterLists();
   renderShop();
 }
 
 function clearFilters() {
-  state.filters = { category: null, brand: null, license: null };
+  state.filters = { category: null, brand: null, condition: null, type: null };
   renderFilterLists();
   renderShop();
 }
@@ -214,7 +284,8 @@ function applySort() {
 function renderFeatured() {
   const grid = document.getElementById('featured-grid');
   if (!grid) return;
-  const featured = state.inventory.products.filter(p => p.isFeatured).slice(0, 8);
+  // Main page: show licensed items OR accessories
+  const featured = state.inventory.products.filter(p => p.isFeatured && (p.licenseRequired || isAccessory(p))).slice(0, 8);
   grid.innerHTML = featured.map(renderProductCard).join('');
 }
 
@@ -222,17 +293,20 @@ function renderShop() {
   const grid = document.getElementById('shop-grid');
   if (!grid) return;
 
-  let filtered = state.inventory.products.slice();
+  // Main page: show licensed items OR accessories
+  let filtered = state.inventory.products.filter(p => p.licenseRequired || isAccessory(p));
+  
   if (state.filters.category) {
     filtered = filtered.filter(p => p.category === state.filters.category);
+  }
+  if (state.filters.type) {
+    filtered = filtered.filter(p => p.type === state.filters.type);
   }
   if (state.filters.brand) {
     filtered = filtered.filter(p => p.brand === state.filters.brand);
   }
-  if (state.filters.license === 'required') {
-    filtered = filtered.filter(p => p.licenseRequired);
-  } else if (state.filters.license === 'none') {
-    filtered = filtered.filter(p => !p.licenseRequired);
+  if (state.filters.condition) {
+    filtered = filtered.filter(p => p.condition === state.filters.condition);
   }
 
   switch (state.sort) {
@@ -249,7 +323,7 @@ function renderShop() {
         <h2 style="font-size: 1.5rem;">No items match your filters</h2>
         <p style="margin-top: 0.75rem; color: var(--charcoal-600);">
           Try removing some filters or
-          <a href="javascript:clearFilters()" style="color: var(--emerald-900); text-decoration: underline;">view the full catalogue</a>.
+          <a href="javascript:clearFilters()" style="color: var(--emerald-900); text-decoration: underline;">view all firearms & ammunition</a>.
         </p>
       </div>
     `;
@@ -387,6 +461,73 @@ function closeQuoteModal() {
   const modal = document.getElementById('quote-modal');
   if (modal) modal.classList.remove('active');
   document.body.style.overflow = '';
+}
+
+// ============================================================
+// REDIRECT MODAL (FOR ACCESSORIES ON MAIN PAGE)
+// ============================================================
+function openRedirectModal(productId) {
+  let product = state.inventory.products.find(p => p.id === productId);
+  
+  const modal = document.getElementById('redirect-modal');
+  if (!modal) {
+    createRedirectModal();
+  }
+  
+  const nameEl = document.getElementById('redirect-product-name');
+  const goBtn = document.getElementById('redirect-go-btn');
+
+  if (productId === 'general-accessory') {
+    nameEl.textContent = 'Accessories & CO2 Gear';
+    goBtn.onclick = () => {
+      window.location.href = `Co2_guns/index.html`;
+    };
+  } else if (product) {
+    nameEl.textContent = product.name;
+    goBtn.onclick = () => {
+      window.location.href = `Co2_guns/products.html?highlight=${product.id}`;
+    };
+  }
+  
+  document.getElementById('redirect-modal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeRedirectModal() {
+  const modal = document.getElementById('redirect-modal');
+  if (modal) modal.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function createRedirectModal() {
+  const html = `
+    <div id="redirect-modal" class="modal-backdrop">
+      <div class="modal" style="text-align: center; max-width: 450px;">
+        <div style="margin-bottom: 2rem;">
+          <div style="width: 80px; height: 80px; background: rgba(56, 189, 248, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--emerald-900)" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+          </div>
+          <h2 style="font-family: var(--font-heading); color: var(--emerald-900);">Available in CO2 Division</h2>
+          <p style="color: var(--charcoal-600); margin-top: 1rem;">
+            The <strong id="redirect-product-name">Product</strong> and all accessories are managed through our specialized CO2 & Precision division.
+          </p>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 1rem;">
+          <button id="redirect-go-btn" class="product-action primary" style="justify-content: center; width: 100%;">
+            Go to CO2 Guns Page
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+          <button onclick="closeRedirectModal()" class="product-action outline" style="justify-content: center; width: 100%;">Stay on Main Page</button>
+        </div>
+      </div>
+    </div>
+  `;
+  document.body.insertAdjacentHTML('beforeend', html);
+  
+  // Bind backdrop click
+  document.getElementById('redirect-modal').addEventListener('click', (e) => {
+    if (e.target.id === 'redirect-modal') closeRedirectModal();
+  });
 }
 
 async function submitQuoteRequest(e) {

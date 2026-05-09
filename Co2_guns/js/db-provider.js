@@ -161,18 +161,9 @@ async function loadEnquiries() {
   const providers = await initDatabase();
   if (!providers || !db) return [];
 
-  const timeoutPromise = new Promise((_, reject) => 
-    setTimeout(() => reject(new Error("Loading enquiries timed out.")), 15000)
-  );
-
   try {
     const colRef = providers.collection(db, "enquiries");
-    
-    // Race the getDocs operation against the timeout
-    const querySnapshot = await Promise.race([
-      providers.getDocs(colRef),
-      timeoutPromise
-    ]);
+    const querySnapshot = await providers.getDocs(colRef);
     
     const enquiries = querySnapshot.docs.map(doc => ({
       id: doc.id,
@@ -180,7 +171,7 @@ async function loadEnquiries() {
     }));
 
     // Sort by timestamp descending
-    return enquiries.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+    return enquiries.sort((a, b) => b.timestamp - a.timestamp);
   } catch (error) {
     console.error("Error loading enquiries:", error);
     return [];
