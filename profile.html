@@ -518,7 +518,7 @@
       const uploadedUrls = [];
 
       try {
-        // Helper to convert base64 to Blob
+        // Helper to convert dataURL to Blob
         const dataURLtoBlob = (dataurl) => {
           let arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
               bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
@@ -526,38 +526,27 @@
           return new Blob([u8arr], {type:mime});
         };
 
-        // Upload each image to Local Server
+        // Upload each image to Firebase Storage
         for (let i = 0; i < images.length; i++) {
-          const formData = new FormData();
           const blob = dataURLtoBlob(images[i]);
-          formData.append('file', blob, `license_${i}.jpg`);
-          formData.append('folder', 'documents');
-
-          const response = await fetch(`upload.php`, {
-            method: 'POST',
-            body: formData
-          });
-
-          if (!response.ok) throw new Error('Upload failed');
-          const result = await response.json();
-          if (result.status === 'success' && result.url) {
-            uploadedUrls.push(result.url);
-          }
+          const url = await uploadFileToStorage(blob, 'documents');
+          uploadedUrls.push(url);
+          console.log('Firebase Doc Upload Success:', url);
         }
 
-        // Save profile with Cloudinary URLs instead of base64
+        // Save profile with Firebase Storage URLs instead of base64
         const profileData = {
           firstName: document.getElementById('first-name').value,
           lastName: document.getElementById('last-name').value,
           email: document.querySelector('input[type="email"]').value,
           phone: document.getElementById('phone-number').value,
           city: document.querySelector('input[type="text"]:last-of-type')?.value || 'Mohali, Punjab',
-          capturedImages: uploadedUrls, // Storing Cloud URLs
+          capturedImages: uploadedUrls, // Storing Firebase Storage URLs
           updatedAt: Date.now()
         };
 
         localStorage.setItem('sgh_user_profile', JSON.stringify(profileData));
-        alert('✅ Profile saved and documents uploaded to Cloud successfully!');
+        alert('✅ Profile saved and documents uploaded to Firebase Storage successfully!');
 
       } catch (err) {
         console.error('Upload error:', err);

@@ -71,26 +71,16 @@ async function init() {
       document.getElementById('preview-placeholder').textContent = 'Uploading...';
 
       try {
-        const response = await fetch(`upload.php`, {
-          method: 'POST',
-          body: formData
-        });
-        const result = await response.json();
+        const url = await uploadFileToStorage(file, 'products');
 
-        if (result.status === 'success' && result.url) {
-          const url = result.url;
-          document.getElementById('image-preview').src = url;
-          document.getElementById('image-preview').style.display = 'block';
-          document.getElementById('preview-placeholder').style.display = 'none';
-          document.getElementById('image-preview').dataset.url = url;
-          console.log('Local Upload Success:', url);
-        } else {
-          alert('Upload failed: ' + (result.message || 'Unknown error'));
-          document.getElementById('preview-placeholder').textContent = 'No Image';
-        }
+        document.getElementById('image-preview').src = url;
+        document.getElementById('image-preview').style.display = 'block';
+        document.getElementById('preview-placeholder').style.display = 'none';
+        document.getElementById('image-preview').dataset.url = url;
+        console.log('Firebase Storage Upload Success:', url);
       } catch (error) {
-        console.error('Error uploading:', error);
-        alert('Upload failed. Check your connection.');
+        console.error('Error uploading to Firebase:', error);
+        alert('Upload failed: ' + error.message);
         document.getElementById('preview-placeholder').textContent = 'No Image';
       }
     }

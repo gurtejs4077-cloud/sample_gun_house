@@ -36,10 +36,12 @@ async function initDatabase() {
     const [
       { initializeApp },
       { getFirestore, doc, getDoc, setDoc, collection, addDoc, getDocs, query, orderBy, serverTimestamp, deleteDoc },
+      { getStorage, ref, uploadBytes, getDownloadURL }
     ] = await Promise.race([
       Promise.all([
         import('https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js'),
         import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js'),
+        import('https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js'),
       ]),
       timeout.then(() => { throw new Error("Firebase SDK load timed out."); })
     ]);
@@ -51,8 +53,12 @@ async function initDatabase() {
 
     const app = initializeApp(firebaseConfig);
     db = getFirestore(app);
+    const storage = getStorage(app);
 
-    providersCache = { doc, getDoc, setDoc, collection, addDoc, getDocs, query, orderBy, serverTimestamp, deleteDoc };
+    providersCache = { 
+      doc, getDoc, setDoc, collection, addDoc, getDocs, query, orderBy, serverTimestamp, deleteDoc,
+      storage, ref, uploadBytes, getDownloadURL
+    };
     console.log("Firebase initialized successfully.");
     return providersCache;
   } catch (error) {
@@ -60,6 +66,21 @@ async function initDatabase() {
     providersCache = null; // reset so it can retry
     return null;
   }
+}
+
+/**
+ * Uploads a file/blob to Firebase Storage and returns the download URL
+ */
+async function uploadFileToStorage(file, folder = 'general') {
+  const providers = await initDatabase();
+  if (!providers) throw new Error("Database not initialized");
+
+  const { storage, ref, uploadBytes, getDownloadURL } = providers;
+  const fileName = `${Date.now()}_${file.name || 'file'}`;
+  const storageRef = ref(storage, `${folder}/${fileName}`);
+  
+  const snapshot = await uploadBytes(storageRef, file);
+  return await getDownloadURL(snapshot.ref);
 }
 
 /**

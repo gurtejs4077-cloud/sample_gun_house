@@ -1,7 +1,6 @@
 <?php
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST');
-header('Access-Control-Allow-Headers: Content-Type');
+header('Content-Type: application/json');
+error_reporting(0); // Prevent PHP errors from breaking JSON output
 
 // Base directory where images will be saved
 $baseDir = "uploads/";
